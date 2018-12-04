@@ -10,16 +10,14 @@
 	        </tr>
 	    </thead>
 	    <tbody>
-	        <tr v-for="user in users"  :key="user.id" :class="{activerow: editingUser === user}">
+	        <tr v-for="user in users"  :key="user.id" >
 	            <td>{{ user.name }}</td>
+	            <td>{{ user.username }}</td>
 	            <td>{{ user.email }}</td>
-	            <td>{{ user.age }}</td>
-	            <td>{{ user.department }}</td>
+	            <td ><img width="100px" :src="getProfileImage(user.photo_url)"></td>
 	            <td>
-					<a class="btn btn-sm btn-success" v-on:click.prevent="definePlayer(user,1)">P1</a>
-					<a class="btn btn-sm btn-success" v-on:click.prevent="definePlayer(user,2)">P2</a>
-	                <a class="btn btn-sm btn-primary" v-on:click.prevent="editUser(user)">Edit</a>
-	                <a class="btn btn-sm btn-danger" v-on:click.prevent="deleteUser(user)">Delete</a>
+					<router-link class="btn btn-default" :to="'/user/'+ user.id">Edit U </router-link>
+                    <button @click="deleteUser(user)">Delete</button>
 	            </td>
 	        </tr>
 	    </tbody>
@@ -29,26 +27,26 @@
 <script type="text/javascript">
 	// Component code (not registered)
 	module.exports={
-		props: ['users'],
+		props: ["users"],
 		data: function(){
-			return { 
-				editingUser: null
-			}
+			return{};			
 		},
         methods: {
             editUser: function(user){
                 this.editingUser = user;
                 this.$emit('edit-click', user);
             },		
-            deleteUser: function(user){
-                this.editingUser = null;
-                this.$emit('delete-click', user);
+            deleteUser: function(user) {
+     			 this.$emit("delete-user", user);
+   				 		
 			},
-			definePlayer: function(user,player){
-				this.$root.$data['player'+player] = user;
-				this.$emit('message', user.name+' selected as Player'+player);
+			getProfileImage(photo_url) {
+      			return `storage/profiles/${photo_url}`;
 			}
-        },		
+			
+		}
+		
+		
 	}
 </script>
 

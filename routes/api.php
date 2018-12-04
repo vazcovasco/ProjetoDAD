@@ -13,16 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::get('departments', 'DepartmentControllerAPI@index');
-Route::get('users', 'UserControllerAPI@index');
+Route::get('items', 'ItemControllerAPI@getItems');
+Route::get('users', 'UserControllerAPI@getUsers');
+Route::post('users', 'UserControllerAPI@add');
+Route::put('users/{id}', 'UserControllerAPI@edit');
+Route::delete('users/{id}', 'UserControllerAPI@delete');
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 Route::get('users/{id}', 'UserControllerAPI@show');
-Route::post('users', 'UserControllerAPI@store');
-Route::put('users/{id}', 'UserControllerAPI@update');
+
+
 Route::delete('users/{id}', 'UserControllerAPI@destroy');
 
 /*

@@ -5,22 +5,63 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Jsonable;
 
-use App\Http\Resources\User as UserResource;
+
 use Illuminate\Support\Facades\DB;
 
 use App\User;
 use App\StoreUserRequest;
 use Hash;
 
+
 class UserControllerAPI extends Controller
 {
-    public function index(Request $request)
+    public function getUsers(Request $request)
     {
-        if ($request->has('page')) {
-            return UserResource::collection(User::paginate(5));
-        } else {
-            return UserResource::collection(User::all());
-        }
+        return User::all();
+        
+    }
+
+    public function add(Request $request)
+    {
+        $user = new User();
+/*         $user->name = $request->name; 
+ */        $user->id = null;
+        $user->email_verified_at = null;
+        $user->blocked = 0;
+        $user->photo_url=null;
+        $user->last_shift_start =null;
+        $user->last_shift_end =null;
+        $user->shift_active =0;
+        $user->deleted_at=null;
+        $user->created_at=null;
+        $user->updated_at=null;
+        $user->fill($request->all()); 
+        $user->password = Hash::make($user->password);
+       $user->save(); 
+       return response()->json($user,200);
+        
+
+    }
+
+    public function edit(Request $request,$id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return $user;
+
+
+    }
+
+
+    public function delete($id)
+    {
+      return User::destroy($id);
+    }
+
+    public function show($id)
+    {
+        return User::find($id);
+    }
 
         /*Caso não se pretenda fazer uso de Eloquent API Resources (https://laravel.com/docs/5.5/eloquent-resources), é possível implementar com esta abordagem:
         if ($request->has('page')) {
@@ -28,9 +69,9 @@ class UserControllerAPI extends Controller
         } else {
             return User::with('department')->get();;
         }*/
-    }
+    
 
-    public function show($id)
+    /* public function show($id)
     {
         return new UserResource(User::find($id));
     }
@@ -77,5 +118,5 @@ class UserControllerAPI extends Controller
             $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
         }
         return response()->json($totalEmail == 0);
-    }
+    } */
 }

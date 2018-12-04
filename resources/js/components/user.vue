@@ -3,37 +3,39 @@
 		<div class="jumbotron">
 			<h1>{{ title }}</h1>
 		</div>
+		
+ 		<router-link to="/users/add"> <button>Add</button>  </router-link>
+		 
+		 
+		
+		<user-list :users="users"  @delete-click="deleteUser"></user-list>
 
-		<user-list :users="users" @edit-click="editUser" @delete-click="deleteUser" @message="childMessage" ref="usersListRef"></user-list>
 
-		<div class="alert alert-success" v-if="showSuccess">
-			 
-			<button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
-			<strong>{{ successMessage }}</strong>
-		</div>
-		<user-edit :user="currentUser" :departments="departments"  @user-saved="savedUser" @user-canceled="cancelEdit" v-if="currentUser"></user-edit>				
 	</div>				
 </template>
 
 <script type="text/javascript">
-	import UserList from './userList.vue';
-	import UserEdit from './userEdit.vue';
+	
 	
 	export default {
 		data: function(){
 			return { 
 		        title: 'List Users',
-		        showSuccess: false,
-		        successMessage: '',
-		        currentUser: null,
-		        users: [],
-		        departments: []
-			}
+		        editingUser: false,
+				showSuccess: false,
+				showFailure: false,
+				successMessage: '',
+				failMessage: '',
+				currentUser: {},
+				currentUserIndex: -1,
+				users: [],
+		    };
 		},
 	    methods: {
-	        editUser: function(user){
+	         editUser: function(user){
 	            this.currentUser = user;
-	            this.showSuccess = false;
+				this.showSuccess = false;
+				
 	        },
 	        deleteUser: function(user){
 	            axios.delete('api/users/'+user.id)
@@ -56,30 +58,19 @@
 	        },
 	        getUsers: function(){
 	            axios.get('api/users')
-	                .then(response=>{this.users = response.data.data; });
+	                .then(response=>{this.users = response.data; });
 			},
 			childMessage: function(message){
 				this.showSuccess = true;
 	            this.successMessage = message;
 			}
-	    },
-	    components: {
-	    	'user-list': UserList,
-	    	'user-edit': UserEdit
-	    },
+			
+	    }, 
 	    mounted() {
 			this.getUsers();
-			if (this.$root.departments.length === 0) {
-				axios.get('api/departments')
-  					.then(response=>{
-  						this.$root.departments = response.data.data; 
-  						this.departments = this.$root.departments;
-  					})
-  			} else {
-  				this.departments = this.$root.departments;
-  			}
 		}
 
+		
 	}
 </script>
 

@@ -156,14 +156,18 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 const user = Vue.component('user', require('./components/user.vue'));
-const department = Vue.component('department', require('./components/departmentList.vue'));
-const game = Vue.component('game', require('./components/tictactoe.vue'));
+const item = Vue.component('item', require('./components/item.vue'));
+const itemList = Vue.component('item-list', require('./components/itemList.vue'));
+const userList = Vue.component('user-list', require('./components/userList.vue'));
+const userAdd = Vue.component('user-add', require('./components/userAdd.vue'));
+const userEdit = Vue.component('user-edit', require('./components/userEdit.vue'));
 
 const routes = [
-  { path: '/', redirect: '/users' },
+  { path: '/', redirect: '/items' },
+  { path: '/items', component : item },
   { path: '/users', component: user },
-  { path: '/departments', component: department },
-  { path: '/tictactoe', component: game }
+  { path: '/users/add', component: userAdd },
+  { path: '/users/:id', component: userEdit }
 ];
 
 const router = new VueRouter({
@@ -173,9 +177,9 @@ const router = new VueRouter({
 const app = new Vue({
   router,
   data:{
-    player1:undefined,
-    player2: undefined,
-    departments: [],
+    
+    items: [],
+    users:[]
   }
 }).$mount('#app');
 
