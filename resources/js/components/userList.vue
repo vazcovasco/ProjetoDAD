@@ -1,4 +1,10 @@
 <template>
+	<div class="container" id="people">
+		<div class="filter">
+		<label><input type="radio" v-model="selectedCategory" value="All" /> All</label>
+		<label><input type="radio" v-model="selectedCategory" value="Blocked" /> Blocked</label>
+	</div>
+
 	<table class="table table-striped">
 	    <thead>
 	        <tr>
@@ -10,7 +16,7 @@
 	        </tr>
 	    </thead>
 	    <tbody>
-	        <tr v-for="user in users"  :key="user.id" >
+	        <tr v-for="user in filteredUsers"  :key="user.id" >
 	            <td>{{ user.name }}</td>
 	            <td>{{ user.username }}</td>
 	            <td>{{ user.email }}</td>
@@ -22,6 +28,7 @@
 	        </tr>
 	    </tbody>
 	</table>
+	</div>
 </template>
 
 <script type="text/javascript">
@@ -29,7 +36,9 @@
 	module.exports={
 		props: ["users"],
 		data: function(){
-			return{};			
+			return{
+				selectedCategory:''
+			};			
 		},
         methods: {
             editUser: function(user){
@@ -43,7 +52,25 @@
 			getProfileImage(photo_url) {
       			return `storage/profiles/${photo_url}`;
 			}
-			
+		},
+		computed:{
+			filteredUsers: function() {
+				var category = this.selectedCategory;
+
+				if(category === "All") {
+					console.log(this.users);
+					return this.users;
+				}
+				if(category == "Blocked") {
+					return this.users.filter(function(user) {
+						return user.blocked ==1;
+					});
+				}
+				if(!category)
+				{
+					return this.users;	
+				}
+			}	
 		}
 		
 		

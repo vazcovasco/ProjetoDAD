@@ -52091,12 +52091,21 @@ exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\n  \t\tbackground: #1
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 // Component code (not registered)
 module.exports = {
 	props: ["users"],
 	data: function data() {
-		return {};
+		return {
+			selectedCategory: ''
+		};
 	},
 	methods: {
 		editUser: function editUser(user) {
@@ -52107,7 +52116,25 @@ module.exports = {
 			this.$emit("delete-user", user);
 		},
 		getProfileImage: function getProfileImage(photo_url) {
-			return "storage/profiles/" + photo_url;
+			return 'storage/profiles/' + photo_url;
+		}
+	},
+	computed: {
+		filteredUsers: function filteredUsers() {
+			var category = this.selectedCategory;
+
+			if (category === "All") {
+				console.log(this.users);
+				return this.users;
+			}
+			if (category == "Blocked") {
+				return this.users.filter(function (user) {
+					return user.blocked == 1;
+				});
+			}
+			if (!category) {
+				return this.users;
+			}
 		}
 	}
 
@@ -52121,57 +52148,103 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table table-striped" }, [
-    _vm._m(0),
+  return _c("div", { staticClass: "container", attrs: { id: "people" } }, [
+    _c("div", { staticClass: "filter" }, [
+      _c("label", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedCategory,
+              expression: "selectedCategory"
+            }
+          ],
+          attrs: { type: "radio", value: "All" },
+          domProps: { checked: _vm._q(_vm.selectedCategory, "All") },
+          on: {
+            change: function($event) {
+              _vm.selectedCategory = "All"
+            }
+          }
+        }),
+        _vm._v(" All")
+      ]),
+      _vm._v(" "),
+      _c("label", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedCategory,
+              expression: "selectedCategory"
+            }
+          ],
+          attrs: { type: "radio", value: "Blocked" },
+          domProps: { checked: _vm._q(_vm.selectedCategory, "Blocked") },
+          on: {
+            change: function($event) {
+              _vm.selectedCategory = "Blocked"
+            }
+          }
+        }),
+        _vm._v(" Blocked")
+      ])
+    ]),
     _vm._v(" "),
-    _c(
-      "tbody",
-      _vm._l(_vm.users, function(user) {
-        return _c("tr", { key: user.id }, [
-          _c("td", [_vm._v(_vm._s(user.name))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(user.username))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(user.email))]),
-          _vm._v(" "),
-          _c("td", [
-            _c("img", {
-              attrs: {
-                width: "100px",
-                src: _vm.getProfileImage(user.photo_url)
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "td",
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-default",
-                  attrs: { to: "/user/" + user.id }
-                },
-                [_vm._v("Edit U ")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.deleteUser(user)
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.filteredUsers, function(user) {
+          return _c("tr", { key: user.id }, [
+            _c("td", [_vm._v(_vm._s(user.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(user.username))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(user.email))]),
+            _vm._v(" "),
+            _c("td", [
+              _c("img", {
+                attrs: {
+                  width: "100px",
+                  src: _vm.getProfileImage(user.photo_url)
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { to: "/user/" + user.id }
+                  },
+                  [_vm._v("Edit U ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.deleteUser(user)
+                      }
                     }
-                  }
-                },
-                [_vm._v("Delete")]
-              )
-            ],
-            1
-          )
-        ])
-      })
-    )
+                  },
+                  [_vm._v("Delete")]
+                )
+              ],
+              1
+            )
+          ])
+        })
+      )
+    ])
   ])
 }
 var staticRenderFns = [
