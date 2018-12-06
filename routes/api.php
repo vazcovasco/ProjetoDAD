@@ -17,13 +17,15 @@ use Illuminate\Http\Request;
 Route::get('items', 'ItemControllerAPI@getItems');
 Route::get('users', 'UserControllerAPI@getUsers');
 Route::post('users', 'UserControllerAPI@add');
-Route::put('users/{id}', 'UserControllerAPI@edit');
-Route::delete('users/{id}', 'UserControllerAPI@delete');
+Route::put('users', 'UserControllerAPI@edit');
+Route::delete('users', 'UserControllerAPI@destroy');
+Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
+
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 Route::get('users/{id}', 'UserControllerAPI@show');
 
 
-Route::delete('users/{id}', 'UserControllerAPI@destroy');
+
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:

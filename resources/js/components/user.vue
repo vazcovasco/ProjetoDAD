@@ -8,14 +8,17 @@
 		 
 		 
 		
-		<user-list :users="users"  @delete-click="deleteUser"></user-list>
+		<user-list :users="users" @delete-click="deleteUser" ref="usersListRef" @edit-click="editUser"></user-list>
+
+		<user-edit :user="currentUser" @user-saved="saveUser"  @user-canceled="cancelEdit" v-if="currentUser"></user-edit>
 
 
 	</div>				
 </template>
 
 <script type="text/javascript">
-	
+	import UserEdit from './userEdit.vue';
+	import UserList from './userList.vue';
 	
 	export default {
 		data: function(){
@@ -26,7 +29,7 @@
 				showFailure: false,
 				successMessage: '',
 				failMessage: '',
-				currentUser: {},
+				currentUser: null,
 				currentUserIndex: -1,
 				users: [],
 		    };
@@ -37,25 +40,24 @@
 				this.showSuccess = false;
 				
 	        },
-	        deleteUser: function(user){
-	            axios.delete('api/users/'+user.id)
+	        deleteUser: function(user){		
+	             axios.delete('api/users/', {params:{id:user.id}})
 	                .then(response => {
 	                    this.showSuccess = true;
-	                    this.successMessage = 'User Deleted';
-	                    this.getUsers();
-	                });
+						this.successMessage = 'User Deleted';
+						this.getUsers();	                    
+	                }); 
 	        },
-	        savedUser: function(){
-	            this.currentUser = null;
-	            this.$refs.usersListRef.editingUser = null;
-	            this.showSuccess = true;
-	            this.successMessage = 'User Saved';
-	        },
-	        cancelEdit: function(){
-	            this.currentUser = null;
-	            this.$refs.usersListRef.editingUser = null;
-	            this.showSuccess = false;
-	        },
+	        saveUser: function(){
+                this.currentUser = null;
+                this.$refs.usersListRef.editingUser = null;
+                this.showSuccess = true;
+                this.successMessage = 'User Saved';
+            },
+            cancelEdit: function(){
+                this.currentUser = null;
+                this.$refs.usersListRef.editingUser = null;
+            },
 	        getUsers: function(){
 	            axios.get('api/users')
 	                .then(response=>{this.users = response.data; });
@@ -63,9 +65,30 @@
 			childMessage: function(message){
 				this.showSuccess = true;
 	            this.successMessage = message;
-			}
+			},
+			toggleBlockUser: function(user){
+                if (user.blocked === 1) {
+					this.message = 'User Unbloked';
+
+                } else {
+                    this.message = 'User Bloked';
+                }
+                axios.post('api/users/block/'+user.id)
+                    .then(response=>{
+                        // Copy object properties from response.data.data to this.user
+                        // without creating a new reference
+						Object.assign(user, response.data.data);
+						this.$emit('update-view',user);
+                        this.$emit('message', this.message)
+					});
+				
+            }
 			
-	    }, 
+		},
+		components: {
+			'user-list':UserList,
+			'user-edit':UserEdit
+		}, 
 	    mounted() {
 			this.getUsers();
 		}

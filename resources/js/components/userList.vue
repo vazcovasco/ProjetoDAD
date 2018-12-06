@@ -3,7 +3,7 @@
 		<div class="filter">
 		<label><input type="radio" v-model="selectedCategory" value="All" /> All</label>
 		<label><input type="radio" v-model="selectedCategory" value="Blocked" /> Blocked</label>
-	</div>
+		</div>
 
 	<table class="table table-striped">
 	    <thead>
@@ -16,16 +16,18 @@
 	        </tr>
 	    </thead>
 	    <tbody>
-	        <tr v-for="user in filteredUsers"  :key="user.id" >
+	        <tr v-for="user in filteredUsers"  :key="user.id" :class="{activerow: editingUser === user}">
 	            <td>{{ user.name }}</td>
 	            <td>{{ user.username }}</td>
 	            <td>{{ user.email }}</td>
 	            <td ><img width="100px" :src="getProfileImage(user.photo_url)"></td>
-	            <td>
-					<router-link class="btn btn-default" :to="'/user/'+ user.id">Edit U </router-link>
+				<td>
+					 <button @click="editUser(user)">edit</button>
                     <button @click="deleteUser(user)">Delete</button>
+	        		 <a :class="(user.blocked === 1) ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'" v-on:click.prevent="toggleBlockUser(user)" 
+                    v-text="(user.blocked === 1) ?  'UnBlock' : 'Block'" :id="user.id"></a>
 	            </td>
-	        </tr>
+			</tr>
 	    </tbody>
 	</table>
 	</div>
@@ -37,7 +39,10 @@
 		props: ["users"],
 		data: function(){
 			return{
-				selectedCategory:''
+				selectedCategory:'',
+				editingUser:null,
+				
+				
 			};			
 		},
         methods: {
@@ -45,13 +50,28 @@
                 this.editingUser = user;
                 this.$emit('edit-click', user);
             },		
-            deleteUser: function(user) {
-     			 this.$emit("delete-user", user);
-   				 		
-			},
-			getProfileImage(photo_url) {
+            getProfileImage(photo_url) {
       			return `storage/profiles/${photo_url}`;
-			}
+			},
+			deleteUser: function(user){
+				 this.$emit('delete-click', user);
+			},
+			toggleBlockUser: function(user){
+                if (user.blocked === 1) {
+					this.message = 'User Unbloked';
+
+                } else {
+                    this.message = 'User Bloked';
+                }
+                axios.post('api/users/block/'+user.id)
+                    .then(response=>{
+                        // Copy object properties from response.data.data to this.user
+                        // without creating a new reference
+						Object.assign(user, response.data.data);
+						this.$emit('message', this.message)
+					});
+				
+            }
 		},
 		computed:{
 			filteredUsers: function() {
@@ -61,7 +81,7 @@
 					console.log(this.users);
 					return this.users;
 				}
-				if(category == "Blocked") {
+				if(category ===	 "Blocked") {
 					return this.users.filter(function(user) {
 						return user.blocked ==1;
 					});
@@ -72,6 +92,7 @@
 				}
 			}	
 		}
+
 		
 		
 	}

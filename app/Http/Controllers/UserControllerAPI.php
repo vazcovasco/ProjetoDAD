@@ -20,11 +20,10 @@ class UserControllerAPI extends Controller
         return User::all();
         
     }
-
     public function add(Request $request)
     {
         $user = new User();
-/*         $user->name = $request->name; 
+/*        $user->name = $request->name; 
  */        $user->id = null;
         $user->email_verified_at = null;
         $user->blocked = 0;
@@ -39,28 +38,36 @@ class UserControllerAPI extends Controller
         $user->password = Hash::make($user->password);
        $user->save(); 
        return response()->json($user,200);
-        
-
-    }
-
-    public function edit(Request $request,$id)
+    } 
+    public function edit(Request $request)
     {
+        $id = $request->query('id');
         $user = User::findOrFail($id);
         $user->update($request->all());
-        return $user;
-
-
+        return response()->json($user,200);
     }
-
-
-    public function delete($id)
+    public function destroy(Request $request)
     {
-      return User::destroy($id);
+        $id = $request->query('id');
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(null, 204);
     }
-
     public function show($id)
     {
         return User::find($id);
+    }
+
+    public function blockUser($id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->blocked === 1) {
+            $user->blocked = 0;
+        } else {
+            $user->blocked = 1;
+        }
+        $user->save();
+        return response()->json($user,200);
     }
 
         /*Caso não se pretenda fazer uso de Eloquent API Resources (https://laravel.com/docs/5.5/eloquent-resources), é possível implementar com esta abordagem:
@@ -101,13 +108,6 @@ class UserControllerAPI extends Controller
         $user = User::findOrFail($id);
         $user->update($request->all());
         return new UserResource($user);
-    }
-
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return response()->json(null, 204);
     }
     public function emailAvailable(Request $request)
     {
