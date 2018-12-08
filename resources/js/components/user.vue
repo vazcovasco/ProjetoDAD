@@ -60,7 +60,11 @@
             },
 	        getUsers: function(){
 	            axios.get('api/users')
-	                .then(response=>{this.users = response.data; });
+	                .then(response=>{
+					
+						this.users = response.data;
+						
+					});
 			},
 			childMessage: function(message){
 				this.showSuccess = true;
@@ -82,7 +86,8 @@
                         this.$emit('message', this.message)
 					});
 				
-            }
+			},
+			
 			
 		},
 		components: {

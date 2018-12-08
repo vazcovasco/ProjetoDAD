@@ -22,10 +22,10 @@
 	            <td>{{ user.email }}</td>
 	            <td ><img width="100px" :src="getProfileImage(user.photo_url)"></td>
 				<td>
-					 <button @click="editUser(user)">edit</button>
+					<button @click="editUser(user)">edit</button>
                     <button @click="deleteUser(user)">Delete</button>
-	        		 <a :class="(user.blocked === 1) ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'" v-on:click.prevent="toggleBlockUser(user)" 
-                    v-text="(user.blocked === 1) ?  'UnBlock' : 'Block'" :id="user.id"></a>
+	        		<a :class="user.blocked ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="toggleBlockUser(user)" 
+                    v-text="user.blocked ?  'UnBlock' : 'Block'" :id="user.id"></a>
 	            </td>
 			</tr>
 	    </tbody>
@@ -66,10 +66,14 @@
                 axios.post('api/users/block/'+user.id)
                     .then(response=>{
                         // Copy object properties from response.data.data to this.user
-                        // without creating a new reference
-						Object.assign(user, response.data.data);
+						// without creating a new reference
+						user.blocked = !user.blocked;
+						//Object.assign(user, response.data.data);
 						this.$emit('message', this.message)
-					});
+					})
+					.catch(erros => {
+						console.log(erros);
+					})
 				
             }
 		},

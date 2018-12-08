@@ -25,6 +25,8 @@ Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 Route::get('users/{id}', 'UserControllerAPI@show');
 
 
+Route::get('meals', 'MealControllerAPI@getMeals');
+
 
 
 /*

@@ -1,13 +1,14 @@
 @extends('master')
 
-@section('title', 'Vue.js App')
+@section('title', 'Restaurant Manager')
 
 @section('content')
 <div id="app">
     <div>
         <ul class="nav">
-            <li><router-link to="/items">Menu</router-link></li>            
+            <li><router-link to="/items">Items</router-link></li>            
             <li><router-link to="/users">Users</router-link></li>
+            <li><router-link to="/menu">Menu</router-link></li>
             <li><a>Restaurant Management</a></li>
         </ul>
         <router-view></router-view>
