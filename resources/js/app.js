@@ -18,5 +18,6 @@ window.Vue = require('vue');
 Vue.component('item-list', require('./components/itemList.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    isLoggedIn = false
 });

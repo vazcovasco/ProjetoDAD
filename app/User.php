@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Auth\Authenticatable;
 
 class User extends Model
 {
+    use HasApiTokens, Authenticatable;
     /**
      * The attributes that are mass assignable.
      *
@@ -36,9 +39,7 @@ class User extends Model
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
-
-    
+    ];   
 }
 
 
