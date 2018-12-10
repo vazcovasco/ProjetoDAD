@@ -28,7 +28,9 @@ Route::post('users', 'UserControllerAPI@uploadImage');
 
 
 
-Route::delete('users/{id}', 'UserControllerAPI@destroy');
+Route::get('meals', 'MealControllerAPI@getMeals');
+
+
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:

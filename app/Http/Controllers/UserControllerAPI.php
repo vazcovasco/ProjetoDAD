@@ -19,7 +19,6 @@ class UserControllerAPI extends Controller
     {
         return User::all();
     }
-
     public function add(Request $request)
     {
         $user = new User();
@@ -37,22 +36,22 @@ class UserControllerAPI extends Controller
         $user->password = Hash::make($user->password);
         $user->save();
         return response()->json($user, 200);
-
-
     }
 
     public function edit(Request $request, $id)
     {
+        $id = $request->query('id');
         $user = User::findOrFail($id);
         $user->update($request->all());
-        return $user;
+        return response()->json($user,200);
     }
-
-    public function delete($id)
+    public function destroy(Request $request)
     {
-      return User::destroy($id);
+        $id = $request->query('id');
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(null, 204);
     }
-
     public function show($id)
     {
         return User::find($id);
@@ -61,5 +60,53 @@ class UserControllerAPI extends Controller
     public function myProfile(Request $request)
     {
         return new UserResource($request->user());
+    }
+    public function blockUser($id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->blocked === 1) {
+            $user->blocked = 0;
+        } else {
+            $user->blocked = 1;
+        }
+        $user->save();
+        return response()->json($user,200);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+                'email' => 'required|email|unique:users,email',
+                'age' => 'integer|between:18,75',
+                'password' => 'min:3'
+            ]);
+        $user = new User();
+        $user->fill($request->all());
+        $user->password = Hash::make($user->password);
+        $user->save();
+        return response()->json(new UserResource($user), 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+                'email' => 'required|email|unique:users,email,'.$id,
+                'age' => 'integer|between:18,75'
+            ]);
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return new UserResource($user);
+    }
+    public function emailAvailable(Request $request)
+    {
+        $totalEmail = 1;
+        if ($request->has('email') && $request->has('id')) {
+            $totalEmail = DB::table('users')->where('email', '=', $request->email)->where('id', '<>', $request->id)->count();
+        } else if ($request->has('email')) {
+            $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
+        }
+        return response()->json($totalEmail == 0);
     }
 }

@@ -27,15 +27,12 @@ module.exports = {
     return {};
   },
   methods: {
-    getItems: function() {
-      axios.get("api/items").then(response => {
-        this.items = response.data.data;
-      });
-	},
-	getFoodImage(photo_url) {
+		getFoodImage(photo_url) {
       return `storage/items/${photo_url}`;
 		}
-  },
+
+	}
+	 
 };
 </script>
 

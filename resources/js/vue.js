@@ -7,16 +7,25 @@ Vue.use(VueRouter);
 
 import store from '../store/store.js';
 
-const user = Vue.component('user', require('./components/user.vue'));
+
+//-------------------------ITEM----------------------------------------------
 const item = Vue.component('item', require('./components/item.vue'));
 const itemList = Vue.component('item-list', require('./components/itemList.vue'));
+//-------------------------USER----------------------------------------------
+const user = Vue.component('user', require('./components/user.vue'));
 const userList = Vue.component('user-list', require('./components/userList.vue'));
 const userAdd = Vue.component('user-add', require('./components/userAdd.vue'));
 const userEdit = Vue.component('user-edit', require('./components/userEdit.vue'));
 const login = Vue.component('login', require('./components/auth/login.vue'));
 const profile = Vue.component('profile', require('./components/profile.vue'));
+//-------------------------MEAL----------------------------------------------
+const meal = Vue.component('meal', require('./components/meal.vue'));
+const mealList = Vue.component('meal-list', require('./components/mealList.vue'));
+const mealAdd = Vue.component('meal-add', require('./components/mealAdd.vue'));
+const mealEdit = Vue.component('meal-edit', require('./components/mealEdit.vue'));
 
-const routes = [{
+const routes = [
+    {
         path: '/',
         redirect: '/items'
     },
@@ -44,19 +53,24 @@ const routes = [{
         path: '/profile',
         component: profile
     },
+    {
+        path: '/meals',
+        component: meal
+    },
 ];
+
 
 const router = new VueRouter({
     routes: routes
 });
 
 const app = new Vue({
-
     router,
     data: {
 
         items: [],
-        users: []
+        users: [],
+        meals: []
     },
     store,
 }).$mount('#app');
