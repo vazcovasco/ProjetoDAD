@@ -20,15 +20,21 @@ Route::post('login', 'LoginControllerAPI@login')->name('login');
 Route::get('items', 'ItemControllerAPI@getItems');
 Route::get('users', 'UserControllerAPI@getUsers');
 Route::post('users', 'UserControllerAPI@add');
-Route::put('users/{id}', 'UserControllerAPI@edit');
-Route::delete('users/{id}', 'UserControllerAPI@delete');
 Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
-Route::get('users/{id}', 'UserControllerAPI@show');
+Route::put('users', 'UserControllerAPI@edit');
+Route::delete('users', 'UserControllerAPI@destroy');
+Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
+Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 Route::post('users', 'UserControllerAPI@uploadImage');
 
 
+Route::post('items', 'ItemControllerAPI@add');
+Route::put('items', 'ItemControllerAPI@edit');
+Route::delete('items', 'ItemControllerAPI@destroy');
+
 
 Route::get('meals', 'MealControllerAPI@getMeals');
+
 
 
 

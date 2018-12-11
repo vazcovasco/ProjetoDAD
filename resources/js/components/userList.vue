@@ -82,7 +82,7 @@
 				var category = this.selectedCategory;
 
 				if(category === "All") {
-					console.log(this.users);
+					
 					return this.users;
 				}
 				if(category ===	 "Blocked") {
