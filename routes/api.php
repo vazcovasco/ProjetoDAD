@@ -26,6 +26,8 @@ Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
 Route::get('users/{id}', 'UserControllerAPI@show');
 Route::post('users', 'UserControllerAPI@uploadImage');
 
+Route::get('orders', 'OrderControllerAPI@getOrders');
+Route::delete('orders/{id}', 'OrderControllerAPI@delete');
 
 
 Route::get('meals', 'MealControllerAPI@getMeals');

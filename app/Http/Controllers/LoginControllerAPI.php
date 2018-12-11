@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 define('YOUR_SERVER_URL', 'http://projetodad.local');
 // Check "oauth_clients" table for next 2 values: 
 define('CLIENT_ID', '2');
-define('CLIENT_SECRET', 'UxDVPEi0OXtWSRVoGRsL9TB5FSCJTlm4YVI72Q3Y');
+define('CLIENT_SECRET', 'yT4oM2g154iboio2NC9owZ20dReGr7n14A7wC6WS');
 
 class LoginControllerAPI extends Controller
 {
@@ -29,6 +29,7 @@ class LoginControllerAPI extends Controller
         if ($errorCode=='200') {
             return json_decode((string) $response->getBody(), true);
         } else {
+            return $response;
             return response()->json(['msg'=>'User credentials are invalid'], $errorCode);
         }
     }

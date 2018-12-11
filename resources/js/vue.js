@@ -23,6 +23,10 @@ const meal = Vue.component('meal', require('./components/meal.vue'));
 const mealList = Vue.component('meal-list', require('./components/mealList.vue'));
 const mealAdd = Vue.component('meal-add', require('./components/mealAdd.vue'));
 const mealEdit = Vue.component('meal-edit', require('./components/mealEdit.vue'));
+//-------------------------ORDER----------------------------------------------
+const order = Vue.component('order', require('./components/order.vue'));
+const orderList = Vue.component('meal-list', require('./components/orderList.vue'));
+const orderAdd = Vue.component('meal-add', require('./components/orderAdd.vue'));
 
 const routes = [
     {
@@ -57,6 +61,10 @@ const routes = [
         path: '/meals',
         component: meal
     },
+    {
+        path: '/orders',
+        component: order
+    },
 ];
 
 
@@ -70,7 +78,8 @@ const app = new Vue({
 
         items: [],
         users: [],
-        meals: []
+        meals: [],
+        orders: []
     },
     store,
 }).$mount('#app');
