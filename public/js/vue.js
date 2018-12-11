@@ -14296,12 +14296,16 @@ module.exports = Cancel;
 /***/ }),
 /* 14 */
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(19);
 
 /***/ }),
 /* 15 */
+<<<<<<< Updated upstream
 =======
 >>>>>>> Stashed changes
 /***/ (function(module, exports, __webpack_require__) {
@@ -14312,6 +14316,11 @@ module.exports = __webpack_require__(19);
 =======
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+>>>>>>> Stashed changes
+=======
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -47631,6 +47640,7 @@ module.exports = Component.exports
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 var disposed = false
 function injectStyle (ssrContext) {
@@ -47660,6 +47670,8 @@ var Component = normalizeComponent(
 )
 Component.options.__file = "resources/js/components/userList.vue"
 =======
+=======
+>>>>>>> Stashed changes
 
 var disposed = false
 function injectStyle (ssrContext) {
@@ -47743,8 +47755,11 @@ if (false) {(function () {
 })()}
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 module.exports = Component.exports
 =======
+=======
+>>>>>>> Stashed changes
 __webpack_require__(15);
 
 window.Vue = __webpack_require__(37);
@@ -47854,8 +47869,11 @@ var userList = Vue.component('user-list', __webpack_require__(41));
 var userAdd = Vue.component('user-add', __webpack_require__(69));
 var userEdit = Vue.component('user-edit', __webpack_require__(40));
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 var login = Vue.component('login', __webpack_require__(104));
 var profile = Vue.component('profile', __webpack_require__(107));
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 //-------------------------MEAL----------------------------------------------
@@ -47864,6 +47882,7 @@ var mealList = Vue.component('meal-list', __webpack_require__(80));
 var mealAdd = Vue.component('meal-add', __webpack_require__(101));
 var mealEdit = Vue.component('meal-edit', __webpack_require__(102));
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 var routes = [{
     path: '/',
@@ -47891,6 +47910,8 @@ var routes = [{
     component: meal
 }];
 =======
+=======
+>>>>>>> Stashed changes
 var routes = [{ path: '/', redirect: '/meals' }, { path: '/items', component: item }, { path: '/users', component: user }, { path: '/meals', component: meal }, { path: '/users/add', component: userAdd }, { path: '/users/:id', component: userEdit }];
 >>>>>>> Stashed changes
 
@@ -51161,7 +51182,11 @@ exports = module.exports = __webpack_require__(2)(false);
 
 // module
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+=======
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+>>>>>>> Stashed changes
 =======
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 >>>>>>> Stashed changes
@@ -51174,6 +51199,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports) {
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 //
 //
 //
@@ -51182,6 +51208,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 //
 //
 //
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 //
@@ -51219,6 +51247,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 module.exports = {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 				props: ['user'],
 				data: function data() {
 								return {
@@ -51237,6 +51266,18 @@ module.exports = {
 								},
 								cancelEdit: function cancelEdit() {
 												var _this2 = this;
+=======
+    props: ['user'],
+    methods: {
+        saveUser: function saveUser() {
+            var _this = this;
+
+            axios.put('api/users/?id=' + this.user.id, this.user).then(function (response) {
+                // Copy object properties from response.data.data to this.user
+                // without creating a new reference
+                console.log(response.data);
+                Object.assign(_this.user, response.data.data);
+                _this.$emit('user-saved', _this.user);
 =======
     props: ['user'],
     methods: {
@@ -51449,6 +51490,753 @@ exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\n  \t\tbackground: #1
 // exports
 
 
+/***/ }),
+/* 66 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// Component code (not registered)
+module.exports = {
+	props: ["users"],
+	data: function data() {
+		return {
+			selectedCategory: '',
+			editingUser: null
+
+		};
+	},
+	methods: {
+		editUser: function editUser(user) {
+			this.editingUser = user;
+			this.$emit('edit-click', user);
+		},
+		getProfileImage: function getProfileImage(photo_url) {
+			return 'storage/profiles/' + photo_url;
+		},
+
+		deleteUser: function deleteUser(user) {
+			this.$emit('delete-click', user);
+		},
+		toggleBlockUser: function toggleBlockUser(user) {
+			var _this = this;
+
+			if (user.blocked === 1) {
+				this.message = 'User Unbloked';
+			} else {
+				this.message = 'User Bloked';
+			}
+			axios.post('api/users/block/' + user.id).then(function (response) {
+				// Copy object properties from response.data.data to this.user
+				// without creating a new reference
+				user.blocked = !user.blocked;
+				//Object.assign(user, response.data.data);
+				_this.$emit('message', _this.message);
+			}).catch(function (erros) {
+				console.log(erros);
+			});
+		}
+	},
+	computed: {
+		filteredUsers: function filteredUsers() {
+			var category = this.selectedCategory;
+
+			if (category === "All") {
+				console.log(this.users);
+				return this.users;
+			}
+			if (category === "Blocked") {
+				return this.users.filter(function (user) {
+					return user.blocked == 1;
+				});
+			}
+			if (!category) {
+				return this.users;
+			}
+		}
+	}
+
+};
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container", attrs: { id: "people" } }, [
+    _c("div", { staticClass: "filter" }, [
+      _c("label", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedCategory,
+              expression: "selectedCategory"
+            }
+          ],
+          attrs: { type: "radio", value: "All" },
+          domProps: { checked: _vm._q(_vm.selectedCategory, "All") },
+          on: {
+            change: function($event) {
+              _vm.selectedCategory = "All"
+            }
+          }
+        }),
+        _vm._v(" All")
+      ]),
+      _vm._v(" "),
+      _c("label", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedCategory,
+              expression: "selectedCategory"
+            }
+          ],
+          attrs: { type: "radio", value: "Blocked" },
+          domProps: { checked: _vm._q(_vm.selectedCategory, "Blocked") },
+          on: {
+            change: function($event) {
+              _vm.selectedCategory = "Blocked"
+            }
+          }
+        }),
+        _vm._v(" Blocked")
+      ])
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.filteredUsers, function(user) {
+          return _c(
+            "tr",
+            { key: user.id, class: { activerow: _vm.editingUser === user } },
+            [
+              _c("td", [_vm._v(_vm._s(user.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.username))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.email))]),
+              _vm._v(" "),
+              _c("td", [
+                _c("img", {
+                  attrs: {
+                    width: "100px",
+                    src: _vm.getProfileImage(user.photo_url)
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.editUser(user)
+                      }
+                    }
+                  },
+                  [_vm._v("edit")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.deleteUser(user)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
+                ),
+                _vm._v(" "),
+                _c("a", {
+                  class: user.blocked
+                    ? "btn btn-xs btn-success"
+                    : "btn btn-xs btn-warning",
+                  attrs: { id: user.id },
+                  domProps: {
+                    textContent: _vm._s(user.blocked ? "UnBlock" : "Block")
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.toggleBlockUser(user)
+                    }
+                  }
+                })
+              ])
+            ]
+          )
+        })
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Age")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Department")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-32d347d4", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "jumbotron" }, [
+        _c("h1", [_vm._v(_vm._s(_vm.title))])
+      ]),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: "/users/add" } }, [
+        _c("button", [_vm._v("Add")])
+      ]),
+      _vm._v(" "),
+      _c("user-list", {
+        ref: "usersListRef",
+        attrs: { users: _vm.users },
+        on: { "delete-click": _vm.deleteUser, "edit-click": _vm.editUser }
+      }),
+      _vm._v(" "),
+      _vm.currentUser
+        ? _c("user-edit", {
+            attrs: { user: _vm.currentUser },
+            on: { "user-saved": _vm.saveUser, "user-canceled": _vm.cancelEdit }
+          })
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e039bdd4", module.exports)
+  }
+}
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(70)
+}
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(72)
+/* template */
+var __vue_template__ = __webpack_require__(74)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-1d9fa35b"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/userAdd.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1d9fa35b", Component.options)
+  } else {
+    hotAPI.reload("data-v-1d9fa35b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(71);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("776ee6ed", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1d9fa35b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./userAdd.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1d9fa35b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./userAdd.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ntr.activerow[data-v-1d9fa35b] {\n  \t\tbackground: #123456  !important;\n  \t\tcolor: #fff          !important;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vform__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vform___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vform__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+// Component code (not registered)
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ["users"],
+    data: function data() {
+        return {
+
+            form: new __WEBPACK_IMPORTED_MODULE_0_vform___default.a({
+                name: '',
+                username: '',
+                email: '',
+                type: ''
+            })
+        };
+    },
+    methods: {
+        CreateUser: function CreateUser() {
+            this.form.post('api/users/')
+            // .then(response => console.log("Success"))
+            .then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                return console.log('Whoops');
+>>>>>>> Stashed changes
+            });
+        },
+        cancelEdit: function cancelEdit() {
+            var _this2 = this;
+
+            axios.get('api/users/' + this.user.id).then(function (response) {
+                // Copy object properties from response.data.data to this.user
+                // without creating a new reference
+                Object.assign(_this2.user, response.data.data);
+                _this2.$emit('user-canceled', _this2.user);
+            });
+        }
+    }
+};
+
+/***/ }),
+<<<<<<< Updated upstream
+/* 63 */
+=======
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "./";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 0:
+>>>>>>> Stashed changes
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "jumbotron" }, [
+    _c("h2", [_vm._v("Edit User")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "inputName" } }, [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.user.name,
+            expression: "user.name"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          name: "name",
+          id: "inputName",
+          placeholder: "Fullname"
+        },
+        domProps: { value: _vm.user.name },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.user, "name", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "inputUsername" } }, [_vm._v("Username")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.user.username,
+            expression: "user.username"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          name: "name",
+          id: "inputUserName",
+          placeholder: "Username"
+        },
+        domProps: { value: _vm.user.username },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.user, "username", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "inputEmail" } }, [_vm._v("Email")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.user.email,
+            expression: "user.email"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: {
+          type: "email",
+          name: "email",
+          id: "inputEmail",
+          placeholder: "Email address"
+        },
+        domProps: { value: _vm.user.email },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.user, "email", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-default",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.saveUser()
+            }
+          }
+        },
+        [_vm._v("Save")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-default",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.cancelEdit()
+            }
+          }
+        },
+        [_vm._v("Cancel")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-421b6f40", module.exports)
+  }
+}
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+<<<<<<< Updated upstream
+// load the styles
+var content = __webpack_require__(65);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("6acac667", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-32d347d4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./userList.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-32d347d4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./userList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+=======
+module.exports = __webpack_require__(14);
+>>>>>>> Stashed changes
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\n  \t\tbackground: #123456  !important;\n  \t\tcolor: #fff          !important;\n}\n\n", ""]);
+
+// exports
+
+
+<<<<<<< Updated upstream
 /***/ }),
 /* 66 */
 /***/ (function(module, exports) {
@@ -52734,6 +53522,8 @@ function deepCopy(obj) {
     return obj;
   }
 
+=======
+>>>>>>> Stashed changes
   var copy = Array.isArray(obj) ? [] : {};
   Object.keys(obj).forEach(function (key) {
     copy[key] = deepCopy(obj[key]);
@@ -52746,6 +53536,7 @@ function deepCopy(obj) {
  * @param  {Any} value
  * @return {Array}
  */
+<<<<<<< Updated upstream
 
 function arrayWrap(value) {
   return Array.isArray(value) ? value : [value];
@@ -52965,13 +53756,20 @@ function () {
 function Form__typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Form__typeof = function _typeof(obj) { return typeof obj; }; } else { Form__typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Form__typeof(obj); }
 
 function Form__defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+=======
+>>>>>>> Stashed changes
 
-function Form__extends() { Form__extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return Form__extends.apply(this, arguments); }
+function arrayWrap(value) {
+  return Array.isArray(value) ? value : [value];
+}
+// CONCATENATED MODULE: ./src/Errors.js
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function Form__classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function Form__defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function Errors__typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Errors__typeof = function _typeof(obj) { return typeof obj; }; } else { Errors__typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Errors__typeof(obj); }
 
+<<<<<<< Updated upstream
 function Form__createClass(Constructor, protoProps, staticProps) { if (protoProps) Form__defineProperties(Constructor.prototype, protoProps); if (staticProps) Form__defineProperties(Constructor, staticProps); return Constructor; }
 =======
 >>>>>>> Stashed changes
@@ -52982,281 +53780,159 @@ function Form__createClass(Constructor, protoProps, staticProps) { if (protoProp
       var _this3 = this;
 
 <<<<<<< Updated upstream
+=======
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+>>>>>>> Stashed changes
 
 
 
-var Form_Form =
+var Errors_Errors =
 /*#__PURE__*/
 function () {
   /**
-   * Create a new form instance.
-   *
-   * @param {Object} data
+   * Create a new error bag instance.
    */
-  function Form() {
-    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  function Errors() {
+    _classCallCheck(this, Errors);
 
-    Form__classCallCheck(this, Form);
-
-    this.busy = false;
-    this.successful = false;
-    this.errors = new Errors_Errors();
-    this.originalData = deepCopy(data);
-    Object.assign(this, data);
+    this.errors = {};
   }
   /**
-   * Fill form data.
+   * Set the errors object or field error messages.
    *
-   * @param {Object} data
+   * @param {Object|String} field
+   * @param {Array|String|undefined} messages
    */
 
 
-  Form__createClass(Form, [{
-    key: "fill",
-    value: function fill(data) {
-      var _this = this;
-
-      this.keys().forEach(function (key) {
-        _this[key] = data[key];
-      });
+  _createClass(Errors, [{
+    key: "set",
+    value: function set(field, messages) {
+      if (Errors__typeof(field) === 'object') {
+        this.errors = field;
+      } else {
+        this.set(_extends({}, this.errors, _defineProperty({}, field, arrayWrap(messages))));
+      }
     }
     /**
-     * Get the form data.
+     * Get all the errors.
      *
      * @return {Object}
      */
 
   }, {
-    key: "data",
-    value: function data() {
-      var _this2 = this;
-
-      return this.keys().reduce(function (data, key) {
-        return Form__extends({}, data, Form__defineProperty({}, key, _this2[key]));
-      }, {});
+    key: "all",
+    value: function all() {
+      return this.errors;
     }
     /**
-     * Get the form data keys.
+     * Determine if there is an error for the given field.
+     *
+     * @param  {String} field
+     * @return {Boolean}
+     */
+
+  }, {
+    key: "has",
+    value: function has(field) {
+      return this.errors.hasOwnProperty(field);
+    }
+    /**
+     * Determine if there are any errors for the given fields.
+     *
+     * @param  {...String} fields
+     * @return {Boolean}
+     */
+
+  }, {
+    key: "hasAny",
+    value: function hasAny() {
+      var _this = this;
+
+      for (var _len = arguments.length, fields = new Array(_len), _key = 0; _key < _len; _key++) {
+        fields[_key] = arguments[_key];
+      }
+
+      return fields.some(function (field) {
+        return _this.has(field);
+      });
+    }
+    /**
+     * Determine if there are any errors.
+     *
+     * @return {Boolean}
+     */
+
+  }, {
+    key: "any",
+    value: function any() {
+      return Object.keys(this.errors).length > 0;
+    }
+    /**
+     * Get the first error message for the given field.
+     *
+     * @param  String} field
+     * @return {String|undefined}
+     */
+
+  }, {
+    key: "get",
+    value: function get(field) {
+      if (this.has(field)) {
+        return this.getAll(field)[0];
+      }
+    }
+    /**
+     * Get all the error messages for the given field.
+     *
+     * @param  {String} field
+     * @return {Array}
+     */
+
+  }, {
+    key: "getAll",
+    value: function getAll(field) {
+      return arrayWrap(this.errors[field] || []);
+    }
+    /**
+     * Get the error message for the given fields.
+     *
+     * @param  {...String} fields
+     * @return {Array}
+     */
+
+  }, {
+    key: "only",
+    value: function only() {
+      var _this2 = this;
+
+      var messages = [];
+
+      for (var _len2 = arguments.length, fields = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        fields[_key2] = arguments[_key2];
+      }
+
+      fields.forEach(function (field) {
+        var message = _this2.get(field);
+
+        if (message) {
+          messages.push(message);
+        }
+      });
+      return messages;
+    }
+    /**
+     * Get all the errors in a flat array.
      *
      * @return {Array}
      */
 
   }, {
-    key: "keys",
-    value: function keys() {
-      return Object.keys(this).filter(function (key) {
-        return !Form.ignore.includes(key);
-      });
-    }
-    /**
-     * Start processing the form.
-     */
-
-  }, {
-    key: "startProcessing",
-    value: function startProcessing() {
-      this.errors.clear();
-      this.busy = true;
-      this.successful = false;
-    }
-    /**
-     * Finish processing the form.
-     */
-
-  }, {
-    key: "finishProcessing",
-    value: function finishProcessing() {
-      this.busy = false;
-      this.successful = true;
-    }
-    /**
-     * Clear the form errors.
-     */
-
-  }, {
-    key: "clear",
-    value: function clear() {
-      this.errors.clear();
-      this.successful = false;
-    }
-    /**
-     * Reset the form fields.
-     */
-
-  }, {
-    key: "reset",
-    value: function reset() {
-      var _this3 = this;
-
-      Object.keys(this).filter(function (key) {
-        return !Form.ignore.includes(key);
-      }).forEach(function (key) {
-        _this3[key] = deepCopy(_this3.originalData[key]);
-      });
-    }
-    /**
-     * Submit the from via a GET request.
-     *
-     * @param  {String} url
-     * @return {Promise}
-     */
-
-  }, {
-    key: "get",
-    value: function get(url) {
-      return this.submit('get', url);
-    }
-    /**
-     * Submit the from via a POST request.
-     *
-     * @param  {String} url
-     * @return {Promise}
-     */
-
-  }, {
-    key: "post",
-    value: function post(url) {
-      return this.submit('post', url);
-    }
-    /**
-     * Submit the from via a PATCH request.
-     *
-     * @param  {String} url
-     * @return {Promise}
-     */
-
-  }, {
-    key: "patch",
-    value: function patch(url) {
-      return this.submit('patch', url);
-    }
-    /**
-     * Submit the from via a PUT request.
-     *
-     * @param  {String} url
-     * @return {Promise}
-     */
-
-  }, {
-    key: "put",
-    value: function put(url) {
-      return this.submit('put', url);
-    }
-    /**
-     * Submit the from via a DELETE request.
-     *
-     * @param  {String} url
-     * @return {Promise}
-     */
-
-  }, {
-    key: "delete",
-    value: function _delete(url) {
-      return this.submit('delete', url);
-    }
-    /**
-     * Submit the form data via an HTTP request.
-     *
-     * @param  {String} method (get, post, patch, put)
-     * @param  {String} url
-     * @param  {Object} config (axios config)
-     * @return {Promise}
-     */
-
-  }, {
-    key: "submit",
-    value: function submit(method, url) {
-      var _this4 = this;
-
-      var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      this.startProcessing();
-      var data = method === 'get' ? {
-        params: this.data()
-      } : this.data();
-      return new Promise(function (resolve, reject) {
-        external__axios__default.a.request(Form__extends({
-          url: _this4.route(url),
-          method: method,
-          data: data
-        }, config)).then(function (response) {
-          _this4.finishProcessing();
-
-          resolve(response);
-        }).catch(function (error) {
-          _this4.busy = false;
-
-          if (error.response) {
-            _this4.errors.set(_this4.extractErrors(error.response));
-          }
-
-          reject(error);
-        });
-      });
-    }
-    /**
-     * Extract the errors from the response object.
-     *
-     * @param  {Object} response
-     * @return {Object}
-     */
-
-  }, {
-    key: "extractErrors",
-    value: function extractErrors(response) {
-      if (!response.data || Form__typeof(response.data) !== 'object') {
-        return {
-          error: Form.errorMessage
-        };
-      }
-
-      if (response.data.errors) {
-        return Form__extends({}, response.data.errors);
-      }
-
-      if (response.data.message) {
-        return {
-          error: response.data.message
-        };
-      }
-
-      return Form__extends({}, response.data);
-    }
-    /**
-     * Get a named route.
-     *
-     * @param  {String} name
-     * @return {Object} parameters
-     * @return {String}
-     */
-
-  }, {
-    key: "route",
-    value: function route(name) {
-      var parameters = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var url = name;
-
-      if (Form.routes.hasOwnProperty(name)) {
-        url = decodeURI(Form.routes[name]);
-      }
-
-      if (Form__typeof(parameters) !== 'object') {
-        parameters = {
-          id: parameters
-        };
-      }
-
-      Object.keys(parameters).forEach(function (key) {
-        url = url.replace("{".concat(key, "}"), parameters[key]);
-      });
-      return url;
-    }
-    /**
-     * Clear errors on keydown.
-     *
-     * @param {KeyboardEvent} event
-     */
-
-  }, {
+<<<<<<< Updated upstream
     key: "onKeydown",
     value: function onKeydown(event) {
       if (event.target.name) {
@@ -53426,6 +54102,73 @@ function Form__classCallCheck(instance, Constructor) { if (!(instance instanceof
 function Form__defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function Form__createClass(Constructor, protoProps, staticProps) { if (protoProps) Form__defineProperties(Constructor.prototype, protoProps); if (staticProps) Form__defineProperties(Constructor, staticProps); return Constructor; }
+=======
+    key: "flatten",
+    value: function flatten() {
+      return Object.values(this.errors).reduce(function (a, b) {
+        return a.concat(b);
+      }, []);
+    }
+    /**
+     * Clear one or all error fields.
+     *
+     * @param {String|undefined} field
+     */
+
+  }, {
+    key: "clear",
+    value: function clear(field) {
+      var _this3 = this;
+
+      var errors = {};
+
+      if (field) {
+        Object.keys(this.errors).forEach(function (key) {
+          if (key !== field) {
+            errors[key] = _this3.errors[key];
+          }
+        });
+      }
+
+      this.set(errors);
+    }
+  }]);
+
+  return Errors;
+}();
+
+
+// CONCATENATED MODULE: ./src/Form.js
+function Form__typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Form__typeof = function _typeof(obj) { return typeof obj; }; } else { Form__typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Form__typeof(obj); }
+
+function Form__defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+>>>>>>> Stashed changes
+
+function Form__extends() { Form__extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return Form__extends.apply(this, arguments); }
+
+<<<<<<< Updated upstream
+
+
+
+var Form_Form =
+/*#__PURE__*/
+function () {
+  /**
+   * Create a new form instance.
+   *
+   * @param {Object} data
+   */
+  function Form() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    Form__classCallCheck(this, Form);
+
+=======
+function Form__classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Form__defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Form__createClass(Constructor, protoProps, staticProps) { if (protoProps) Form__defineProperties(Constructor.prototype, protoProps); if (staticProps) Form__defineProperties(Constructor, staticProps); return Constructor; }
 
 
 
@@ -53444,6 +54187,7 @@ function () {
 
     Form__classCallCheck(this, Form);
 
+>>>>>>> Stashed changes
     this.busy = false;
     this.successful = false;
     this.errors = new Errors_Errors();
@@ -53455,8 +54199,64 @@ function () {
    *
    * @param {Object} data
    */
+<<<<<<< Updated upstream
+=======
 
 
+  Form__createClass(Form, [{
+    key: "fill",
+    value: function fill(data) {
+      var _this = this;
+
+      this.keys().forEach(function (key) {
+        _this[key] = data[key];
+      });
+    }
+    /**
+     * Get the form data.
+     *
+     * @return {Object}
+     */
+
+  }, {
+    key: "data",
+    value: function data() {
+      var _this2 = this;
+
+      return this.keys().reduce(function (data, key) {
+        return Form__extends({}, data, Form__defineProperty({}, key, _this2[key]));
+      }, {});
+    }
+    /**
+     * Get the form data keys.
+     *
+     * @return {Array}
+     */
+
+  }, {
+    key: "keys",
+    value: function keys() {
+      return Object.keys(this).filter(function (key) {
+        return !Form.ignore.includes(key);
+      });
+    }
+    /**
+     * Start processing the form.
+     */
+>>>>>>> Stashed changes
+
+  }, {
+    key: "startProcessing",
+    value: function startProcessing() {
+      this.errors.clear();
+      this.busy = true;
+      this.successful = false;
+    }
+    /**
+     * Finish processing the form.
+     */
+
+<<<<<<< Updated upstream
   Form__createClass(Form, [{
     key: "fill",
     value: function fill(data) {
@@ -53702,6 +54502,201 @@ function () {
      * @param {KeyboardEvent} event
      */
 
+=======
+  }, {
+    key: "finishProcessing",
+    value: function finishProcessing() {
+      this.busy = false;
+      this.successful = true;
+    }
+    /**
+     * Clear the form errors.
+     */
+
+  }, {
+    key: "clear",
+    value: function clear() {
+      this.errors.clear();
+      this.successful = false;
+    }
+    /**
+     * Reset the form fields.
+     */
+
+  }, {
+    key: "reset",
+    value: function reset() {
+      var _this3 = this;
+
+      Object.keys(this).filter(function (key) {
+        return !Form.ignore.includes(key);
+      }).forEach(function (key) {
+        _this3[key] = deepCopy(_this3.originalData[key]);
+      });
+    }
+    /**
+     * Submit the from via a GET request.
+     *
+     * @param  {String} url
+     * @return {Promise}
+     */
+
+  }, {
+    key: "get",
+    value: function get(url) {
+      return this.submit('get', url);
+    }
+    /**
+     * Submit the from via a POST request.
+     *
+     * @param  {String} url
+     * @return {Promise}
+     */
+
+  }, {
+    key: "post",
+    value: function post(url) {
+      return this.submit('post', url);
+    }
+    /**
+     * Submit the from via a PATCH request.
+     *
+     * @param  {String} url
+     * @return {Promise}
+     */
+
+  }, {
+    key: "patch",
+    value: function patch(url) {
+      return this.submit('patch', url);
+    }
+    /**
+     * Submit the from via a PUT request.
+     *
+     * @param  {String} url
+     * @return {Promise}
+     */
+
+  }, {
+    key: "put",
+    value: function put(url) {
+      return this.submit('put', url);
+    }
+    /**
+     * Submit the from via a DELETE request.
+     *
+     * @param  {String} url
+     * @return {Promise}
+     */
+
+  }, {
+    key: "delete",
+    value: function _delete(url) {
+      return this.submit('delete', url);
+    }
+    /**
+     * Submit the form data via an HTTP request.
+     *
+     * @param  {String} method (get, post, patch, put)
+     * @param  {String} url
+     * @param  {Object} config (axios config)
+     * @return {Promise}
+     */
+
+  }, {
+    key: "submit",
+    value: function submit(method, url) {
+      var _this4 = this;
+
+      var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      this.startProcessing();
+      var data = method === 'get' ? {
+        params: this.data()
+      } : this.data();
+      return new Promise(function (resolve, reject) {
+        external__axios__default.a.request(Form__extends({
+          url: _this4.route(url),
+          method: method,
+          data: data
+        }, config)).then(function (response) {
+          _this4.finishProcessing();
+
+          resolve(response);
+        }).catch(function (error) {
+          _this4.busy = false;
+
+          if (error.response) {
+            _this4.errors.set(_this4.extractErrors(error.response));
+          }
+
+          reject(error);
+        });
+      });
+    }
+    /**
+     * Extract the errors from the response object.
+     *
+     * @param  {Object} response
+     * @return {Object}
+     */
+
+  }, {
+    key: "extractErrors",
+    value: function extractErrors(response) {
+      if (!response.data || Form__typeof(response.data) !== 'object') {
+        return {
+          error: Form.errorMessage
+        };
+      }
+
+      if (response.data.errors) {
+        return Form__extends({}, response.data.errors);
+      }
+
+      if (response.data.message) {
+        return {
+          error: response.data.message
+        };
+      }
+
+      return Form__extends({}, response.data);
+    }
+    /**
+     * Get a named route.
+     *
+     * @param  {String} name
+     * @return {Object} parameters
+     * @return {String}
+     */
+
+  }, {
+    key: "route",
+    value: function route(name) {
+      var parameters = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var url = name;
+
+      if (Form.routes.hasOwnProperty(name)) {
+        url = decodeURI(Form.routes[name]);
+      }
+
+      if (Form__typeof(parameters) !== 'object') {
+        parameters = {
+          id: parameters
+        };
+      }
+
+      Object.keys(parameters).forEach(function (key) {
+        url = url.replace("{".concat(key, "}"), parameters[key]);
+      });
+      return url;
+    }
+    /**
+     * Clear errors on keydown.
+     *
+     * @param {KeyboardEvent} event
+     */
+
+>>>>>>> Stashed changes
   }, {
     key: "onKeydown",
     value: function onKeydown(event) {
@@ -53739,6 +54734,7 @@ Form_Form.ignore = ['busy', 'successful', 'errors', 'originalData'];
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-4389a6dd","hasScoped":false,"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/components/HasError.vue
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.form.errors.has(_vm.field))?_c('div',{staticClass:"help-block invalid-feedback",domProps:{"innerHTML":_vm._s(_vm.form.errors.get(_vm.field))}}):_vm._e()}
 var staticRenderFns = []
+<<<<<<< Updated upstream
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/component-normalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
@@ -53949,8 +54945,220 @@ var AlertError_Component = normalizeComponent(
 )
 
 /* harmony default export */ var components_AlertError = (AlertError_Component.exports);
+=======
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/component-normalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  scriptExports = scriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof scriptExports.default
+  if (type === 'object' || type === 'function') {
+    scriptExports = scriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./src/components/HasError.vue
+/* script */
+>>>>>>> Stashed changes
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"C://Users//Otinsoft//Code//github//vform//node_modules//.cache//cache-loader"}!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/components/AlertErrors.vue
+//
+//
+
+<<<<<<< Updated upstream
+/* harmony default export */ var AlertError = ({
+  name: 'alert-error',
+  extends: Alert,
+  props: {
+    message: {
+      type: String,
+      default: 'There were some problems with your input.'
+    }
+  }
+});
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-e73aa7c8","hasScoped":false,"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/components/AlertError.vue
+var AlertError_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.form.errors.any())?_c('div',{staticClass:"alert alert-danger alert-dismissible",attrs:{"role":"alert"}},[(_vm.dismissible)?_c('button',{staticClass:"close",attrs:{"type":"button","aria-label":"Close"},on:{"click":_vm.dismiss}},[_c('span',{attrs:{"aria-hidden":"true"}},[_vm._v("×")])]):_vm._e(),_vm._v(" "),_vm._t("default",[(_vm.form.errors.has('error'))?_c('div',{domProps:{"innerHTML":_vm._s(_vm.form.errors.get('error'))}}):_c('div',{domProps:{"innerHTML":_vm._s(_vm.message)}})])],2):_vm._e()}
+var AlertError_staticRenderFns = []
+
+// CONCATENATED MODULE: ./src/components/AlertError.vue
+/* script */
+=======
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+>>>>>>> Stashed changes
+
+var Component = normalizeComponent(
+  HasError,
+  render,
+  staticRenderFns,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+
+<<<<<<< Updated upstream
+/* template */
+
+/* template functional */
+var AlertError___vue_template_functional__ = false
+/* styles */
+var AlertError___vue_styles__ = null
+/* scopeId */
+var AlertError___vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var AlertError___vue_module_identifier__ = null
+
+var AlertError_Component = normalizeComponent(
+  AlertError,
+  AlertError_render,
+  AlertError_staticRenderFns,
+  AlertError___vue_template_functional__,
+  AlertError___vue_styles__,
+  AlertError___vue_scopeId__,
+  AlertError___vue_module_identifier__
+)
+
+/* harmony default export */ var components_AlertError = (AlertError_Component.exports);
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"C://Users//Otinsoft//Code//github//vform//node_modules//.cache//cache-loader"}!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/components/AlertErrors.vue
+=======
+/* harmony default export */ var components_HasError = (Component.exports);
+
+// CONCATENATED MODULE: ./src/components/Alert.js
+/* harmony default export */ var Alert = ({
+  props: {
+    form: {
+      type: Object,
+      required: true
+    },
+    dismissible: {
+      type: Boolean,
+      default: true
+    }
+  },
+  methods: {
+    dismiss: function dismiss() {
+      if (this.dismissible) {
+        this.form.clear();
+      }
+    }
+  }
+});
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"C://Users//Otinsoft//Code//github//vform//node_modules//.cache//cache-loader"}!./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/components/AlertError.vue
+//
+//
+//
+>>>>>>> Stashed changes
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 
@@ -54001,6 +55209,8 @@ var AlertError_Component = normalizeComponent(
 //
 //
 //
+<<<<<<< Updated upstream
+=======
 //
 //
 //
@@ -54010,6 +55220,7 @@ var AlertError_Component = normalizeComponent(
 //
 //
 //
+>>>>>>> Stashed changes
 
 /* harmony default export */ var AlertErrors = ({
   name: 'alert-errors',
@@ -54080,6 +55291,7 @@ var AlertErrors_Component = normalizeComponent(
 var AlertSuccess_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.form.successful)?_c('div',{staticClass:"alert alert-success alert-dismissible",attrs:{"role":"alert"}},[(_vm.dismissible)?_c('button',{staticClass:"close",attrs:{"type":"button","aria-label":"Close"},on:{"click":_vm.dismiss}},[_c('span',{attrs:{"aria-hidden":"true"}},[_vm._v("×")])]):_vm._e(),_vm._v(" "),_vm._t("default",[_c('div',{domProps:{"innerHTML":_vm._s(_vm.message)}})])],2):_vm._e()}
 var AlertSuccess_staticRenderFns = []
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 // CONCATENATED MODULE: ./src/components/AlertSuccess.vue
 /* script */
@@ -54121,6 +55333,49 @@ var AlertSuccess_Component = normalizeComponent(
 
 
 
+=======
+
+// CONCATENATED MODULE: ./src/components/AlertSuccess.vue
+/* script */
+
+
+/* template */
+
+/* template functional */
+var AlertSuccess___vue_template_functional__ = false
+/* styles */
+var AlertSuccess___vue_styles__ = null
+/* scopeId */
+var AlertSuccess___vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var AlertSuccess___vue_module_identifier__ = null
+
+var AlertSuccess_Component = normalizeComponent(
+  AlertSuccess,
+  AlertSuccess_render,
+  AlertSuccess_staticRenderFns,
+  AlertSuccess___vue_template_functional__,
+  AlertSuccess___vue_styles__,
+  AlertSuccess___vue_scopeId__,
+  AlertSuccess___vue_module_identifier__
+)
+
+/* harmony default export */ var components_AlertSuccess = (AlertSuccess_Component.exports);
+
+// CONCATENATED MODULE: ./src/index.js
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "Form", function() { return src_Form; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "Errors", function() { return Errors_Errors; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "HasError", function() { return components_HasError; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AlertError", function() { return components_AlertError; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AlertErrors", function() { return components_AlertErrors; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AlertSuccess", function() { return components_AlertSuccess; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "default", function() { return src_Form; });
+
+
+
+
+
+>>>>>>> Stashed changes
 =======
 
 // CONCATENATED MODULE: ./src/components/AlertSuccess.vue
@@ -54187,6 +55442,7 @@ var render = function() {
         _c("label", { attrs: { for: "fullName" } }, [_vm._v("name")]),
         _vm._v(" "),
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         _c("input", {
           directives: [
             {
@@ -54299,6 +55555,118 @@ var render = function() {
       _c("div", { staticClass: "form-group" }, [
         _c("label", { attrs: { for: "username" } }, [_vm._v("email")]),
         _vm._v(" "),
+=======
+>>>>>>> Stashed changes
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+<<<<<<< Updated upstream
+              value: _vm.form.email,
+              expression: "form.email"
+=======
+              value: _vm.form.name,
+              expression: "form.name"
+>>>>>>> Stashed changes
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", name: "name", id: "name" },
+<<<<<<< Updated upstream
+          domProps: { value: _vm.form.email },
+=======
+          domProps: { value: _vm.form.name },
+>>>>>>> Stashed changes
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+<<<<<<< Updated upstream
+              _vm.$set(_vm.form, "email", $event.target.value)
+=======
+              _vm.$set(_vm.form, "name", $event.target.value)
+>>>>>>> Stashed changes
+            }
+          }
+        })
+      ]),
+>>>>>>> Stashed changes
+      _vm._v(" "),
+<<<<<<< Updated upstream
+      _c(
+        "select",
+        {
+=======
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "username" } }, [_vm._v("username")]),
+        _vm._v(" "),
+        _c("input", {
+>>>>>>> Stashed changes
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+<<<<<<< Updated upstream
+              value: _vm.form.type,
+              expression: "form.type"
+            }
+          ],
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.$set(
+                _vm.form,
+                "type",
+                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+              )
+            }
+          }
+        },
+        [
+          _c("label", { attrs: { for: "username" } }, [_vm._v("Type")]),
+          _vm._v(" "),
+          _c("option", [_vm._v("Waiter")]),
+          _vm._v(" "),
+          _c("option", [_vm._v("Cook")]),
+          _vm._v(" "),
+          _c("option", [_vm._v("Manager")])
+        ]
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+=======
+              value: _vm.form.username,
+              expression: "form.username"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", name: "name", id: "name" },
+          domProps: { value: _vm.form.username },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "username", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "username" } }, [_vm._v("email")]),
+        _vm._v(" "),
         _c("input", {
           directives: [
             {
@@ -54321,7 +55689,6 @@ var render = function() {
           }
         })
       ]),
->>>>>>> Stashed changes
       _vm._v(" "),
       _c(
         "select",
@@ -54366,6 +55733,7 @@ var render = function() {
       _c("br"),
       _vm._v(" "),
       _c(
+>>>>>>> Stashed changes
         "a",
         {
           staticClass: "btn btn-default",
