@@ -6,7 +6,10 @@
 		
  		<router-link to="/users/add"> <button>Add</button>  </router-link>
 		 
-		 
+		 <div class="alert alert-success" v-if="showSuccess">			 
+			<button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
+			<strong>{{ successMessage }}</strong>
+		</div>
 		
 		<user-list :users="users" @delete-click="deleteUser" @restore-click ="restoreUser" ref="usersListRef" @edit-click="editUser"></user-list>
 
@@ -53,7 +56,8 @@
                 this.currentUser = null;
                 this.$refs.usersListRef.editingUser = null;
                 this.showSuccess = true;
-                this.successMessage = 'User Saved';
+				this.successMessage = 'User Saved';
+				this.$socket.emit('user_changed', savedUser)
             },
             cancelEdit: function(){
                 this.currentUser = null;

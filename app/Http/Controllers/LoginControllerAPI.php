@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 define('YOUR_SERVER_URL', 'http://projetodad.local');
 // Check "oauth_clients" table for next 2 values: 
 define('CLIENT_ID', '2');
@@ -14,11 +15,11 @@ class LoginControllerAPI extends Controller
     public function login(Request $request)
     {
         $http = new \GuzzleHttp\Client;
-        $response = $http->post(YOUR_SERVER_URL.'/oauth/token', [
+        $response = $http->post(config('services.passport.login_endpoint'), [
             'form_params' => [
                 'grant_type' => 'password',
-                'client_id' => CLIENT_ID,
-                'client_secret' => CLIENT_SECRET,
+                'client_id' => config('services.passport.client_id'),
+                'client_secret' => config('services.passport.client_secret'),
                 'username' => $request->email,
                 'password' => $request->password,
                 'scope' => ''

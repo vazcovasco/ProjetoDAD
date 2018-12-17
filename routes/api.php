@@ -20,6 +20,10 @@ Route::post('login', 'LoginControllerAPI@login')->name('login');
 Route::get('items', 'ItemControllerAPI@getItems');
 Route::get('users', 'UserControllerAPI@getUsers');
 Route::post('users', 'UserControllerAPI@add');
+Route::put('users/{id}', 'UserControllerAPI@update');
+Route::delete('users/{id}', 'UserControllerAPI@delete');
+Route::get('users/{id}', 'UserControllerAPI@show');
+Route::post('upload', 'UserControllerAPI@upload');
 Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
 Route::put('users', 'UserControllerAPI@edit');
 
@@ -27,7 +31,11 @@ Route::put('users', 'UserControllerAPI@edit');
 
 Route::delete('users', 'UserControllerAPI@destroy');
 Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
+<<<<<<< HEAD
 Route::post('users/delete/{id}', 'UserControllerAPI@restoreDestroy');
+=======
+Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
+>>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
 
 
 Route::post('items', 'ItemControllerAPI@add');

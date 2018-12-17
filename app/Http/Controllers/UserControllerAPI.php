@@ -38,7 +38,7 @@ class UserControllerAPI extends Controller
         return response()->json($user, 200);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request)
     {
         $id = $request->query('id');
         $user = User::findOrFail($id);
@@ -111,11 +111,6 @@ class UserControllerAPI extends Controller
  */
     /* public function update(Request $request, $id)
     {
-        $request->validate([
-                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-                'email' => 'required|email|unique:users,email,'.$id,
-                'age' => 'integer|between:18,75'
-            ]);
         $user = User::findOrFail($id);
         $user->update($request->all());
         return new UserResource($user);
@@ -129,5 +124,18 @@ class UserControllerAPI extends Controller
             $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
         }
         return response()->json($totalEmail == 0);
+
     } */
+
+
+
+    public function upload(Request $request)
+    {   
+        if($request->hasFile('file')) {
+            $filename = $request->file->getClientOriginalName();
+
+            return $request->file->storeAs('public/profiles', $filename);
+        }
+    }
+
 }
