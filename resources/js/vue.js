@@ -25,6 +25,8 @@ const meal = Vue.component('meal', require('./components/meal.vue'));
 const mealList = Vue.component('meal-list', require('./components/mealList.vue'));
 
 
+
+
 const routes = [
     {
         path: '/',
@@ -65,7 +67,8 @@ const routes = [
     {
         path: '/meals',
         component: meal
-    },
+    }
+
 ];
 
 

@@ -3,12 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Auth\Authenticatable;
 
+
+
 class User extends Model
 {
-    use HasApiTokens, Authenticatable;
+    use HasApiTokens, Authenticatable, softDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -26,9 +29,17 @@ class User extends Model
         'last_shift_start',
         'last_shift_end',
         'shift_active',
+
+
+
+    ];
+
+    protected $dates =[
         'deleted_at',
         'created_at',
-        'updated_at'
+        'updated_at',
+
+
 
     ];
 

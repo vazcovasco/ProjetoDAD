@@ -17,9 +17,9 @@ class UserControllerAPI extends Controller
 {
     public function getUsers(Request $request)
     {
-        return User::all();
+        return User::withTrashed()->get();
     }
-    public function add(Request $request)
+   public function add(Request $request)
     {
         $user = new User();
         $user->id = null;
@@ -48,10 +48,26 @@ class UserControllerAPI extends Controller
     public function destroy(Request $request)
     {
         $id = $request->query('id');
-        $user = User::findOrFail($id);
-        $user->delete();
+
+        $user = User::withTrashed()->findOrFail($id);
+
+        if(!$user->trashed()){
+
+            $user->delete();
+
+        }else{
+            $user->forceDelete();
+        }
         return response()->json(null, 204);
+
     }
+    public  function restoreDestroy($id)
+    {
+        User::withTrashed()->find($id)->restore();
+
+        return response()->json(null, 204);;
+    }
+    /* 
     public function show($id)
     {
         return User::find($id);
@@ -61,7 +77,7 @@ class UserControllerAPI extends Controller
     {
         return new UserResource($request->user());
     }
-    public function blockUser($id)
+     */public function blockUser($id)
     {
         $user = User::findOrFail($id);
         if ($user->blocked === 1) {
@@ -73,7 +89,12 @@ class UserControllerAPI extends Controller
         return response()->json($user,200);
     }
 
-    public function store(Request $request)
+    public function myProfile(Request $request)
+    {
+        return new UserResource($request->user());
+    }
+
+    /* public function store(Request $request)
     {
         $request->validate([
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
@@ -87,8 +108,8 @@ class UserControllerAPI extends Controller
         $user->save();
         return response()->json(new UserResource($user), 201);
     }
-
-    public function update(Request $request, $id)
+ */
+    /* public function update(Request $request, $id)
     {
         $request->validate([
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
@@ -98,8 +119,8 @@ class UserControllerAPI extends Controller
         $user = User::findOrFail($id);
         $user->update($request->all());
         return new UserResource($user);
-    }
-    public function emailAvailable(Request $request)
+    } */
+   /*  public function emailAvailable(Request $request)
     {
         $totalEmail = 1;
         if ($request->has('email') && $request->has('id')) {
@@ -108,5 +129,5 @@ class UserControllerAPI extends Controller
             $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
         }
         return response()->json($totalEmail == 0);
-    }
+    } */
 }

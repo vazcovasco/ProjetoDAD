@@ -39,15 +39,24 @@
 </template>
 
 <script type="text/javascript">
+	props: ["user"],
 	module.exports={
-        props: ['user'],
+
         data() {
             return {
-                selectedFile: null
+				  user: {
+                    email:"",
+					username:"",
+					name:""
+					
+                },
+				selectedFile: null
+				
             }
         },
 	    methods: {
 	        saveUser: function(){
+
 	            axios.put('api/users/' + this.user.id, this.user)
 	                .then(response=>{
 	                	Object.assign(this.user, response.data.data);
