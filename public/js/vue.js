@@ -51891,6 +51891,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -51928,6 +51931,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.$refs.usersListRef.editingUser = null;
 			this.showSuccess = true;
 			this.successMessage = 'User Saved';
+			this.$socket.emit('user_changed', savedUser);
 		},
 		cancelEdit: function cancelEdit() {
 			this.currentUser = null;
@@ -52007,7 +52011,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -52050,48 +52054,59 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 module.exports = {
-				props: ['user'],
-				data: function data() {
-								return {
-												selectedFile: null
-								};
-				},
+	props: ['user'],
+	data: function data() {
+		return {
+			file: ''
+		};
+	},
 
-				methods: {
-								saveUser: function saveUser() {
-												var _this = this;
+	methods: {
+		saveUser: function saveUser() {
+			var _this = this;
 
-												axios.put('api/users/' + this.user.id, this.user).then(function (response) {
-																Object.assign(_this.user, response.data.data);
-																_this.$emit('user-saved', _this.user);
-												});
-								},
-								cancelEdit: function cancelEdit() {
-												var _this2 = this;
+			axios.put('api/users/' + this.user.id, this.user).then(function (response) {
+				console.log(response);
+				Object.assign(_this.user, response.data.data);
+				_this.$emit('user-saved', _this.user);
+			});
+		},
+		cancelEdit: function cancelEdit() {
+			var _this2 = this;
 
-												axios.get('api/users/' + this.user.id).then(function (response) {
-																Object.assign(_this2.user, response.data.data);
-																_this2.$emit('user-canceled', _this2.user);
-												});
-								},
-								getProfileImage: function getProfileImage(photo_url) {
-												return 'storage/profiles/' + photo_url;
-								},
-								onFileSelected: function onFileSelected(event) {
-												this.selectedFile = event.target.files[0];
-								},
-								onUpload: function onUpload() {
-												console.log("Here");
-								}
+			axios.get('api/update/' + this.user.id).then(function (response) {
+				Object.assign(_this2.user, response.data.data);
+				_this2.$emit('user-canceled', _this2.user);
+			});
+		},
+		getProfileImage: function getProfileImage(photo_url) {
+			return 'storage/profiles/' + photo_url;
+		},
+		handleFileUpload: function handleFileUpload() {
+			this.file = this.$refs.file.files[0];
+		},
+		submitFile: function submitFile() {
+			var _this3 = this;
+
+			var formData = new FormData();
+			formData.append('file', this.file);
+			console.log(this.user);
+			axios.post('api/upload', formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
 				}
+			}).then(function (response) {
+				console.log(_this3.user);
+				_this3.user.photo_url = response.data.replace('public/profiles/', '');
+
+				console.log('SUCCESS!!');
+			}).catch(function () {
+				console.log('FAILURE!!');
+			});
+		}
+	}
 };
 
 /***/ }),
@@ -52199,22 +52214,42 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "inputPhoto" } }, [_vm._v("Photo")]),
-      _vm._v(" "),
+      _c("label", [_vm._v("Photo")]),
       _c("br"),
       _vm._v(" "),
       _c("img", {
         attrs: { width: "100px", src: _vm.getProfileImage(_vm.user.photo_url) }
       }),
-      _vm._v(" "),
+      _c("br"),
       _c("br"),
       _vm._v(" "),
-      _c("input", {
-        attrs: { type: "file" },
-        on: { change: _vm.onFileSelected }
-      }),
-      _vm._v(" "),
-      _c("button", { on: { click: _vm.onUpload } }, [_vm._v("Upload")])
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "large-12 medium-12 small-12 cell" }, [
+          _c("label", [
+            _c("input", {
+              ref: "file",
+              attrs: { type: "file", id: "file" },
+              on: {
+                change: function($event) {
+                  _vm.handleFileUpload()
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              on: {
+                click: function($event) {
+                  _vm.submitFile()
+                }
+              }
+            },
+            [_vm._v("Submit")]
+          )
+        ])
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
@@ -52573,6 +52608,26 @@ var render = function() {
       _c("router-link", { attrs: { to: "/users/add" } }, [
         _c("button", [_vm._v("Add")])
       ]),
+      _vm._v(" "),
+      _vm.showSuccess
+        ? _c("div", { staticClass: "alert alert-success" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close-btn",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.showSuccess = false
+                  }
+                }
+              },
+              [_vm._v("×")]
+            ),
+            _vm._v(" "),
+            _c("strong", [_vm._v(_vm._s(_vm.successMessage))])
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("user-list", {
         ref: "usersListRef",
@@ -54031,6 +54086,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.$store.commit('setToken', response.data.access_token);
                 return axios.get('api/users/me');
             }).then(function (response) {
+                _this.$router.push('/');
                 _this.$store.commit('setUser', response.data.data);
                 _this.typeofmsg = "alert-success";
                 _this.message = "User authenticated correctly";

@@ -8,7 +8,7 @@
         <ul>
             <li><router-link to="/items">Menu</router-link></li> 
             <li><router-link to="/" v-show="this.$store.state.user">Restaurant Management</router-link></li>
-            <li><router-link to="/profile" v-show="this.$store.state.user">@{{this.$store.state.user != null ? this.$store.state.user.name : " Profile " }}</router-link></li>        
+            <li><router-link to="/profile" v-show="this.$store.state.user">Profile</router-link></li>        
             <li style="float:right" class="active"><router-link to="/login" v-show="!this.$store.state.user">Login</router-link></li>
             <li style="float:right" class="active"><router-link to="/logout" v-show="this.$store.state.user">Logout</router-link></li>
         </ul>
