@@ -11,6 +11,8 @@ import store from '../store/store.js';
 //-------------------------ITEM----------------------------------------------
 const item = Vue.component('item', require('./components/item.vue'));
 const itemList = Vue.component('item-list', require('./components/itemList.vue'));
+const itemAdd = Vue.component('item-add', require('./components/itemAdd.vue'));
+const itemEdit = Vue.component('item-edit', require('./components/itemEdit.vue'));
 //-------------------------USER----------------------------------------------
 const user = Vue.component('user', require('./components/user.vue'));
 const userList = Vue.component('user-list', require('./components/userList.vue'));
@@ -21,8 +23,7 @@ const profile = Vue.component('profile', require('./components/profile.vue'));
 //-------------------------MEAL----------------------------------------------
 const meal = Vue.component('meal', require('./components/meal.vue'));
 const mealList = Vue.component('meal-list', require('./components/mealList.vue'));
-const mealAdd = Vue.component('meal-add', require('./components/mealAdd.vue'));
-const mealEdit = Vue.component('meal-edit', require('./components/mealEdit.vue'));
+
 
 const routes = [
     {
@@ -32,6 +33,14 @@ const routes = [
     {
         path: '/items',
         component: item
+    },
+    {
+        path: '/items/add',
+        component: itemAdd
+    },
+    {
+        path: '/items/:id',
+        component: itemEdit
     },
     {
         path: '/users',

@@ -6,6 +6,7 @@
 	            <th>Description</th>
 	            <th>Photo</th>
 	            <th>Prices</th>	
+				<th>Actions</th>	
 	        </tr>
 	    </thead>
 	    <tbody>
@@ -14,6 +15,9 @@
 							<td>{{ item.description }}</td>
 							<td>{{ item.price }}</td>
 							<td ><img width="100px" :src="getFoodImage(item.photo_url)"></td> 
+							<td><button @click="editItem(item)">edit</button>
+                    			<button @click="deleteItem(item)">Delete</button></td>
+				
 	        </tr>
 	    </tbody>
 	</table>
@@ -29,7 +33,14 @@ module.exports = {
   methods: {
 		getFoodImage(photo_url) {
       return `storage/items/${photo_url}`;
-		}
+		},
+		editItem: function(item){
+                this.editingItem = item;
+                this.$emit('edit-click', item);
+			},
+		deleteItem: function(item){
+				 this.$emit('delete-click', item);
+			},
 
 	}
 	 

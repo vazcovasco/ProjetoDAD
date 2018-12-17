@@ -5,8 +5,11 @@
 			<h1>{{ title }}</h1>
 		</div>
 
+
 		<div> 
+			
 	    <meal-list :meals="meals" ></meal-list>
+	
 
 		</div>
 	</div>
@@ -22,18 +25,19 @@
 		        title: 'List meals',
 		        showSuccess: false,
 		        successMessage: '',
-		        currentUser: null,
-				meals: [],
+		        currentMeal: null,
+				meals:[]
 			}
 		},
 	    methods: {
-	    	getMeals: function(){
+	    	getMeals: function(){			
 	            axios.get('api/meals')
-	                .then(response=>{
-						this.meals = response.data;
-									});
-			}
+	                .then(response=>{this.meals = response.data;});
+			},
 		},
+		 mounted() {
+			this.getMeals();
+		}
 	    	
 	}
 

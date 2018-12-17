@@ -22,13 +22,22 @@ Route::get('users', 'UserControllerAPI@getUsers');
 Route::post('users', 'UserControllerAPI@add');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::delete('users/{id}', 'UserControllerAPI@delete');
-Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
 Route::get('users/{id}', 'UserControllerAPI@show');
 Route::post('upload', 'UserControllerAPI@upload');
+Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
+Route::put('users', 'UserControllerAPI@edit');
+Route::delete('users', 'UserControllerAPI@destroy');
+Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
+Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 
+
+Route::post('items', 'ItemControllerAPI@add');
+Route::put('items', 'ItemControllerAPI@edit');
+Route::delete('items', 'ItemControllerAPI@destroy');
 
 
 Route::get('meals', 'MealControllerAPI@getMeals');
+
 
 
 
