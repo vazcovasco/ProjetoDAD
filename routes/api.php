@@ -35,6 +35,9 @@ Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
 Route::post('users/delete/{id}', 'UserControllerAPI@restoreDestroy');
 =======
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
+<<<<<<< HEAD
+>>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
+=======
 >>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
 
 

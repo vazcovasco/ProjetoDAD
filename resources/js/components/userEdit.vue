@@ -33,6 +33,7 @@
 </template>
 
 <script type="text/javascript">
+<<<<<<< HEAD
 
 	props: ['user'],
 	module.exports={
@@ -48,6 +49,13 @@
 				selectedFile: null
 				
 
+=======
+	module.exports = {
+        props: ['user'],
+        data() {
+            return {
+				file: '',
+>>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
             }
         },
 	    methods: {

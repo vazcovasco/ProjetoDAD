@@ -138,4 +138,15 @@ class UserControllerAPI extends Controller
         }
     }
 
+<<<<<<< HEAD
+=======
+    public function upload(Request $request)
+    {   
+        if($request->hasFile('file')) {
+            $filename = $request->file->getClientOriginalName();
+
+            return $request->file->storeAs('public/profiles', $filename);
+        }
+    }
+>>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
 }

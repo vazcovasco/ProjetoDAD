@@ -48,9 +48,13 @@
                         return axios.get('api/users/me');
                     })
                     .then(response => {
+<<<<<<< HEAD
 
                         this.$router.push('/');
 
+=======
+                        this.$router.push('/')
+>>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
                         this.$store.commit('setUser', response.data.data);
                         this.typeofmsg = "alert-success";
                         this.message = "User authenticated correctly";
