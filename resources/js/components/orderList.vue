@@ -26,7 +26,7 @@
 				<td>{{ order.created_at }}</td>
 				<td>{{ order.updated_at }}</td>
 				<td>
-	                <a class="btn btn-sm btn-primary" v-on:click.prevent="setState(order)">Edit</a>
+	                <a class="btn btn-sm btn-primary" click.prevent="setState(order)">Edit</a>
 	                <a class="btn btn-sm btn-danger" v-on:click.prevent="deleteOrder(order)">Delete</a>
 	            </td>
 	        </tr>
@@ -45,8 +45,31 @@
 		},
         methods: {
             setState: function(order){
-                this.currentOrder = order;
-                this.$emit('edit-click', order);
+                if (order.state === 'delivered') {
+					this.message = 'Order Delivered';
+
+                } else if(order.state === 'not delivered') {
+                    this.message = 'Order not delivered';
+                } else if(order.state === 'in preperation'){
+					this.message = 'Order is being prepared';
+				} else if ($order.state === 'prepared') {
+					this.message = 'Order is prepared';
+				} else if(order.state === 'confirmed'){
+					this.message = 'Order is confirmed';
+				} else {
+					this.message = 'Order is pending';
+				}
+                axios.post('api/orders/setState/'+order.id)
+                    .then(response=>{
+                        // Copy object properties from response.data.data to this.user
+						// without creating a new reference
+						//user.blocked = !user.blocked;
+						//Object.assign(order, response.data.data);
+						this.$emit('message', this.message)
+					})
+					.catch(erros => {
+						console.log(erros);
+					})
             },		
             deleteOrder: function(order){
                 this.currentOrder = null;

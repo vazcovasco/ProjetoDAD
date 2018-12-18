@@ -25,8 +25,8 @@ const mealAdd = Vue.component('meal-add', require('./components/mealAdd.vue'));
 const mealEdit = Vue.component('meal-edit', require('./components/mealEdit.vue'));
 //-------------------------ORDER----------------------------------------------
 const order = Vue.component('order', require('./components/order.vue'));
-const orderList = Vue.component('meal-list', require('./components/orderList.vue'));
-const orderAdd = Vue.component('meal-add', require('./components/orderAdd.vue'));
+const orderList = Vue.component('order-list', require('./components/orderList.vue'));
+const orderAdd = Vue.component('order-add', require('./components/orderAdd.vue'));
 
 const routes = [
     {
