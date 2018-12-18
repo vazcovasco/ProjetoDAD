@@ -31,16 +31,8 @@ Route::put('users', 'UserControllerAPI@edit');
 
 Route::delete('users', 'UserControllerAPI@destroy');
 Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
-<<<<<<< HEAD
 Route::post('users/delete/{id}', 'UserControllerAPI@restoreDestroy');
-=======
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
-<<<<<<< HEAD
->>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
-=======
->>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
-
-
 Route::post('items', 'ItemControllerAPI@add');
 Route::put('items', 'ItemControllerAPI@edit');
 Route::delete('items', 'ItemControllerAPI@destroy');
@@ -48,6 +40,12 @@ Route::delete('items', 'ItemControllerAPI@destroy');
 
 Route::get('meals', 'MealControllerAPI@getMeals');
 Route::post('users', 'UserControllerAPI@uploadImage');
+
+//ORDERS
+Route::get('orders', 'OrderControllerAPI@getOrders');
+Route::delete('orders/{id}', 'OrderControllerAPI@delete');
+Route::post('orders/{id}', 'OrderControllerAPI@setState');
+Route::post('orders', 'OrderControllerAPI@add');
 
 
 

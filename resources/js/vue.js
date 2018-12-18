@@ -23,6 +23,10 @@ const profile = Vue.component('profile', require('./components/profile.vue'));
 //-------------------------MEAL----------------------------------------------
 const meal = Vue.component('meal', require('./components/meal.vue'));
 const mealList = Vue.component('meal-list', require('./components/mealList.vue'));
+//-------------------------ORDER----------------------------------------------
+const order = Vue.component('order', require('./components/order.vue'));
+const orderList = Vue.component('order-list', require('./components/orderList.vue'));
+const orderAdd = Vue.component('order-add', require('./components/orderAdd.vue'));
 
 
 
@@ -67,7 +71,12 @@ const routes = [
     {
         path: '/meals',
         component: meal
-    }
+    },
+    {
+        path: '/orders',
+        component: order
+    },
+   
 
 ];
 
@@ -82,7 +91,8 @@ const app = new Vue({
 
         items: [],
         users: [],
-        meals: []
+        meals: [],
+        orders: []
     },
     store,
 }).$mount('#app');
