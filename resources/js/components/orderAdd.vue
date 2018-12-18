@@ -6,9 +6,15 @@
             <div class="form-group">
                 <label for="meal_id">Meal:</label>
                 <select class="form-control" id="meal_id" name="meal_id" v-model="order.meal_id" >
-                    <option v-for="meal in meals" v-bind:value="meal.id"> {{ meal.id }} </option>
+                    <option v-for="meal in meals" v-bind:value="meal.table_number"> {{ meal.table_number }} </option>
                 </select>
 	        </div>
+        <div class="form-group">
+	        <label for="item_name">Item:</label>
+	        <select class="form-control" id="item_name" name="item_name" v-model="order.item_id" >
+	            <option v-for="item in items" v-bind:value="item.table_number"> {{ item.name }} </option>
+	        </select>
+	    </div>
 
             <select v-model="form.type">
                 <label for="state">Item</label>
@@ -35,6 +41,9 @@
 		data: function(){
            	return{
                 form: new Form({
+                    state: '',
+                    item: '',
+                    meal: ''
                 })
             }			
 		},

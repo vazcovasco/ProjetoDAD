@@ -3,15 +3,17 @@
 		<div class="filter">
 		<label><input type="radio" v-model="selectedCategory" value="All" /> All</label>
 		<label><input type="radio" v-model="selectedCategory" value="Blocked" /> Blocked</label>
+		<label><input type="radio" v-model="selectedCategory" value="SoftDelete" /> Soft Delete</label>
+
 		</div>
 
 	<table class="table table-striped">
 	    <thead>
 	        <tr>
 	            <th>Name</th>
+	            <th>Username</th>
 	            <th>Email</th>
-	            <th>Age</th>
-	            <th>Department</th>
+				<th>Photo</th>
 	            <th>Actions</th>
 	        </tr>
 	    </thead>
@@ -25,7 +27,9 @@
 					<button @click="editUser(user)">edit</button>
                     <button @click="deleteUser(user)">Delete</button>
 	        		<a :class="user.blocked ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="toggleBlockUser(user)" 
-                    v-text="user.blocked ?  'UnBlock' : 'Block'" :id="user.id"></a>
+                    v-text="user.blocked ?  'UnBlock' : 'Block'"></a>
+						<a :class="user.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="restoreUser(user)"
+					   v-text="user.deleted_at ?  'SoftDeleted' : 'Delete'"></a>
 	            </td>
 			</tr>
 	    </tbody>
@@ -56,6 +60,9 @@
 			deleteUser: function(user){
 				 this.$emit('delete-click', user);
 			},
+			restoreUser: function(user){
+            	this.$emit('restore-click', user);
+			},
 			toggleBlockUser: function(user){
                 if (user.blocked === 1) {
 					this.message = 'User Unbloked';
@@ -82,7 +89,7 @@
 				var category = this.selectedCategory;
 
 				if(category === "All") {
-					console.log(this.users);
+					
 					return this.users;
 				}
 				if(category ===	 "Blocked") {
@@ -90,12 +97,18 @@
 						return user.blocked ==1;
 					});
 				}
+				if(category ===	 "SoftDelete") {
+					return this.users.filter(function(user) {
+						return user.deleted_at != null;
+					});
+				}
 				if(!category)
 				{
 					return this.users;	
 				}
 			}	
-		}
+		},
+
 
 		
 		

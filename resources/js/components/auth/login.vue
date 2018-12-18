@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="alert" :class="typeofmsg" v-if="showMessage">             
+        <div class="alert" :class="typeofmsg" v-if="showMessage">
             <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>
             <strong>{{ message }}</strong>
         </div>
@@ -9,15 +9,15 @@
             <div class="form-group">
                 <label for="inputEmail">Email</label>
                 <input
-                    type="email" class="form-control" v-model.trim="user.email"
-                    name="email" id="inputEmail"
-                    placeholder="Email address"/>
+                        type="email" class="form-control" v-model.trim="user.email"
+                        name="email" id="inputEmail"
+                        placeholder="Email address"/>
             </div>
             <div class="form-group">
                 <label for="inputPassword">Password</label>
                 <input
-                    type="password" class="form-control" v-model="user.password"
-                    name="password" id="inputPassword"/>
+                        type="password" class="form-control" v-model="user.password"
+                        name="password" id="inputPassword"/>
             </div>
             <div class="form-group">
                 <a class="btn btn-primary" v-on:click.prevent="login">Login</a>
@@ -26,13 +26,13 @@
     </div>
 </template>
 
-<script type="text/javascript">    
+<script type="text/javascript">
     export default {
-        data: function(){
-            return { 
+        data: function () {
+            return {
                 user: {
-                    email:"",
-                    password:""
+                    email: "",
+                    password: ""
                 },
                 typeofmsg: "alert-success",
                 showMessage: false,
@@ -48,6 +48,13 @@
                         return axios.get('api/users/me');
                     })
                     .then(response => {
+<<<<<<< HEAD
+
+                        this.$router.push('/');
+
+=======
+                        this.$router.push('/')
+>>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
                         this.$store.commit('setUser', response.data.data);
                         this.typeofmsg = "alert-success";
                         this.message = "User authenticated correctly";
