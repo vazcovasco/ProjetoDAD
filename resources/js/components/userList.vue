@@ -45,8 +45,6 @@
 			return{
 				selectedCategory:'',
 				editingUser:null,
-				
-				
 			};			
 		},
         methods: {

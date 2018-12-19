@@ -14,17 +14,19 @@ use App\Http\Controllers\UserControllerAPI;
 |
 */
 
-//AUTH
-Route::post('login', 'LoginControllerAPI@login')->name('login');
+Route::middleware('auth:api')->get('/user', function(Request $request) {
+    return $request->user();
+}); 
 
-Route::get('items', 'ItemControllerAPI@getItems');
+Route::post('login', 'AuthControllerAPI@login');
+Route::post('register', 'AuthControllerAPI@register');
+Route::middleware('auth:api')->post('/logout', 'AuthControllerAPI@logout'); 
+
+/*-------------------USERS---------------------------*/
 Route::get('users', 'UserControllerAPI@getUsers');
 Route::post('users', 'UserControllerAPI@add');
 Route::put('users/{id}', 'UserControllerAPI@update');
-Route::delete('users/{id}', 'UserControllerAPI@delete');
 Route::get('users/{id}', 'UserControllerAPI@show');
-Route::post('upload', 'UserControllerAPI@upload');
-Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
 Route::put('users', 'UserControllerAPI@edit');
 
 
@@ -33,11 +35,18 @@ Route::delete('users', 'UserControllerAPI@destroy');
 Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
 Route::post('users/delete/{id}', 'UserControllerAPI@restoreDestroy');
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
+Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
+
+/*-------------------PHOTO---------------------------*/
+Route::post('upload', 'UserControllerAPI@upload');
+
+/*-------------------ITEMS---------------------------*/
+Route::get('items', 'ItemControllerAPI@getItems');
 Route::post('items', 'ItemControllerAPI@add');
 Route::put('items', 'ItemControllerAPI@edit');
 Route::delete('items', 'ItemControllerAPI@destroy');
 
-
+/*-------------------MEALS---------------------------*/
 Route::get('meals', 'MealControllerAPI@getMeals');
 Route::post('users', 'UserControllerAPI@uploadImage');
 

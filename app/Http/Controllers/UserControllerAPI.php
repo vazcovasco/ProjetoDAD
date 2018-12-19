@@ -77,7 +77,8 @@ class UserControllerAPI extends Controller
     {
         return new UserResource($request->user());
     }
-     */public function blockUser($id)
+    
+    public function blockUser($id)
     {
         $user = User::findOrFail($id);
         if ($user->blocked === 1) {

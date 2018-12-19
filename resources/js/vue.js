@@ -3,10 +3,11 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router';
+
+
 Vue.use(VueRouter);
 
 import store from '../store/store.js';
-
 
 //-------------------------ITEM----------------------------------------------
 const item = Vue.component('item', require('./components/item.vue'));
@@ -19,6 +20,7 @@ const userList = Vue.component('user-list', require('./components/userList.vue')
 const userAdd = Vue.component('user-add', require('./components/userAdd.vue'));
 const userEdit = Vue.component('user-edit', require('./components/userEdit.vue'));
 const login = Vue.component('login', require('./components/auth/login.vue'));
+const logout = Vue.component('logout', require('./components/auth/logout.vue'));
 const profile = Vue.component('profile', require('./components/profile.vue'));
 //-------------------------MEAL----------------------------------------------
 const meal = Vue.component('meal', require('./components/meal.vue'));
@@ -65,6 +67,10 @@ const routes = [
         component: login
     },
     {
+        path: '/logout',
+        component: logout
+    },
+    {
         path: '/profile',
         component: profile
     },
@@ -85,10 +91,19 @@ const router = new VueRouter({
     routes: routes
 });
 
+router.beforeEach((to, from, next) => {
+    if ((to.name == 'profile') || (to.name == 'logout')) {
+        if (!store.state.user) {
+            next("/login");
+            return;
+        }
+    }
+    next();
+});
+
 const app = new Vue({
     router,
     data: {
-
         items: [],
         users: [],
         meals: [],
