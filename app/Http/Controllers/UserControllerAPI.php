@@ -67,6 +67,14 @@ class UserControllerAPI extends Controller
 
         return response()->json(null, 204);;
     }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return new UserResource($user);
+    } 
+    
     /* 
     public function show($id)
     {
@@ -110,12 +118,7 @@ class UserControllerAPI extends Controller
         return response()->json(new UserResource($user), 201);
     }
  */
-    /* public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-        return new UserResource($user);
-    } */
+    
    /*  public function emailAvailable(Request $request)
     {
         $totalEmail = 1;
