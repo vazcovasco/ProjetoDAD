@@ -25,10 +25,16 @@ const profile = Vue.component('profile', require('./components/profile.vue'));
 //-------------------------MEAL----------------------------------------------
 const meal = Vue.component('meal', require('./components/meal.vue'));
 const mealList = Vue.component('meal-list', require('./components/mealList.vue'));
+//-------------------------Invoice----------------------------------------------
+const invoice = Vue.component('invoice', require('./components/invoice.vue'));
+const invoiceList = Vue.component('invoice-list', require('./components/invoiceList.vue'));
+const invoiceShow = Vue.component('invoice-show', require('./components/invoiceShow.vue'));
 //-------------------------ORDER----------------------------------------------
 const order = Vue.component('order', require('./components/order.vue'));
 const orderList = Vue.component('order-list', require('./components/orderList.vue'));
 const orderAdd = Vue.component('order-add', require('./components/orderAdd.vue'));
+
+
 
 
 
@@ -83,6 +89,15 @@ const routes = [
         component: order
     },
    
+    },
+    {
+        path: '/invoices',
+        component: invoice
+    },
+    {
+        path: '/invoices/:id',
+        component: invoiceShow
+    },
 
 ];
 
@@ -106,6 +121,8 @@ const app = new Vue({
     data: {
         items: [],
         users: [],
+        meals: [],
+        invoices:[]
         meals: [],
         orders: []
     },

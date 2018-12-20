@@ -10,7 +10,7 @@
 		</div>
 
 		<div> 
-	    <item-list :items="items" @delete-click="deleteItem" ref="itemsListRef" @edit-click="editItem" ></item-list>
+	    <item-list :items="items" @delete-click="deleteItem" @restore-click="restoreItem" ref="itemsListRef" @edit-click="editItem" ></item-list>
 
 		<item-edit :item="currentItem" @item-saved="saveItem"  @item-canceled="cancelEdit" v-if="currentItem"></item-edit>
 
@@ -63,6 +63,28 @@ import ItemList from './itemList.vue';
                 this.currentItem = null;
                 this.$refs.itemsListRef.editingItem = null;
             },
+			restoreItem: function(item){
+
+				if (item.deleted_at === null) {
+					this.message = 'User not Softdeleted';
+
+				} else {
+					this.message = 'User  Softdeleted';
+				}
+				axios.post('api/items/delete/'+ item.id)
+						.then(response=>{
+							// Copy object properties from response.data.data to this.user
+							// without creating a new reference
+							item.deleted_at = !item.deleted_at;
+
+							//Object.assign(user, response.data.data);
+							this.$emit('message', this.message)
+						})
+						.catch(erros => {
+							console.log(erros);
+						})
+
+			},
 			getItems: function(){
 				
               axios.get('api/items')
