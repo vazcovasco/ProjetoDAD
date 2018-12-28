@@ -72,8 +72,7 @@ export default {
       } else {
         this.message = "User  Softdeleted";
       }
-      axios
-        .post("api/users/delete/" + user.id)
+     /* axios.post("api/users/delete/" + user.id)
         .then(response => {
           // Copy object properties from response.data.data to this.user
           // without creating a new reference
@@ -81,7 +80,7 @@ export default {
 
 				} else {
 					this.message = 'User  Softdeleted';
-				}
+				}*/
 				axios.post('api/users/delete/'+ user.id)
 						.then(response=>{
 							// Copy object properties from response.data.data to this.user

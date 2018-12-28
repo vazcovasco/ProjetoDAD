@@ -129,7 +129,8 @@ export default {
     showPassEdit() {
       this.editPage = !this.editPage;
     }
-  };
+  }
+}
 </script>
 
 <style scoped>

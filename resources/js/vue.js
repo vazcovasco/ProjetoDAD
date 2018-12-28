@@ -131,6 +131,13 @@ const routes = [
         }
     },
     {
+        path: '/orders/add',
+        component: orderAdd,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
         path: '/restaurantManagement',
         component: rm,
         meta: {
@@ -143,7 +150,7 @@ const routes = [
         meta: {
             requiresAuth: true
         }
-    }
+    },
     {
         path: '/statistics/orders/:id',
         component: statistics

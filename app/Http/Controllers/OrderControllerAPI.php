@@ -11,7 +11,7 @@ use App\Meal;
 use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use DB;
+//use DB;
 
 class OrderControllerAPI extends Controller
 {

@@ -1,4 +1,5 @@
 <template>
+<div>
     <div>
       <table class="table">
         <tbody class="center">
@@ -20,37 +21,37 @@
         <input type="radio" v-model="selectedCategory" value="SoftDelete"> Soft Delete
       </label>
     </div>
-  <div class="container" id="people">
+		<div class="container" id="people">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Username</th>
+						<th>Email</th>
+						<th>Photo</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="user in filteredUsers"  :key="user.id" :class="{activerow: editingUser === user}">
+						<td>{{ user.name }}</td>
+						<td>{{ user.username }}</td>
+						<td>{{ user.email }}</td>
+						<td ><img width="100px" :src="getProfileImage(user.photo_url)"></td>
+						<td>
+							<button @click="editUser(user)">edit</button>
+							<button @click="deleteUser(user)">Delete</button>
+							<a :class="user.blocked ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="toggleBlockUser(user)"
+								v-text="user.blocked ?  'UnBlock' : 'Block'"></a>
+							<a :class="user.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="restoreUser(user)"
+								v-text="user.deleted_at ?  'Restore' : 'Delete'"></a>
+							<button @click="showPerformance(user)" v-if="user.type == 'cook' || user.type == 'waiter'">Performance</button>
 
-		<table class="table table-striped">
-			<thead>
-			<tr>
-				<th>Name</th>
-				<th>Username</th>
-				<th>Email</th>
-				<th>Photo</th>
-				<th>Actions</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr v-for="user in filteredUsers"  :key="user.id" :class="{activerow: editingUser === user}">
-				<td>{{ user.name }}</td>
-				<td>{{ user.username }}</td>
-				<td>{{ user.email }}</td>
-				<td ><img width="100px" :src="getProfileImage(user.photo_url)"></td>
-				<td>
-					<button @click="editUser(user)">edit</button>
-					<button @click="deleteUser(user)">Delete</button>
-					<a :class="user.blocked ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="toggleBlockUser(user)"
-					   v-text="user.blocked ?  'UnBlock' : 'Block'"></a>
-					<a :class="user.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="restoreUser(user)"
-					   v-text="user.deleted_at ?  'Restore' : 'Delete'"></a>
-					<button @click="showPerformance(user)" v-if="user.type == 'cook' || user.type == 'waiter'">Performance</button>
-
-				</td>
-			</tr>
-			</tbody>
-		</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </template>
 
