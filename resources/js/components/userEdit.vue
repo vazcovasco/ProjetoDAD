@@ -1,6 +1,6 @@
 <template>
   <div class="jumbotron">
-    <h2>Edit User</h2>
+    <h2>Profile</h2>
 
     <div class="form-group">
       <label for="inputName">Fullname</label>
@@ -35,7 +35,7 @@
         name="email"
         id="inputEmail"
         placeholder="Email address"
-        disabled
+        :disabled="!isManager ? true : false"
       >
     </div>
 
@@ -56,33 +56,49 @@
     </div>
 
     <div class="form-group">
-      <button class="btn btn-primary"  v-on:click.prevent="saveUser()">Save</button>
+      <a href="#">
+        <router-link
+          @click="showPassEdit"
+          :editPage="editPage"
+          :user="this.user"
+          @save-password="savePassword"
+          to="/changePassword"
+        >Change Password</router-link>
+      </a>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary" v-on:click.prevent="saveUser()">Save</button>
       <button class="btn btn-light" v-on:click.prevent="cancelEdit()">Cancel</button>
     </div>
   </div>
 </template>
 
 <script type="text/javascript">
-module.exports = {
+export default {
   props: ["user"],
   data() {
     return {
-      file: ''
+      file: "",
+      disabled: false,
+      isManager: this.$store.getters.isManager,
+      editPage: false
     };
   },
   methods: {
     saveUser: function() {
-
       let instance = this;
-      axios.put("api/users/" + this.user.id, this.user)
-        .then(response => {
-          Object.assign(this.user, response.data.data);
-          instance.$emit("user-saved", this.user);
+      axios.put("api/users/" + this.user.id, this.user).then(response => {
+        Object.assign(this.user, response.data.data);
+        instance.$emit("user-saved", this.user);
       });
-      this.$router.push('/users');
+      this.$router.push("/users");
     },
     cancelEdit: function() {
       this.$router.push("/");
+    },
+    savePassword: function(user) {
+
     },
     getProfileImage(photo_url) {
       return `storage/profiles/${photo_url}`;
@@ -109,6 +125,9 @@ module.exports = {
         .catch(function() {
           console.log("FAILURE!!");
         });
+    },
+    showPassEdit() {
+      this.editPage = !this.editPage;
     }
   }
 };

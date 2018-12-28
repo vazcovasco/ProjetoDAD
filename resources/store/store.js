@@ -10,11 +10,15 @@ axios.defaults.baseURL = 'http://projetodad.local/';
 export default new Vuex.Store({
     state: {
         token: localStorage.getItem('access_token') || null,
-        user: localStorage.getItem('user') || null
+        user: JSON.parse(localStorage.getItem('user')) || null,
+        manager: localStorage.getItem('manager') || null
     },  
     getters: {
         loggedIn(state) {
             return state.token !== null;
+        },
+        isManager(state) {
+            return state.manager !== null;
         }
     },
     mutations: { 
@@ -27,8 +31,34 @@ export default new Vuex.Store({
         setUser: (state, user) => {
             state.user =  user;
         },
+        setManager: (state, manager) => {
+            state.manager =  manager;
+        },
+        removeUser: (state, user) => {
+            state.user =  null;
+        },
+        removeManager: (state, manager) => {
+            state.manager =  null;
+        }
     },
     actions: {
+        register(context, data) {
+            return new Promise((resolve, reject) => {
+                axios.post('api/register', {
+                    name: data.name,
+                    username: data.username,
+                    email: data.email,
+                    photo: data.photo,
+                    type: data.type,
+                })
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+            });
+        },
         destroyToken(context) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
 
@@ -38,11 +68,19 @@ export default new Vuex.Store({
                     .then(response => {
                         localStorage.removeItem('access_token');
                         context.commit('destroyToken');
+                        localStorage.removeItem('user');
+                        context.commit('removeUser');
+                        localStorage.removeItem('manager');
+                        context.commit('removeManager');
                         resolve(response);
                     })
                     .catch(error => {
                         localStorage.removeItem('access_token');
                         context.commit('destroyToken');
+                        localStorage.removeItem('user');
+                        context.commit('removeUser');
+                        localStorage.removeItem('manager');
+                        context.commit('removeManager');
                         reject(error);
                     })
                 });
@@ -51,6 +89,7 @@ export default new Vuex.Store({
         retrieveToken(context, credentials) {
             return new Promise((resolve, reject) => {
                 axios.post('api/login', {
+                    username: credentials.username,
                     email: credentials.email,
                     password: credentials.password
                 })
@@ -76,8 +115,14 @@ export default new Vuex.Store({
                 })
                 .then(function (response) {
                     const user = response.data;
-                    localStorage.setItem('user', user);
+                    const type =  user.type;
+                    console.log(user);
+                    localStorage.setItem('user', JSON.stringify(user));
                     context.commit('setUser', user);
+                    if(type === 'manager') {
+                        localStorage.setItem('manager', type);
+                        context.commit('setManager', type);
+                    }
                     resolve(response);
                 })
                 .catch(error => {
@@ -86,6 +131,5 @@ export default new Vuex.Store({
                 });
             });
         },
-        
     }
 });

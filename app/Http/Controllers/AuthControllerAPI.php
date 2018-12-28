@@ -39,7 +39,6 @@ class AuthControllerAPI extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:3',
         ]);
 
         return User::create([
@@ -47,6 +46,8 @@ class AuthControllerAPI extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'photo' => $request->photo,
+            'type' => $request->type
         ]);
     }
 

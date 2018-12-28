@@ -6,7 +6,7 @@
 		</div>
 
 		<div>
-			<router-link to="/items/add"> <button>Add</button>  </router-link>
+			<router-link v-if="this.$store.getters.loggedIn && this.$store.getters.isManager" to="/items/add"> <button>Add</button>  </router-link>
 		</div>
 
 		<div> 
@@ -41,9 +41,9 @@ import ItemList from './itemList.vue';
 		},
 	    methods: {
 			editItem: function(item){
+				this.isLoggedIn = this.$store.getters.loggedIn;
 	            this.currentItem = item;
 				this.showSuccess = false;
-				
 			},
 			deleteItem: function(item){		
 	             axios.delete('api/items/', {params:{id:item.id}})

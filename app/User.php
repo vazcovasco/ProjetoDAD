@@ -30,18 +30,12 @@ class User extends Model
         'last_shift_start',
         'last_shift_end',
         'shift_active',
-
-
-
     ];
 
     protected $dates =[
         'deleted_at',
         'created_at',
         'updated_at',
-
-
-
     ];
 
     /**

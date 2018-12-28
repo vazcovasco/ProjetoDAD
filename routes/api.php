@@ -14,9 +14,7 @@ use App\Http\Controllers\UserControllerAPI;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function(Request $request) {
-    return $request->user();
-}); 
+Route::middleware('auth:api')->get('/user', 'UserControllerAPI@getUser'); 
 
 Route::post('login', 'AuthControllerAPI@login');
 Route::post('register', 'AuthControllerAPI@register');
@@ -28,6 +26,7 @@ Route::post('users', 'UserControllerAPI@add');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::get('users/{id}', 'UserControllerAPI@show');
 Route::put('users', 'UserControllerAPI@edit');
+Route::post('users/changePassword/{id}', 'UserControllerAPI@changePassword');
 
 
 

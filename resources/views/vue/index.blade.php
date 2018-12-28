@@ -7,8 +7,7 @@
     <div>
         <ul>
             <li><router-link to="/items">Menu</router-link></li> 
-            <li v-if="this.$store.getters.loggedIn"><router-link to="/">Restaurant Management</router-link></li>
-            <li v-if="this.$store.getters.loggedIn"><router-link to="/users">Users</router-link></li>
+            <li v-if="this.$store.getters.loggedIn && this.$store.getters.isManager"><router-link to="/restaurantManagement">Restaurant Management</router-link></li>
             <li v-if="this.$store.getters.loggedIn"><router-link to="/profile">Profile</router-link></li>        
             <li style="float:right" class="active" v-if="!this.$store.getters.loggedIn"><router-link to="/login">Login</router-link></li>
             <li style="float:right" class="active" v-if="this.$store.getters.loggedIn"><router-link to="/logout">Logout</router-link></li>
