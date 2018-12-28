@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\Order as OrderResource;
+use App\Http\Resources\User as UserResource;
+use Illuminate\Support\Facades\DB;
 
 use App\Order;
 use Illuminate\Http\Request;
@@ -15,9 +17,56 @@ class OrderControllerAPI extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getOrders()
+    public function getOrders(Request $request, $id)
     {
-        return Order::all();
+        $orders = DB::table('orders')
+            ->select('orders.id', 'orders.state', 'orders.item_id', 'orders.responsible_cook_id' ,'orders.meal_id','orders.start','orders.end','orders.created_at','orders.updated_at')
+            ->join('users', 'orders.responsible_cook_id', '=', 'users.id')
+            ->where('orders.responsible_cook_id', $id)
+            ->get();
+        return $orders;
+        /*$orders = DB::table('orders')
+            ->select('orders.id', 'orders.state', 'orders.item_id', 'orders.responsible_cook_id' ,'orders.meal_id','orders.start','orders.end','orders.created_at','orders.updated_at')
+            ->join('users', 'orders.responsible_cook_id', '=', 'users.id')
+            ->where([
+                ['orders.responsible_cook_id', null],
+                ['orders.state', 'pending'],
+            ])
+            ->orWhere('orders.responsible_cook_id', $id)
+            ->orderBy('state', 'DESC')
+            ->orderBy('start', 'ASC')
+            ->get();
+        return $orders;*/
+    }
+    //para os waiters
+    public function getOrdersWaiter(Request $request, $id)
+    {
+        $orders = DB::table('orders')
+            ->select('orders.id', 'orders.state', 'orders.item_id', 'orders.responsible_cook_id' ,'orders.meal_id','orders.start','orders.end','orders.created_at','orders.updated_at')
+            ->join('users', 'orders.responsible_cook_id', '=', 'users.id')
+            ->join('meals', 'orders.meal_id', '=', 'meals.id')
+            ->where([
+                ['meals.responsible_waiter_id', $id],
+                ['meals.state', 'active'],
+                ['meals.id', '=', 'orders.meal_id'],
+                ['orders.state', 'pending']
+            ])
+            ->orWhere([
+                ['meals.responsible_waiter_id', $id],
+                ['meals.state', 'active'],
+                ['meals.id', '=', 'orders.meal_id'],
+                ['orders.state', 'confirmed']
+            ])
+            ->orWhere([
+                ['meals.responsible_waiter_id', $id],
+                ['meals.state', 'active'],
+                ['meals.id', '=', 'orders.meal_id'],
+                ['orders.state', 'prepared']
+            ])
+            ->orderBy('state', 'DESC')
+            ->orderBy('start', 'ASC')
+            ->get();
+        return $orders;
     }
 
     public function add(Request $request)
@@ -32,7 +81,7 @@ class OrderControllerAPI extends Controller
         $order->start = $current;
         $order->end = null;
         $order->created_at = $current;
-        $order->updated_at = $created_at;
+        $order->updated_at = $current;
         $order->fill($request->all());
         $order->save();
         return response()->json($order, 200);
@@ -69,6 +118,15 @@ class OrderControllerAPI extends Controller
             $order->state = 'prepared';
         } else if ($order->state === 'prepared') {
             $order->state = 'delivered';
+        }
+        $order->save();
+        return response()->json($order,200);
+    }
+    public function confirmOrder($id)
+    {
+        $order = order::findOrFail($id);
+        if($order->state === 'pending'){
+            $order->state = 'confirmed';
         }
         $order->save();
         return response()->json($order,200);

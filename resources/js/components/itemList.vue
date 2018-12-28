@@ -15,8 +15,13 @@
 							<td>{{ item.description }}</td>
 							<td>{{ item.price }}</td>
 							<td ><img width="100px" :src="getFoodImage(item.photo_url)"></td> 
-							<td><button @click="editItem(item)">edit</button>
-                    			<button @click="deleteItem(item)">Delete</button></td>
+							<td>
+								<button @click="editItem(item)">edit</button>
+                    			<button @click="deleteItem(item)">Delete</button>
+								<a :class="item.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="restoreItem(item)"
+								   v-text="item.deleted_at ?  'Restore' : 'Delete'"></a>
+							</td>
+
 				
 	        </tr>
 	    </tbody>
@@ -41,6 +46,9 @@ module.exports = {
 		deleteItem: function(item){
 				 this.$emit('delete-click', item);
 			},
+	    restoreItem: function(item){
+		         this.$emit('restore-click', item);
+	        },
 
 	}
 	 

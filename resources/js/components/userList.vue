@@ -4,7 +4,6 @@
 		<label><input type="radio" v-model="selectedCategory" value="All" /> All</label>
 		<label><input type="radio" v-model="selectedCategory" value="Blocked" /> Blocked</label>
 		<label><input type="radio" v-model="selectedCategory" value="SoftDelete" /> Soft Delete</label>
-
 		</div>
 
 	<table class="table table-striped">
@@ -29,7 +28,7 @@
 	        		<a :class="user.blocked ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="toggleBlockUser(user)" 
                     v-text="user.blocked ?  'UnBlock' : 'Block'"></a>
 						<a :class="user.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="restoreUser(user)"
-					   v-text="user.deleted_at ?  'SoftDeleted' : 'Delete'"></a>
+					   v-text="user.deleted_at ?  'Restore' : 'Delete'"></a>
 	            </td>
 			</tr>
 	    </tbody>
@@ -45,8 +44,6 @@
 			return{
 				selectedCategory:'',
 				editingUser:null,
-				
-				
 			};			
 		},
         methods: {

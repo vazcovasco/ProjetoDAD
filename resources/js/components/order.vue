@@ -55,7 +55,8 @@
 						// without creating a new reference
 						//user.blocked = !user.blocked;
 						Object.assign(order, response.data.data);
-						this.$emit('message', this.message)
+						this.$emit('message', this.message);
+						this.getOrders();
 					})
 					.catch(erros => {
 						console.log(erros);
@@ -81,8 +82,13 @@
 	            this.showSuccess = false;
 	        },*/
 	        getOrders: function(){
-	            axios.get('api/orders')
-	                .then(response=>{this.orders = response.data; });
+				console.log(this.$store.state.user.id);
+                axios.get('/api/orders/'+this.$store.state.user.id).then(response=>{
+				this.orders = response.data;})
+				.catch(error=>{
+					this.showFailure = true;
+					this.failMessage = 'Error while fetching the existing orders!';
+				});
 			},
 			childMessage: function(message){
 				this.showSuccess = true;

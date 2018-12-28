@@ -60,7 +60,7 @@
                  this.form.post('api/users/')
                    // .then(response => console.log("Success"))
                    .then(response => {
-                       console.log(response);                        
+                       console.log(response);
                    })
                    .catch(error => console.log('Whoops'));
                 

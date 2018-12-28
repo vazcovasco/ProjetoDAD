@@ -41,8 +41,6 @@
 	         editUser: function(user){
 	            this.currentUser = user;
 				this.showSuccess = false;
-				
-				
 	        },
 			deleteUser: function(user){
 	             axios.delete('api/users/', {params:{id:user.id}})
@@ -57,7 +55,6 @@
                 this.$refs.usersListRef.editingUser = null;
                 this.showSuccess = true;
 				this.successMessage = 'User Saved';
-				this.$socket.emit('user_changed', savedUser)
             },
             cancelEdit: function(){
                 this.currentUser = null;

@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Meal extends Model
 {
+
+
     protected $fillable = [
         'id',
         'state', 
@@ -16,7 +19,7 @@ class Meal extends Model
         'total_price_preview',
      ];
 
-     public function orders()
+    public function orders()
     {
         return $this->hasMany(Order::class);
     }
@@ -29,4 +32,8 @@ class Meal extends Model
         return $this->belongsTo(User::class);
     }
     
+    public function invoices()
+    {
+        return $this->belongsTo("App\Invoices");
+    }
 }

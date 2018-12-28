@@ -15,5 +15,18 @@ class MealControllerAPI extends Controller
         
     }
 
+    public function showInvoice(Request $request, $id){
+        $meals = Meal::findOrFail($id);
+
+        $meals = DB::table('invoice_items')
+            ->join('items', 'invoice_items.item_id', '=', 'items.id')
+            ->select('invoice_items.quantity', 'invoice_items.unit_price', 'invoice_items.sub_total_price', 'items.name')
+            ->where('invoice_items.invoice_id', $id)
+            ->get();
+
+        return $meals;
+
+    }
+
       
 }

@@ -13,6 +13,8 @@
             <li style="float:right" class="active"><router-link to="/logout" v-show="this.$store.state.user">Logout</router-link></li>
             <li><router-link to="/meals">Menu</router-link></li>
             <li><router-link to="/users">users</router-link></li>
+            <li><router-link to="/orders">orders</router-link></li>
+            <li><router-link to="/invoices">invoices</router-link></li>
         </ul>
         <router-view></router-view>
     </div>
@@ -22,7 +24,8 @@
 @endsection
 
 @section('pagescript')
-<script src="js/vue.js"></script>
+<script src="js/vue.js">
+</script>
  @stop  
 
 

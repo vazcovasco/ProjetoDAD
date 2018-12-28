@@ -14,46 +14,48 @@ use App\Http\Controllers\UserControllerAPI;
 |
 */
 
-//AUTH
-Route::post('login', 'LoginControllerAPI@login')->name('login');
+Route::middleware('auth:api')->get('/user', function(Request $request) {
+    return $request->user();
+}); 
 
-Route::get('items', 'ItemControllerAPI@getItems');
+Route::post('login', 'AuthControllerAPI@login');
+Route::post('register', 'AuthControllerAPI@register');
+Route::middleware('auth:api')->post('/logout', 'AuthControllerAPI@logout'); 
+
+/*-------------------USERS---------------------------*/
 Route::get('users', 'UserControllerAPI@getUsers');
 Route::post('users', 'UserControllerAPI@add');
 Route::put('users/{id}', 'UserControllerAPI@update');
-Route::delete('users/{id}', 'UserControllerAPI@delete');
 Route::get('users/{id}', 'UserControllerAPI@show');
-Route::post('upload', 'UserControllerAPI@upload');
-Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
 Route::put('users', 'UserControllerAPI@edit');
-
-//ORDERS
-Route::get('orders', 'OrderControllerAPI@getOrders');
-Route::delete('orders/{id}', 'OrderControllerAPI@delete');
-Route::post('orders/{id}', 'UserControllerAPI@setState');
-Route::post('orders', 'OrderControllerAPI@add');
-
 
 Route::delete('users', 'UserControllerAPI@destroy');
 Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
-<<<<<<< HEAD
 Route::post('users/delete/{id}', 'UserControllerAPI@restoreDestroy');
-=======
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
-<<<<<<< HEAD
->>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
-=======
->>>>>>> f8082f0e8ad3f44638721f702755e09cbf4370cf
 
+/*-------------------PHOTO---------------------------*/
+Route::post('upload', 'UserControllerAPI@upload');
 
+/*-------------------ITEMS---------------------------*/
+Route::get('items', 'ItemControllerAPI@getItems');
 Route::post('items', 'ItemControllerAPI@add');
 Route::put('items', 'ItemControllerAPI@edit');
 Route::delete('items', 'ItemControllerAPI@destroy');
+Route::post('items/delete/{id}', 'ItemControllerAPI@restoreDestroy');
 
-
+/*-------------------MEALS---------------------------*/
 Route::get('meals', 'MealControllerAPI@getMeals');
-Route::post('users', 'UserControllerAPI@uploadImage');
 
+//ORDERS
+Route::get('orders/{id}', 'OrderControllerAPI@getOrders');
+Route::delete('orders/{id}', 'OrderControllerAPI@delete');
+Route::post('orders/{id}', 'OrderControllerAPI@setState');
+Route::post('orders/{id}', 'OrderControllerAPI@confirmOrder');
+Route::post('orders', 'OrderControllerAPI@add');
+
+Route::get('invoices', 'InvoiceControllerAPI@getInvoices');
+Route::get('invoices/{id}', 'InvoiceControllerAPI@showInvoice');
 
 
 /*
