@@ -42,19 +42,19 @@
 
 
 
-        module.exports= {
-            props: ['invoice','items'],
+    module.exports= {
+        props: ['invoice','items'],
 
-            data() {
-                return {
+        data() {
+            return {
 
-
-                }
-            },
-            methods: {
 
             }
+        },
+        methods: {
+
         }
+    }
 </script>
 
 <style scoped>

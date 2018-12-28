@@ -25,14 +25,21 @@ const profile = Vue.component('profile', require('./components/profile.vue'));
 //-------------------------MEAL----------------------------------------------
 const meal = Vue.component('meal', require('./components/meal.vue'));
 const mealList = Vue.component('meal-list', require('./components/mealList.vue'));
+const mealStart = Vue.component('meal-start', require('./components/mealStart.vue'));
+const mealShow = Vue.component('meal-show', require('./components/mealShow.vue'));
 //-------------------------Invoice----------------------------------------------
 const invoice = Vue.component('invoice', require('./components/invoice.vue'));
 const invoiceList = Vue.component('invoice-list', require('./components/invoiceList.vue'));
 const invoiceShow = Vue.component('invoice-show', require('./components/invoiceShow.vue'));
+const invoiceEdit = Vue.component('invoice-edit', require('./components/invoiceEdit.vue'));
 //-------------------------ORDER----------------------------------------------
 const order = Vue.component('order', require('./components/order.vue'));
 const orderList = Vue.component('order-list', require('./components/orderList.vue'));
 const orderAdd = Vue.component('order-add', require('./components/orderAdd.vue'));
+
+//-------------------------Statistics----------------------------------------------
+const statistics = Vue.component('statistics', require('./components/statistics.vue'));
+
 
 
 
@@ -85,10 +92,20 @@ const routes = [
         component: meal
     },
     {
+        path: '/meals/:id',
+        component: mealShow
+    },
+    {
+        path: '/meals/start',
+        component: mealStart
+    },
+    {
         path: '/orders',
         component: order
     },
-   
+    {
+        path: '/statistics/orders/:id',
+        component: statistics
     },
     {
         path: '/invoices',
@@ -98,6 +115,12 @@ const routes = [
         path: '/invoices/:id',
         component: invoiceShow
     },
+    {
+        path: '/invoices/:id',
+        component: invoiceEdit
+    },
+
+
 
 ];
 
@@ -121,10 +144,10 @@ const app = new Vue({
     data: {
         items: [],
         users: [],
-        meals: [],
-        invoices:[]
+        invoices:[],
         meals: [],
         orders: []
     },
     store,
+
 }).$mount('#app');

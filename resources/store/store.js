@@ -11,13 +11,13 @@ export default new Vuex.Store({
     state: {
         token: localStorage.getItem('access_token') || null,
         user: localStorage.getItem('user') || null
-    },  
+    },
     getters: {
         loggedIn(state) {
             return state.token !== null;
         }
     },
-    mutations: { 
+    mutations: {
         retrieveToken(state, token) {
             state.token = token;
         },
@@ -27,6 +27,7 @@ export default new Vuex.Store({
         setUser: (state, user) => {
             state.user =  user;
         },
+
     },
     actions: {
         destroyToken(context) {
@@ -35,16 +36,16 @@ export default new Vuex.Store({
             if(context.getters.loggedIn) {
                 return new Promise((resolve, reject) => {
                     axios.post('api/logout')
-                    .then(response => {
-                        localStorage.removeItem('access_token');
-                        context.commit('destroyToken');
-                        resolve(response);
-                    })
-                    .catch(error => {
-                        localStorage.removeItem('access_token');
-                        context.commit('destroyToken');
-                        reject(error);
-                    })
+                        .then(response => {
+                            localStorage.removeItem('access_token');
+                            context.commit('destroyToken');
+                            resolve(response);
+                        })
+                        .catch(error => {
+                            localStorage.removeItem('access_token');
+                            context.commit('destroyToken');
+                            reject(error);
+                        })
                 });
             }
         },
@@ -54,16 +55,16 @@ export default new Vuex.Store({
                     email: credentials.email,
                     password: credentials.password
                 })
-                .then(response => {
-                    const token = response.data.access_token;
-                    localStorage.setItem('access_token', token);
-                    context.commit('retrieveToken', token);
-                    resolve(response);
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                })
+                    .then(response => {
+                        const token = response.data.access_token;
+                        localStorage.setItem('access_token', token);
+                        context.commit('retrieveToken', token);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject(error);
+                    })
             });
         },
         setUser(context) {
@@ -74,18 +75,19 @@ export default new Vuex.Store({
                         'Accept': 'application/json'
                     }
                 })
-                .then(function (response) {
-                    const user = response.data;
-                    localStorage.setItem('user', user);
-                    context.commit('setUser', user);
-                    resolve(response);
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
+                    .then(function (response) {
+                        const user = response.data;
+                        localStorage.setItem('user', user);
+                        context.commit('setUser', user);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject(error);
+                    });
             });
         },
-        
+
+
     }
 });

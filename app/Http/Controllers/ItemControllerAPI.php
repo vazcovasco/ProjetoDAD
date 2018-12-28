@@ -14,17 +14,17 @@ class ItemControllerAPI extends Controller
     public function getItems(Request $request)
     {
         return Item::withTrashed()->get();
-        
+
     }
     public function add(Request $request)
     {
         $item = new Item();
-        $item->fill($request->all()); 
-        $item->photo_url= "dsfds"; 
+        $item->fill($request->all());
+        $item->photo_url= "dsfds";
         $item->save();
-        
-       return response()->json($item,200);
-    } 
+
+        return response()->json($item,200);
+    }
 
     public function edit(Request $request)
     {

@@ -3,31 +3,32 @@
 		<div class="jumbotron">
 			<h1>{{ title }}</h1>
 		</div>
-		
- 		<router-link to="/users/add"> <button>Add</button>  </router-link>
-		 
-		 <div class="alert alert-success" v-if="showSuccess">			 
+
+		<router-link to="/users/add"> <button>Add</button>  </router-link>
+
+		<div class="alert alert-success" v-if="showSuccess">
 			<button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
 			<strong>{{ successMessage }}</strong>
 		</div>
-		
-		<user-list :users="users" @delete-click="deleteUser" @restore-click ="restoreUser" ref="usersListRef" @edit-click="editUser"></user-list>
+
+		<user-list :users="users" @delete-click="deleteUser" @restore-click ="restoreUser" ref="usersListRef"
+				   @edit-click="editUser" @show-performance-click="showPerformance"></user-list>
 
 		<user-edit :user="currentUser" @user-saved="saveUser"  @user-canceled="cancelEdit" v-if="currentUser"></user-edit>
 
 
-	</div>				
+	</div>
 </template>
 
 <script type="text/javascript">
 	import UserEdit from './userEdit.vue';
 	import UserList from './userList.vue';
-	
+
 	export default {
 		data: function(){
-			return { 
-		        title: 'List Users',
-		        editingUser: false,
+			return {
+				title: 'List Users',
+				editingUser: false,
 				showSuccess: false,
 				showFailure: false,
 				successMessage: '',
@@ -35,31 +36,31 @@
 				currentUser: null,
 				currentUserIndex: -1,
 				users: [],
-		    };
+			};
 		},
-	    methods: {
-	         editUser: function(user){
-	            this.currentUser = user;
+		methods: {
+			editUser: function(user){
+				this.currentUser = user;
 				this.showSuccess = false;
-	        },
+			},
 			deleteUser: function(user){
-	             axios.delete('api/users/', {params:{id:user.id}})
-	                .then(response => {
-	                    this.showSuccess = true;
-						this.successMessage = 'User Deleted';
-						this.getUsers();
-	                }); 
-	        },
-	        saveUser: function(){
-                this.currentUser = null;
-                this.$refs.usersListRef.editingUser = null;
-                this.showSuccess = true;
+				axios.delete('api/users/', {params:{id:user.id}})
+						.then(response => {
+							this.showSuccess = true;
+							this.successMessage = 'User Deleted';
+							this.getUsers();
+						});
+			},
+			saveUser: function(){
+				this.currentUser = null;
+				this.$refs.usersListRef.editingUser = null;
+				this.showSuccess = true;
 				this.successMessage = 'User Saved';
-            },
-            cancelEdit: function(){
-                this.currentUser = null;
-                this.$refs.usersListRef.editingUser = null;
-            },
+			},
+			cancelEdit: function(){
+				this.currentUser = null;
+				this.$refs.usersListRef.editingUser = null;
+			},
 			restoreUser: function(user){
 
 				if (user.deleted_at === null) {
@@ -82,26 +83,30 @@
 						})
 
 			},
+			showPerformance(id)
+			{
+				this.$router.push("/statistics/orders/"+id);
+			},
 			childMessage: function(message){
 				this.showSuccess = true;
-	            this.successMessage = message;
+				this.successMessage = message;
 			},
 			toggleBlockUser: function(user){
-                if (user.blocked === 1) {
+				if (user.blocked === 1) {
 					this.message = 'User Unblocked';
 
-                } else {
-                    this.message = 'User Blocked';
-                }
-                axios.post('api/users/block/'+user.id)
-                    .then(response=>{
-                        // Copy object properties from response.data.data to this.user
-                        // without creating a new reference
-						Object.assign(user, response.data.data);
-						this.$emit('update-view',user);
-                        this.$emit('message', this.message)
-					});
-				
+				} else {
+					this.message = 'User Blocked';
+				}
+				axios.post('api/users/block/'+user.id)
+						.then(response=>{
+							// Copy object properties from response.data.data to this.user
+							// without creating a new reference
+							Object.assign(user, response.data.data);
+							this.$emit('update-view',user);
+							this.$emit('message', this.message)
+						});
+
 			},
 			getUsers: function(){
 
@@ -110,24 +115,24 @@
 
 			},
 
-			
-			
+
+
 		},
 		components: {
 			'user-list':UserList,
 			'user-edit':UserEdit
-		}, 
-	    mounted() {
+		},
+		mounted() {
 			this.getUsers();
 		}
 
-		
+
 	}
 </script>
 
-<style scoped>	
-p {
-	font-size: 2em;
-	text-align: center;
-}
+<style scoped>
+	p {
+		font-size: 2em;
+		text-align: center;
+	}
 </style>

@@ -5,37 +5,37 @@
     <div class="form-group">
       <label for="inputName">Fullname</label>
       <input
-        type="text"
-        class="form-control"
-        v-model="user.name"
-        name="name"
-        id="inputName"
-        placeholder="Fullname"
+              type="text"
+              class="form-control"
+              v-model="user.name"
+              name="name"
+              id="inputName"
+              placeholder="Fullname"
       >
     </div>
 
     <div class="form-group">
       <label for="inputUserName">Username</label>
       <input
-        type="text"
-        class="form-control"
-        v-model="user.username"
-        name="username"
-        id="inputUserName"
-        placeholder="Username"
+              type="text"
+              class="form-control"
+              v-model="user.username"
+              name="username"
+              id="inputUserName"
+              placeholder="Username"
       >
     </div>
 
     <div class="form-group">
       <label for="inputEmail">Email</label>
       <input
-        type="email"
-        class="form-control"
-        v-model="user.email"
-        name="email"
-        id="inputEmail"
-        placeholder="Email address"
-        disabled
+              type="email"
+              class="form-control"
+              v-model="user.email"
+              name="email"
+              id="inputEmail"
+              placeholder="Email address"
+              disabled
       >
     </div>
 
@@ -63,55 +63,55 @@
 </template>
 
 <script type="text/javascript">
-module.exports = {
-  props: ["user"],
-  data() {
-    return {
-      file: ''
-    };
-  },
-  methods: {
-    saveUser: function() {
+  module.exports = {
+    props: ["user"],
+    data() {
+      return {
+        file: ''
+      };
+    },
+    methods: {
+      saveUser: function() {
 
-      let instance = this;
-      axios.put("api/users/" + this.user.id, this.user)
-        .then(response => {
-          Object.assign(this.user, response.data.data);
-          instance.$emit("user-saved", this.user);
-      });
-      this.$router.push('/users');
-    },
-    cancelEdit: function() {
-      this.$router.push("/");
-    },
-    getProfileImage(photo_url) {
-      return `storage/profiles/${photo_url}`;
-    },
-    handleFileUpload() {
-      this.file = this.$refs.file.files[0];
-    },
-    submitFile() {
-      let formData = new FormData();
-      formData.append("file", this.file);
-      console.log(this.user);
-      axios
-        .post("api/upload", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
-        .then(response => {
-          console.log(this.user);
-          this.user.photo_url = response.data.replace("public/profiles/", "");
+        let instance = this;
+        axios.put("api/users/" + this.user.id, this.user)
+                .then(response => {
+                  Object.assign(this.user, response.data.data);
+                  instance.$emit("user-saved", this.user);
+                });
+        this.$router.push('/users');
+      },
+      cancelEdit: function() {
+        this.$router.push("/");
+      },
+      getProfileImage(photo_url) {
+        return `storage/profiles/${photo_url}`;
+      },
+      handleFileUpload() {
+        this.file = this.$refs.file.files[0];
+      },
+      submitFile() {
+        let formData = new FormData();
+        formData.append("file", this.file);
+        console.log(this.user);
+        axios
+                .post("api/upload", formData, {
+                  headers: {
+                    "Content-Type": "multipart/form-data"
+                  }
+                })
+                .then(response => {
+                  console.log(this.user);
+                  this.user.photo_url = response.data.replace("public/profiles/", "");
 
-          console.log("SUCCESS!!");
-        })
-        .catch(function() {
-          console.log("FAILURE!!");
-        });
+                  console.log("SUCCESS!!");
+                })
+                .catch(function() {
+                  console.log("FAILURE!!");
+                });
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>

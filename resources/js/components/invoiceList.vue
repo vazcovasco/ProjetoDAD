@@ -1,34 +1,35 @@
 <template>
-<div class="container" id="people">
-    <div class="filter">
-        <label><input type="radio" v-model="selectedCategory" value="All"/> All</label>
-        <label><input type="radio" v-model="selectedCategory" value="Pending"/> Pending</label>
+    <div class="container" id="people">
+        <div class="filter">
+            <label><input type="radio" v-model="selectedCategory" value="All"/> All</label>
+            <label><input type="radio" v-model="selectedCategory" value="Pending"/> Pending</label>
 
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>MealID</th>
+                <th>Total Price</th>
+                <th>Table Number</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="invoice in filteredInvoices"  :key="invoice.id" :class="{activerow: showingInvoice === invoice}">
+                <td>{{ invoice.name }}</td>
+                <td>{{ invoice.meal_id }}</td>
+                <td>{{ invoice.total_price }}</td>
+                <td>{{ invoice.table_number }}</td>
+                <td>
+                    <button  @click="showInvoice(invoice)">Show</button>
+                    <button v-if="invoice.state=='pending'" @click="editInvoice(invoice)" >Nif/Name</button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>MealID</th>
-            <th>Total Price</th>
-            <th>Table Number</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="invoice in filteredInvoices"  :key="invoice.id" :class="{activerow: showingInvoice === invoice}">
-            <td>{{ invoice.name }}</td>
-            <td>{{ invoice.meal_id }}</td>
-            <td>{{ invoice.total_price }}</td>
-            <td>{{ invoice.table_number }}</td>
-            <td>
-                <button @click="showInvoice(invoice)">Show</button>
-            </td>
-
-        </tr>
-        </tbody>
-    </table>
-</div>
 </template>
 
 <script>
@@ -38,13 +39,16 @@
         data: function() {
             return {
                 showingInvoice:null,
-                selectedCategory:''
+                selectedCategory:'',
             };
         },
         methods: {
             showInvoice: function(invoice){
                 this.showingInvoice = invoice;
                 this.$emit('show-click', invoice);
+            },
+            editInvoice: function(invoice){
+                this.$emit('edit-click', invoice);
             },
         },
         computed:{
