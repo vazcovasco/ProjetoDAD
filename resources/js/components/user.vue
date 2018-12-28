@@ -79,45 +79,68 @@ export default {
           // without creating a new reference
           user.deleted_at = !user.deleted_at;
 
-          //Object.assign(user, response.data.data);
-          this.$emit("message", this.message);
-        })
-        .catch(erros => {
-          console.log(erros);
-        });
-    },
-    childMessage: function(message) {
-      this.showSuccess = true;
-      this.successMessage = message;
-    },
-    toggleBlockUser: function(user) {
-      if (user.blocked === 1) {
-        this.message = "User Unblocked";
-      } else {
-        this.message = "User Blocked";
-      }
-      axios.post("api/users/block/" + user.id).then(response => {
-        // Copy object properties from response.data.data to this.user
-        // without creating a new reference
-        Object.assign(user, response.data.data);
-        this.$emit("update-view", user);
-        this.$emit("message", this.message);
-      });
-    },
-    getUsers: function() {
-      axios.get("api/users").then(response => {
-        this.users = response.data;
-      }); // ver a estrutura do json
-    }
-  },
-  components: {
-    "user-list": UserList,
-    "user-edit": UserEdit
-  },
-  mounted() {
-    this.getUsers();
-  }
-};
+				} else {
+					this.message = 'User  Softdeleted';
+				}
+				axios.post('api/users/delete/'+ user.id)
+						.then(response=>{
+							// Copy object properties from response.data.data to this.user
+							// without creating a new reference
+							user.deleted_at = !user.deleted_at;
+
+							//Object.assign(user, response.data.data);
+							this.$emit('message', this.message)
+						})
+						.catch(erros => {
+							console.log(erros);
+						})
+
+			},
+			showPerformance(id)
+			{
+				this.$router.push("/statistics/orders/"+id);
+			},
+			childMessage: function(message){
+				this.showSuccess = true;
+				this.successMessage = message;
+			},
+			toggleBlockUser: function(user){
+				if (user.blocked === 1) {
+					this.message = 'User Unblocked';
+
+				} else {
+					this.message = 'User Blocked';
+				}
+				axios.post('api/users/block/'+user.id)
+						.then(response=>{
+							// Copy object properties from response.data.data to this.user
+							// without creating a new reference
+							Object.assign(user, response.data.data);
+							this.$emit('update-view',user);
+							this.$emit('message', this.message)
+						});
+
+			},
+			getUsers: function(){
+
+				axios.get('api/users')
+						.then(response=>{ this.users = response.data; }); // ver a estrutura do json
+
+			},
+
+
+
+		},
+		components: {
+			'user-list':UserList,
+			'user-edit':UserEdit
+		},
+		mounted() {
+			this.getUsers();
+		}
+
+
+	}
 </script>
 
 <style scoped>

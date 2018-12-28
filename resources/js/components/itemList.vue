@@ -49,8 +49,8 @@ module.exports = {
 </script>
 
 <style scoped>
-tr.activerow {
-  background: #123456 !important;
-  color: #fff !important;
-}
+	tr.activerow {
+		background: #123456 !important;
+		color: #fff !important;
+	}
 </style>

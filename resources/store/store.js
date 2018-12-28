@@ -21,7 +21,7 @@ export default new Vuex.Store({
             return state.manager !== null;
         }
     },
-    mutations: { 
+    mutations: {
         retrieveToken(state, token) {
             state.token = token;
         },
@@ -93,16 +93,16 @@ export default new Vuex.Store({
                     email: credentials.email,
                     password: credentials.password
                 })
-                .then(response => {
-                    const token = response.data.access_token;
-                    localStorage.setItem('access_token', token);
-                    context.commit('retrieveToken', token);
-                    resolve(response);
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                })
+                    .then(response => {
+                        const token = response.data.access_token;
+                        localStorage.setItem('access_token', token);
+                        context.commit('retrieveToken', token);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject(error);
+                    })
             });
         },
         setUser(context) {

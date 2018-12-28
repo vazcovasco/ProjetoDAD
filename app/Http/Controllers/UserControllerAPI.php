@@ -28,16 +28,6 @@ class UserControllerAPI extends Controller
     public function add(Request $request)
     {
         $user = new User();
-        $user->id = null;
-        $user->email_verified_at = null;
-        $user->blocked = 0;
-        $user->photo_url = null;
-        $user->last_shift_start = null;
-        $user->last_shift_end = null;
-        $user->shift_active = 0;
-        $user->deleted_at = null;
-        $user->created_at = null;
-        $user->updated_at = null;
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
         $user->save();
@@ -51,22 +41,32 @@ class UserControllerAPI extends Controller
         $user->update($request->all());
         return response()->json($user, 200);
     }
+
     public function destroy(Request $request)
     {
         $id = $request->query('id');
 
         $user = User::withTrashed()->findOrFail($id);
 
-        if (!$user->trashed()) {
+        $orders = DB::table('orders')
+            ->where('orders.responsible_cook_id', $id)
+            ->count();
 
+
+        $meals = DB::table('meals')
+            ->where('meals.responsible_waiter_id', $id)
+            ->count();
+
+        if($orders != 0 or $meals!=0){
             $user->delete();
-
-        } else {
+        }else{
             $user->forceDelete();
         }
+
         return response()->json(null, 204);
 
     }
+
     public function restoreDestroy($id)
     {
         User::withTrashed()->find($id)->restore();
@@ -131,7 +131,7 @@ class UserControllerAPI extends Controller
             $user->blocked = 1;
         }
         $user->save();
-        return response()->json($user,200);
+        return response()->json($user, 200);
     }
 
     public function myProfile(Request $request)
@@ -165,8 +165,17 @@ class UserControllerAPI extends Controller
         }
         return response()->json($totalEmail == 0);
 
-    } */
+    /*  public function emailAvailable(Request $request)
+     {
+         $totalEmail = 1;
+         if ($request->has('email') && $request->has('id')) {
+             $totalEmail = DB::table('users')->where('email', '=', $request->email)->where('id', '<>', $request->id)->count();
+         } else if ($request->has('email')) {
+             $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
+         }
+         return response()->json($totalEmail == 0);
 
+      } */
 
 
     public function upload(Request $request)

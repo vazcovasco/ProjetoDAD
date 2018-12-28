@@ -11,6 +11,9 @@
             <li v-if="this.$store.getters.loggedIn"><router-link to="/profile">Profile</router-link></li>        
             <li style="float:right" class="active" v-if="!this.$store.getters.loggedIn"><router-link to="/login">Login</router-link></li>
             <li style="float:right" class="active" v-if="this.$store.getters.loggedIn"><router-link to="/logout">Logout</router-link></li>
+            <li><router-link to="/invoices">invoices</router-link></li>
+            <li><router-link to="/orders">orders</router-link></li>
+            <li><router-link to="/statistics">statistics</router-link></li>
         </ul>
         <router-view></router-view>
     </div>

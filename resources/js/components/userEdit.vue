@@ -5,24 +5,24 @@
     <div class="form-group">
       <label for="inputName">Fullname</label>
       <input
-        type="text"
-        class="form-control"
-        v-model="user.name"
-        name="name"
-        id="inputName"
-        placeholder="Fullname"
+              type="text"
+              class="form-control"
+              v-model="user.name"
+              name="name"
+              id="inputName"
+              placeholder="Fullname"
       >
     </div>
 
     <div class="form-group">
       <label for="inputUserName">Username</label>
       <input
-        type="text"
-        class="form-control"
-        v-model="user.username"
-        name="username"
-        id="inputUserName"
-        placeholder="Username"
+              type="text"
+              class="form-control"
+              v-model="user.username"
+              name="username"
+              id="inputUserName"
+              placeholder="Username"
       >
     </div>
 
@@ -129,8 +129,7 @@ export default {
     showPassEdit() {
       this.editPage = !this.editPage;
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
