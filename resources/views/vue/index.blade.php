@@ -14,6 +14,8 @@
             <li><router-link to="/meals">Menu</router-link></li>
             <li><router-link to="/users">users</router-link></li>
             <li><router-link to="/invoices">invoices</router-link></li>
+            <li><router-link to="/orders">orders</router-link></li>
+            <li><router-link to="/statistics">statistics</router-link></li>
         </ul>
         <router-view></router-view>
     </div>

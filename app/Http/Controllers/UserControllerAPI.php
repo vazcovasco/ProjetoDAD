@@ -75,19 +75,8 @@ class UserControllerAPI extends Controller
         $user = User::findOrFail($id);
         $user->update($request->all());
         return new UserResource($user);
-    } 
-    
-    /* 
-    public function show($id)
-    {
-        return User::find($id);
     }
 
-    public function myProfile(Request $request)
-    {
-        return new UserResource($request->user());
-    }
-     */
     public function blockUser($id)
     {
         $user = User::findOrFail($id);
@@ -120,21 +109,21 @@ class UserControllerAPI extends Controller
         return response()->json(new UserResource($user), 201);
     }
  */
-    
-   /*  public function emailAvailable(Request $request)
-    {
-        $totalEmail = 1;
-        if ($request->has('email') && $request->has('id')) {
-            $totalEmail = DB::table('users')->where('email', '=', $request->email)->where('id', '<>', $request->id)->count();
-        } else if ($request->has('email')) {
-            $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
-        }
-        return response()->json($totalEmail == 0);
 
-     } */
+    /*  public function emailAvailable(Request $request)
+     {
+         $totalEmail = 1;
+         if ($request->has('email') && $request->has('id')) {
+             $totalEmail = DB::table('users')->where('email', '=', $request->email)->where('id', '<>', $request->id)->count();
+         } else if ($request->has('email')) {
+             $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
+         }
+         return response()->json($totalEmail == 0);
+
+      } */
 
 
-    public function uploadImage(Request $request)
+    public function upload(Request $request)
     {
         if ($request->hasFile('file')) {
             $filename = $request->file->getClientOriginalName();

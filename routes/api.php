@@ -16,11 +16,11 @@ use App\Http\Controllers\UserControllerAPI;
 
 Route::middleware('auth:api')->get('/user', function(Request $request) {
     return $request->user();
-}); 
+});
 
 Route::post('login', 'AuthControllerAPI@login');
 Route::post('register', 'AuthControllerAPI@register');
-Route::middleware('auth:api')->post('/logout', 'AuthControllerAPI@logout'); 
+Route::middleware('auth:api')->post('/logout', 'AuthControllerAPI@logout');
 
 /*-------------------USERS---------------------------*/
 Route::get('users', 'UserControllerAPI@getUsers');
@@ -45,6 +45,10 @@ Route::post('items/delete/{id}', 'ItemControllerAPI@restoreDestroy');
 
 /*-------------------MEALS---------------------------*/
 Route::get('meals', 'MealControllerAPI@getMeals');
+Route::post('meals', 'MealControllerAPI@add');
+Route::get('meals/{id}', 'MealControllerAPI@showMeal');
+Route::get('meals/waiter', 'MealControllerAPI@getMealWaiterPerDay');
+
 
 //ORDERS
 Route::get('orders', 'OrderControllerAPI@getOrders');
@@ -54,7 +58,16 @@ Route::post('orders', 'OrderControllerAPI@add');
 
 Route::get('invoices', 'InvoiceControllerAPI@getInvoices');
 Route::get('invoices/{id}', 'InvoiceControllerAPI@showInvoice');
+Route::put('invoices/{id}', 'InvoiceControllerAPI@editPendingInvoice');
 
+
+
+Route::get('restaurant_tables', 'RestaurantTableControllerAPI@getRestaurantTables');
+//Route::post('restaurant_tables', 'RestaurantTableControllerAPI@add');
+
+Route::get('/statistics/orders/{user}', 'OrderControllerAPI@getOrdersByDay');
+
+Route::get('/statistics/meals/{user}', 'MealControllerAPI@getMealsByDay');
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:
