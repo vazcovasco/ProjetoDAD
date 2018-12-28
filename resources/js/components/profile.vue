@@ -18,10 +18,15 @@
         data: function(){
             return { 
                 profileUser: {
-                    username: "",
-                    photo: "",
-                    email:"",
-                    name:"",
+                    id: '',
+                    name: '',
+                    username: '',
+                    email: '',
+                    email_verified_at: '',
+                    type: '',
+                    blocked: '',
+                    photo_url: '',
+                    last_shift_start: '',
                 },
                 successMessage: "",
                 showSuccess: false

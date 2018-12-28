@@ -19,23 +19,30 @@ const user = Vue.component('user', require('./components/user.vue'));
 const userList = Vue.component('user-list', require('./components/userList.vue'));
 const userAdd = Vue.component('user-add', require('./components/userAdd.vue'));
 const userEdit = Vue.component('user-edit', require('./components/userEdit.vue'));
+const register = Vue.component('register', require('./components/auth/register.vue'));
 const login = Vue.component('login', require('./components/auth/login.vue'));
 const logout = Vue.component('logout', require('./components/auth/logout.vue'));
 const profile = Vue.component('profile', require('./components/profile.vue'));
+const changePassword = Vue.component('changePassword', require('./components/changePassword.vue'));
 //-------------------------MEAL----------------------------------------------
 const meal = Vue.component('meal', require('./components/meal.vue'));
 const mealList = Vue.component('meal-list', require('./components/mealList.vue'));
-//const mealAdd = Vue.component('meal-add', require('./components/mealAdd.vue'));
-//const mealEdit = Vue.component('meal-edit', require('./components/mealEdit.vue'));
-
+const mealStart = Vue.component('meal-start', require('./components/mealStart.vue'));
+const mealShow = Vue.component('meal-show', require('./components/mealShow.vue'));
 //-------------------------Invoice----------------------------------------------
 const invoice = Vue.component('invoice', require('./components/invoice.vue'));
 const invoiceList = Vue.component('invoice-list', require('./components/invoiceList.vue'));
 const invoiceShow = Vue.component('invoice-show', require('./components/invoiceShow.vue'));
+const invoiceEdit = Vue.component('invoice-edit', require('./components/invoiceEdit.vue'));
 //-------------------------ORDER----------------------------------------------
 const order = Vue.component('order', require('./components/order.vue'));
 const orderList = Vue.component('order-list', require('./components/orderList.vue'));
 const orderAdd = Vue.component('order-add', require('./components/orderAdd.vue'));
+//-------------------------RESTAURANT-----------------------------------------
+const rm = Vue.component('rm', require('./components/restaurantManagement.vue'));
+
+//-------------------------Statistics----------------------------------------------
+const statistics = Vue.component('statistics', require('./components/statistics.vue'));
 
 
 const routes = [
@@ -45,27 +52,42 @@ const routes = [
     },
     {
         path: '/items',
-        component: item
+        component: item,
     },
     {
         path: '/items/add',
-        component: itemAdd
+        component: itemAdd,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/items/:id',
-        component: itemEdit
+        component: itemEdit,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/users',
-        component: user
+        component: user,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/users/add',
-        component: userAdd
+        component: userAdd,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/users/:id',
-        component: userEdit
+        component: userEdit,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/login',
@@ -76,21 +98,55 @@ const routes = [
         component: logout
     },
     {
+        path: '/register',
+        component: register
+    },
+    {
         path: '/profile',
-        component: profile
+        component: profile,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/meals',
-        component: meal
-
+        component: meal,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/meals/:id',
+        component: mealShow
+    },
+    {
+        path: '/meals/start',
+        component: mealStart
     },
     {
         path: '/orders',
-        component: order
+        component: order,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
-        path: '/orders/add',
-        component: orderAdd
+        path: '/restaurantManagement',
+        component: rm,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/changePassword',
+        component: changePassword,
+        meta: {
+            requiresAuth: true
+        }
+    }
+    {
+        path: '/statistics/orders/:id',
+        component: statistics
     },
     {
         path: '/invoices',
@@ -100,6 +156,13 @@ const routes = [
         path: '/invoices/:id',
         component: invoiceShow
     },
+    {
+        path: '/invoices/:id',
+        component: invoiceEdit
+    },
+
+
+
 ];
 
 
@@ -108,8 +171,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if ((to.name == 'profile') || (to.name == 'logout')) {
-        if (!store.state.user) {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!store.getters.loggedIn) {
             next("/login");
             return;
         }
@@ -122,9 +185,10 @@ const app = new Vue({
     data: {
         items: [],
         users: [],
-        meals: [],
         invoices:[],
+        meals: [],
         orders: []
     },
     store,
+
 }).$mount('#app');

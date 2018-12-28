@@ -63,43 +63,18 @@
 
 			}
 		},
-        methods: {
-            setState: function(order){
-                if (order.state === 'delivered') {
-					this.message = 'Order Delivered';
-                } else if(order.state === 'not delivered') {
-                    this.message = 'Order not delivered';
-                } else if(order.state === 'in preperation'){
-					this.message = 'Order is being prepared';
-				} else if ($order.state === 'prepared') {
-					this.message = 'Order is prepared';
-				} else if(order.state === 'confirmed'){
-					this.message = 'Order is confirmed';
-				} else {
-					this.message = 'Order is pending';
-				}
-                axios.post('api/orders/setState/'+order.id)
-                    .then(response=>{
-                        // Copy object properties from response.data.data to this.user
-						// without creating a new reference
-						//user.blocked = !user.blocked;
-						//Object.assign(order, response.data.data);
-						this.$emit('message', this.message);
-						this.getOrders();
-					})
-					.catch(erros => {
-						console.log(erros);
-					})
-            },		
-            deleteOrder: function(order){
-                this.currentOrder = null;
+		methods: {
+			setState: function(order){
+				this.$emit('set_state-click', order);
+			},
+			deleteOrder: function(order){
+				this.currentOrder = null;
 				this.$emit('delete-click', order);
-				this.getOrders();
 			}
-        },	
+		},
 	}
 </script>
 
 <style scoped>
-/*	  Specific style applied only on the component*/
+	/*	  Specific style applied only on the component*/
 </style>
