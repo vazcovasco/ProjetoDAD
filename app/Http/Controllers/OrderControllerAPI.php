@@ -25,7 +25,7 @@ class OrderControllerAPI extends Controller
         $orders = DB::table('orders')
             ->select('orders.id', 'orders.state', 'orders.item_id', 'orders.responsible_cook_id' ,'orders.meal_id','orders.start','orders.end','orders.created_at','orders.updated_at')
             ->join('users', 'orders.responsible_cook_id', '=', 'users.id')
-            ->where('orders.responsible_cook_id', $id)
+            ->where('orders.responsible_cook_id', 46)
             ->get();
         return $orders;
         /*$orders = DB::table('orders')

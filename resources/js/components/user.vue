@@ -12,24 +12,11 @@
 		</div>
 
 		<user-list :users="users" @delete-click="deleteUser" @restore-click ="restoreUser" ref="usersListRef"
-				   @edit-click="editUser" @show-performance-click="showPerformance"></user-list>
+				   @edit-click="editUser" @show-performance-click="showPerformance" @start-shift-click="startShift"
+				   @end-shift-click="endShift"></user-list>
 
 		<user-edit :user="currentUser" @user-saved="saveUser"  @user-canceled="cancelEdit" v-if="currentUser"></user-edit>
 
-    <user-list
-      :users="users"
-      @delete-click="deleteUser"
-      @restore-click="restoreUser"
-      ref="usersListRef"
-      @edit-click="editUser"
-    ></user-list>
-
-    <user-edit
-      :user="currentUser"
-      @user-saved="saveUser"
-      @user-canceled="cancelEdit"
-      v-if="currentUser"
-    ></user-edit>
   </div>
 </template>
 
@@ -133,10 +120,21 @@ export default {
 						.then(response=>{ this.users = response.data; }); // ver a estrutura do json
 
 			},
+	  		startShift: function(){
+					this.currentUser = null;
+					this.showSuccess = true;
+					this.successMessage = 'Shift Started';
+
+	  		},
+	  		endShift: function(){
+					  this.currentUser = null;
+					  this.showSuccess = true;
+					  this.successMessage = 'Shift Ended';
+	  },
 
 
 
-		},
+  },
 		components: {
 			'user-list':UserList,
 			'user-edit':UserEdit

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Meal;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\Meal as MealResource;
 use SebastianBergmann\Environment\Console;
@@ -38,32 +39,12 @@ class MealControllerAPI extends Controller
         return $meals;
 
     }
-    public function getMealWaiterPerDay(Request $request)
-    {
-        $waiter_meals=DB::table('meals')
-            ->select(DB::raw('count(*) as count, HOUR(start) as hour'))
-            ->whereDate('start', '=', Carbon::now()->toDateString())
-            ->groupBy('hour')
-            ->get();
-        return $waiter_meals;
-
-    }
 
 
     public function showInvoice(Request $request, $id){
         $meals = Meal::findOrFail($id);
 
-        $meals = DB::table('invoice_items')
-            ->join('items', 'invoice_items.item_id', '=', 'items.id')
-            ->select('invoice_items.quantity', 'invoice_items.unit_price', 'invoice_items.sub_total_price', 'items.name')
-            ->where('invoice_items.invoice_id', $id)
-            ->get();
 
-        return $meals;
-
-    }
-
-      
         $meals = DB::table('orders')
             ->join('items', 'items.id', '=', 'orders.item_id')
             ->join('meals', 'meals.id', '=', 'orders.meal_id')
@@ -71,19 +52,45 @@ class MealControllerAPI extends Controller
             ->where('meals.id', $id)
             ->get();
 
-        return $meals;
+       return $meals;
 
     }
-    public function getMealWaiterPerDay(Request $request)
-    {
-        $waiter_meals=DB::table('meals')
-            ->select(DB::raw('count(*) as count, HOUR(start) as hour'))
-            ->whereDate('start', '=', Carbon::now()->toDateString())
-            ->groupBy('hour')
-            ->get();
-        return $waiter_meals;
+    public function getMealsByDay(User $user){
+
+        $data['user']['id'] = $user->id;
+        $data['user']['name'] = $user->name;
+            $data['user']['type'] = $user->type;
+
+
+        if($user->type == 'waiter'){
+
+            $mealIds = Meal::where('responsible_waiter_id', $user->id)
+                ->pluck('id');
+
+            $data['data'] = Meal::whereIn('id', $mealIds)
+                ->groupBy(DB::raw('DATE(start)'))
+                ->select(DB::raw('DATE(start) as date'), DB::raw('count(*) as meals'))
+                ->get();
+
+        }
+
+        $sum = 0;
+
+        foreach ($data['data'] as $day)
+        {
+            $sum +=$day['meals'];
+        }
+
+        //days when the restaurant was open
+        $daysOpen = Meal::select(DB::raw('count(distinct(DATE(start))) as days'))->first()->days;
+        $data['user']['performance'] = $sum / $daysOpen;
+
+
+        return $data;
+
 
     }
+
 
 
 }

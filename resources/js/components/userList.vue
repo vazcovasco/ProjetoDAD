@@ -102,6 +102,13 @@
 			showPerformance: function(user){
 				this.$emit('show-performance-click', user.id);
 			},
+			startShift: function(user){
+				this.$emit('start-shift-click', user.id);
+			},
+			endShift: function(user){
+				this.$emit('end-shift-click', user.id);
+			},
+
 		},
 		computed:{
 			filteredUsers: function() {

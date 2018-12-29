@@ -8,6 +8,7 @@ use App\Meals;
 use Illuminate\Http\Request;
 use App\Http\Resources\Invoice as InvoiceResource;
 use DB;
+use PDF;
 
 
 class InvoiceControllerAPI extends Controller
@@ -45,6 +46,20 @@ class InvoiceControllerAPI extends Controller
 
         $invoice->update($request->all());
         return response()->json($invoice, 200);
+
+    }
+    public function downloadInvoice($id)
+    {
+        $invoices = DB::table('invoices')
+            ->join('meals', 'invoices.meal_id', '=', 'meals.id')
+            ->where('invoices.id', '=', $id)
+            ->select('invoices.name', 'invoices.meal_id', 'invoices.total_price',
+                'meals.table_number','invoices.date','invoices.id','invoices.state')
+            ->get();
+
+        $invoiceDownload = $invoices[0];
+        $pdf = PDF::loadView('invoice', compact('invoiceDownload'));
+        return $pdf->download('edgar.pdf');
 
     }
 

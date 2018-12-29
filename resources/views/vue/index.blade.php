@@ -15,9 +15,12 @@
             <li><router-link to="/orders">orders</router-link></li>
             <li><router-link to="/statistics">statistics</router-link></li>
         </ul>
-        <router-view></router-view>
+    <div>
+        <shift v-if="this.$store.getters.loggedIn"></shift>
     </div>
-    
+        <router-view></router-view>
+
+    </div>
 </div>
     
 @endsection

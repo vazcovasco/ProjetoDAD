@@ -10,9 +10,9 @@ axios.defaults.baseURL = 'http://projetodad.local/';
 export default new Vuex.Store({
     state: {
         token: localStorage.getItem('access_token') || null,
-        user: JSON.parse(localStorage.getItem('user')) || null,
+        user: /*JSON.parse(localStorage.getItem('user')) ||*/ null,
         manager: localStorage.getItem('manager') || null
-    },  
+    },
     getters: {
         loggedIn(state) {
             return state.token !== null;

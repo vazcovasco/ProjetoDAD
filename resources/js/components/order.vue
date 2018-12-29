@@ -86,8 +86,8 @@
                 this.successMessage = 'Order Saved';
             },*/
 	        getOrders: function(){
-				console.log(this.$store.state.user.id);
-                axios.get('/api/orders/'+this.$store.state.user.id).then(response=>{
+
+                axios.get('api/orders').then(response=>{
 				this.orders = response.data;})
 				.catch(error=>{
 					this.showFailure = true;

@@ -32,6 +32,9 @@ Route::delete('users', 'UserControllerAPI@destroy');
 Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
 Route::post('users/delete/{id}', 'UserControllerAPI@restoreDestroy');
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
+Route::patch('users/{id}', 'UserControllerAPI@startShift');
+Route::patch('users/{id}', 'UserControllerAPI@endShift');
+
 
 /*-------------------PHOTO---------------------------*/
 Route::post('upload', 'UserControllerAPI@upload');
@@ -51,7 +54,7 @@ Route::get('meals/waiter', 'MealControllerAPI@getMealWaiterPerDay');
 
 
 //ORDERS
-Route::get('orders/{id}', 'OrderControllerAPI@getOrders');
+Route::get('orders', 'OrderControllerAPI@getOrders');
 Route::delete('orders/{id}', 'OrderControllerAPI@delete');
 Route::post('orders/{id}', 'OrderControllerAPI@setState');
 Route::post('orders/{id}', 'OrderControllerAPI@confirmOrder');
@@ -60,6 +63,8 @@ Route::post('orders', 'OrderControllerAPI@add');
 Route::get('invoices', 'InvoiceControllerAPI@getInvoices');
 Route::get('invoices/{id}', 'InvoiceControllerAPI@showInvoice');
 Route::put('invoices/{id}', 'InvoiceControllerAPI@editPendingInvoice');
+Route::get('invoices/pdf/{id}', 'InvoiceControllerAPI@downloadInvoice');
+
 
 
 

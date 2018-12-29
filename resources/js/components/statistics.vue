@@ -2,7 +2,7 @@
     <div>
 
         <div v-if="user">
-            <h4> Performance - {{user.name}} (<b>{{user.performance}} {{currentFilter}} p/ day)  </b></b></h4>
+            <h4> Performance - {{user.name}} (<b>{{user.performance}} {{currentFilter}} p/ day)  </b></h4>
             <h5></h5>
 
         </div>
@@ -22,7 +22,7 @@
             <tbody>
             <tr v-for="day in data" >
                 <td>{{ day.date }}</td>
-                <td>{{ day[currentFilter] }}</td>
+                <td>{{ $data['user']['performance'] }}</td>
             </tr>
             </tbody>
         </table>
@@ -45,6 +45,7 @@
 
                 if(this.user.type == 'meals')
                 {
+                    console.log("teste");
                     this.data = [];
                     axios.get('api/statistics/meals' + this.$route.params.id)
                         .then(response=>{
@@ -69,6 +70,7 @@
         },
         mounted() {
             this.getOrders();
+
         }
     }
 </script>

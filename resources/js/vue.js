@@ -43,6 +43,7 @@ const rm = Vue.component('rm', require('./components/restaurantManagement.vue'))
 
 //-------------------------Statistics----------------------------------------------
 const statistics = Vue.component('statistics', require('./components/statistics.vue'));
+const shift = Vue.component('shift', require('./components/shift.vue'));
 
 
 const routes = [
@@ -131,14 +132,16 @@ const routes = [
         }
     },
     {
-        path: '/statistics/orders/:id',
-        component: statistics
-    {
         path: '/orders/add',
         component: orderAdd,
         meta: {
             requiresAuth: true
         }
+    },
+    {
+        path: '/statistics/orders/:id',
+        component: statistics
+
     },
     {
         path: '/restaurantManagement',
@@ -169,6 +172,10 @@ const routes = [
     {
         path: '/invoices/:id',
         component: invoiceEdit
+    },
+    {
+        path: '/shift',
+        component: shift
     },
 
 

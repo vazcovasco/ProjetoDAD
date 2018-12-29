@@ -23,6 +23,7 @@
                 <td>{{ invoice.table_number }}</td>
                 <td>
                     <button  @click="showInvoice(invoice)">Show</button>
+                    <button  v-if="invoice.state=='paid'" @click="downloadInvoice(invoice)">Download</button>
                     <button v-if="invoice.state=='pending'" @click="editInvoice(invoice)" >Nif/Name</button>
                 </td>
 
@@ -50,6 +51,10 @@
             editInvoice: function(invoice){
                 this.$emit('edit-click', invoice);
             },
+            downloadInvoice: function(invoice){
+                this.$emit('download-click', invoice);
+            },
+
         },
         computed:{
             filteredInvoices: function() {
