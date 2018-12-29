@@ -133,6 +133,7 @@ const routes = [
     {
         path: '/statistics/orders/:id',
         component: statistics
+    },
     {
         path: '/orders/add',
         component: orderAdd,
@@ -170,9 +171,6 @@ const routes = [
         path: '/invoices/:id',
         component: invoiceEdit
     },
-
-
-
 ];
 
 

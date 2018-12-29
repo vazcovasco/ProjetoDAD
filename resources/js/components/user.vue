@@ -16,20 +16,6 @@
 
 		<user-edit :user="currentUser" @user-saved="saveUser"  @user-canceled="cancelEdit" v-if="currentUser"></user-edit>
 
-    <user-list
-      :users="users"
-      @delete-click="deleteUser"
-      @restore-click="restoreUser"
-      ref="usersListRef"
-      @edit-click="editUser"
-    ></user-list>
-
-    <user-edit
-      :user="currentUser"
-      @user-saved="saveUser"
-      @user-canceled="cancelEdit"
-      v-if="currentUser"
-    ></user-edit>
   </div>
 </template>
 
