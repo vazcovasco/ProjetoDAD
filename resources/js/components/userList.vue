@@ -1,5 +1,5 @@
 <template>
-<div>
+	<div class="container" id="people">
     <div>
       <table class="table">
         <tbody class="center">

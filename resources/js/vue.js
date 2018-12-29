@@ -131,6 +131,9 @@ const routes = [
         }
     },
     {
+        path: '/statistics/orders/:id',
+        component: statistics
+    {
         path: '/orders/add',
         component: orderAdd,
         meta: {

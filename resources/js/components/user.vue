@@ -1,13 +1,20 @@
 <template>
-  <div>
-    <div class="jumbotron">
-      <h1>{{ title }}</h1>
-    </div>
+	<div>
+		<div class="jumbotron">
+			<h1>{{ title }}</h1>
+		</div>
 
-    <div class="alert alert-success" v-if="showSuccess">
-      <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
-      <strong>{{ successMessage }}</strong>
-    </div>
+		<router-link to="/users/add"> <button>Add</button>  </router-link>
+
+		<div class="alert alert-success" v-if="showSuccess">
+			<button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
+			<strong>{{ successMessage }}</strong>
+		</div>
+
+		<user-list :users="users" @delete-click="deleteUser" @restore-click ="restoreUser" ref="usersListRef"
+				   @edit-click="editUser" @show-performance-click="showPerformance"></user-list>
+
+		<user-edit :user="currentUser" @user-saved="saveUser"  @user-canceled="cancelEdit" v-if="currentUser"></user-edit>
 
     <user-list
       :users="users"

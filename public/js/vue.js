@@ -63,6 +63,7 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 152);
 /******/ })
 /************************************************************************/
+<<<<<<< HEAD
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -76477,380 +76478,32 @@ if(false) {
  // When the module is disposed, remove the <style> tags
  module.hot.dispose(function() { update(); });
 }
+=======
+/******/ ({
+>>>>>>> master
 
-/***/ }),
-/* 285 */
+/***/ 152:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.center {\n    text-align: center;\n}\n.button {\n    background-color: #4CAF50;\n    border: none;\n    color: white;\n    padding: 15px 32px;\n    text-align: center;\n    text-decoration: none;\n    display: inline-block;\n    font-size: 16px;\n    margin: 4px 2px;\n    cursor: pointer;\n}\n", ""]);
-
-// exports
+__webpack_require__(153);
+module.exports = __webpack_require__(280);
 
 
 /***/ }),
-/* 286 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+/***/ 153:
+/***/ (function(module, __webpack_exports__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            title: 'Restaurant Management'
-        };
-    }
-});
+throw new Error("Module build failed: SyntaxError: C:/DAD/ProjetoDAD/resources/js/vue.js: Unexpected token, expected , (136:4)\n\n\u001b[0m \u001b[90m 134 | \u001b[39m        path\u001b[33m:\u001b[39m \u001b[32m'/statistics/orders/:id'\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 135 | \u001b[39m        component\u001b[33m:\u001b[39m statistics\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 136 | \u001b[39m    {\n \u001b[90m     | \u001b[39m    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 137 | \u001b[39m        path\u001b[33m:\u001b[39m \u001b[32m'/orders/add'\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 138 | \u001b[39m        component\u001b[33m:\u001b[39m orderAdd\u001b[33m,\u001b[39m\n \u001b[90m 139 | \u001b[39m        meta\u001b[33m:\u001b[39m {\u001b[0m\n");
 
 /***/ }),
-/* 287 */
-/***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "jumbotron" }, [
-      _c("h1", [_vm._v(_vm._s(_vm.title))]),
-      _vm._v(" "),
-      _c("table", { staticClass: "table table-striped" }, [
-        _c("tbody", { staticClass: "center" }, [
-          _c("tr", [
-            _c(
-              "td",
-              [
-                _c(
-                  "router-link",
-                  { staticClass: "button", attrs: { to: "/users" } },
-                  [_vm._v("Users")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "td",
-              [
-                _c(
-                  "router-link",
-                  { staticClass: "button", attrs: { to: "/orders" } },
-                  [_vm._v("Orders")]
-                )
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c(
-              "td",
-              [
-                _c(
-                  "router-link",
-                  { staticClass: "button", attrs: { to: "/meals" } },
-                  [_vm._v("Meals")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "td",
-              [
-                _c(
-                  "router-link",
-                  { staticClass: "button", attrs: { to: "/users" } },
-                  [_vm._v("Other")]
-                )
-              ],
-              1
-            )
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-700dd7aa", module.exports)
-  }
-}
-
-/***/ }),
-/* 288 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(289)
-/* template */
-var __vue_template__ = __webpack_require__(290)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/statistics.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-17e76fa4", Component.options)
-  } else {
-    hotAPI.reload("data-v-17e76fa4", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 289 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-
-    data: function data() {
-        return {
-            data: [],
-            currentFilter: 'orders',
-            user: null
-        };
-    },
-    methods: {
-        getMeals: function getMeals() {
-            var _this = this;
-
-            if (this.user.type == 'meals') {
-                this.data = [];
-                axios.get('api/statistics/meals' + this.$route.params.id).then(function (response) {
-                    _this.data = response.data.data;
-                    _this.user = response.data.user;
-                }); // ver a estrutura do json
-            }
-        },
-        getOrders: function getOrders() {
-            var _this2 = this;
-
-            axios.get('api/statistics/orders/' + this.$route.params.id).then(function (response) {
-                _this2.data = response.data.data;
-                _this2.user = response.data.user;
-            }); // ver a estrutura do json
-        }
-    },
-    mounted: function mounted() {
-        this.getOrders();
-    }
-});
-
-/***/ }),
-/* 290 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.user
-      ? _c("div", [
-          _c("h4", [
-            _vm._v(" Performance - " + _vm._s(_vm.user.name) + " ("),
-            _c("b", [
-              _vm._v(
-                _vm._s(_vm.user.performance) +
-                  " " +
-                  _vm._s(_vm.currentFilter) +
-                  " p/ day)  "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("h5")
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("div", { staticClass: "filter" }, [
-      _c("label", [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.currentFilter,
-              expression: "currentFilter"
-            }
-          ],
-          attrs: { type: "radio", value: "orders" },
-          domProps: { checked: _vm._q(_vm.currentFilter, "orders") },
-          on: {
-            click: _vm.getOrders,
-            change: function($event) {
-              _vm.currentFilter = "orders"
-            }
-          }
-        }),
-        _vm._v(" Orders")
-      ]),
-      _vm._v(" "),
-      _vm.user && _vm.user.type == "waiter"
-        ? _c("label", { on: { click: _vm.getMeals } }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.currentFilter,
-                  expression: "currentFilter"
-                }
-              ],
-              attrs: { type: "radio", value: "meals" },
-              domProps: { checked: _vm._q(_vm.currentFilter, "meals") },
-              on: {
-                change: function($event) {
-                  _vm.currentFilter = "meals"
-                }
-              }
-            }),
-            _vm._v(" Meals")
-          ])
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("table", { staticClass: "table table-striped" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.data, function(day) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(day.date))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(day[_vm.currentFilter]))])
-          ])
-        })
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Orders")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-17e76fa4", module.exports)
-  }
-}
-
-/***/ }),
-/* 291 */
+/***/ 280:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
-/******/ ]);
+
+/******/ });

@@ -64,4 +64,26 @@ class MealControllerAPI extends Controller
     }
 
       
+        $meals = DB::table('orders')
+            ->join('items', 'items.id', '=', 'orders.item_id')
+            ->join('meals', 'meals.id', '=', 'orders.meal_id')
+            ->select('meals.table_number', 'meals.total_price_preview', 'items.name', 'items.price')
+            ->where('meals.id', $id)
+            ->get();
+
+        return $meals;
+
+    }
+    public function getMealWaiterPerDay(Request $request)
+    {
+        $waiter_meals=DB::table('meals')
+            ->select(DB::raw('count(*) as count, HOUR(start) as hour'))
+            ->whereDate('start', '=', Carbon::now()->toDateString())
+            ->groupBy('hour')
+            ->get();
+        return $waiter_meals;
+
+    }
+
+
 }
