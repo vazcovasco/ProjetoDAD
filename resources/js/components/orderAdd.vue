@@ -13,7 +13,7 @@
             <div class="form-group">
                 <label for="item_id">Item:</label>
                 <select class="form-control" id="item_id" name="item_id" v-model="form.item_id" >
-                    <option v-for="item in items" v-bind:value="item.id"> {{ item.name }} </option>
+                    <option v-for="item in items" v-bind:value="item.id"> {{ item.id }} </option>
                 </select>
 	        </div>
 
@@ -37,6 +37,8 @@
                 meals: [],
                 items: [],
                 form: new Form({
+                    meal_id: '',
+                    item_id: ''
                 })
             }			
 		},
@@ -61,7 +63,7 @@
                 setTimeout(function() {
                     confirmOrder(order);
                 }, 5000);
-            },  
+            }, 
             confirmOrder: function(order){
                 axios.post('api/orders/'+order.id)
                     .then(response=>{

@@ -22,10 +22,10 @@
                     {{restaurant_table.table_number}}</option>
             </select>
         </div>
-        <!--
+        
                 <div class="form-group">
                     <a class="btn btn-success" v-on:click.prevent="startMeal">Start Meal</a>
-                </div>-->
+                </div>
 
         <div class="alert" :class="typeofmsg" v-if="showMessage">
             <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>

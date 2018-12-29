@@ -74493,6 +74493,22 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-success",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.startMeal($event)
+            }
+          }
+        },
+        [_vm._v("Start Meal")]
+      )
+    ]),
+    _vm._v(" "),
     _vm.showMessage
       ? _c("div", { staticClass: "alert", class: _vm.typeofmsg }, [
           _c(
@@ -76192,7 +76208,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             meals: [],
             items: [],
-            form: new __WEBPACK_IMPORTED_MODULE_0_vform___default.a({})
+            form: new __WEBPACK_IMPORTED_MODULE_0_vform___default.a({
+                meal_id: '',
+                item_id: ''
+            })
         };
     },
     methods: {
@@ -76334,7 +76353,7 @@ var render = function() {
           },
           _vm._l(_vm.items, function(item) {
             return _c("option", { domProps: { value: item.id } }, [
-              _vm._v(" " + _vm._s(item.name) + " ")
+              _vm._v(" " + _vm._s(item.id) + " ")
             ])
           })
         )

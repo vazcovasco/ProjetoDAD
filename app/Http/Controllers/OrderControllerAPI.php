@@ -74,7 +74,7 @@ class OrderControllerAPI extends Controller
 
     public function add(Request $request)
     {
-        $current = Carbon::now();
+        /*$current = Carbon::now();
         $order = new Order();
         $order->id = null;
         $order->state = 'pending';
@@ -86,6 +86,14 @@ class OrderControllerAPI extends Controller
         $order->created_at = $current;
         $order->updated_at = $current;
         $order->fill($request->all());
+        $order->save();
+        return response()->json($order, 200);*/
+        $order = new Order();
+        $current = Carbon::now();
+        $order->fill($request->all());
+        $order->state ="pending";
+        $order->created_at = $current;
+        $order->updated_at = $current;
         $order->save();
         return response()->json($order, 200);
     }
