@@ -14,9 +14,7 @@ use App\Http\Controllers\UserControllerAPI;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function(Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get('/user', 'UserControllerAPI@getUser'); 
 
 Route::post('login', 'AuthControllerAPI@login');
 Route::post('register', 'AuthControllerAPI@register');
@@ -28,6 +26,8 @@ Route::post('users', 'UserControllerAPI@add');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::get('users/{id}', 'UserControllerAPI@show');
 Route::put('users', 'UserControllerAPI@edit');
+Route::post('users/changePassword/{id}', 'UserControllerAPI@changePassword');
+
 Route::delete('users', 'UserControllerAPI@destroy');
 Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
 Route::post('users/delete/{id}', 'UserControllerAPI@restoreDestroy');
@@ -51,9 +51,10 @@ Route::get('meals/waiter', 'MealControllerAPI@getMealWaiterPerDay');
 
 
 //ORDERS
-Route::get('orders', 'OrderControllerAPI@getOrders');
+Route::get('orders/{id}', 'OrderControllerAPI@getOrders');
 Route::delete('orders/{id}', 'OrderControllerAPI@delete');
 Route::post('orders/{id}', 'OrderControllerAPI@setState');
+Route::post('orders/{id}', 'OrderControllerAPI@confirmOrder');
 Route::post('orders', 'OrderControllerAPI@add');
 
 Route::get('invoices', 'InvoiceControllerAPI@getInvoices');

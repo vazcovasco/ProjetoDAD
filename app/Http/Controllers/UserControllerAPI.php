@@ -20,9 +20,13 @@ class UserControllerAPI extends Controller
         return User::withTrashed()->get();
     }
 
+    public function getUser(Request $request)
+    {
+        return $request->user();
+    }
+    
     public function add(Request $request)
     {
-
         $user = new User();
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
@@ -72,11 +76,52 @@ class UserControllerAPI extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'email' => 'email|unique:users,email,' . $id,
+        ]);
+
         $user = User::findOrFail($id);
         $user->update($request->all());
         return new UserResource($user);
     }
 
+
+    public function show($id)
+    {
+        return new UserResource(User::find($id));
+    }
+
+    public function changePassword(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $currentPassword = $user->password;
+
+        if (Hash::check($request->input('oldPassword'), $user->password) && ($request->input('newPassword') == $request->input('confirmPassword'))) {
+
+            $user->update([
+                'password' => Hash::make($request->input('newPassword'))
+            ]);
+
+            return response()->json([
+                'message' => 'Password updated'
+            ]);
+
+        } else {
+            return response()->json([
+                'message' => 'Something Went Wrong!!'
+            ]);
+        }
+
+        return $user;
+    }
+/*
+    public function myProfile(Request $request)
+    {
+        return new UserResource($request->user());
+    }
+    
     public function blockUser($id)
     {
         $user = User::findOrFail($id);

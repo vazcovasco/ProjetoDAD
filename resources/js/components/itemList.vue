@@ -15,7 +15,7 @@
 			<td>{{ item.description }}</td>
 			<td>{{ item.price }}</td>
 			<td ><img width="100px" :src="getFoodImage(item.photo_url)"></td>
-			<td>
+				<td v-if="isLoggedIn && isManager">
 				<button @click="editItem(item)">edit</button>
 				<button @click="deleteItem(item)">Delete</button>
 				<a :class="item.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="restoreItem(item)"
@@ -34,7 +34,8 @@
 		props: ["items"],
 		data: function() {
 			return {
-
+		isLoggedIn: this.$store.getters.loggedIn,
+		isManager: this.$store.getters.isManager
 			};
 		},
 		methods: {
