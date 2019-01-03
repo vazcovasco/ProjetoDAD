@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 import axios from 'axios';
 
 Vue.use(Vuex);
-axios.defaults.baseURL = 'http://projetodad.local/';
+axios.defaults.baseURL = 'http://157.230.136.9/';
 
 export default new Vuex.Store({
     state: {

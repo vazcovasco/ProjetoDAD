@@ -68256,7 +68256,7 @@ if (inBrowser && window.Vue) {
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
-__WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projetodad.local/';
+__WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://157.230.136.9/';
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
