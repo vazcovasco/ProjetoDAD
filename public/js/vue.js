@@ -70536,115 +70536,168 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-		data: function data() {
-				return {
-						title: "List Users",
-						editingUser: false,
-						showSuccess: false,
-						showFailure: false,
-						successMessage: "",
-						failMessage: "",
-						currentUser: null,
-						currentUserIndex: -1,
-						users: []
-				};
-		},
-		methods: {
-				editUser: function editUser(user) {
-						this.currentUser = user;
-						this.showSuccess = false;
-				},
-				deleteUser: function deleteUser(user) {
-						var _this = this;
+  data: function data() {
+    return {
+      title: "List Users",
+      editingUser: false,
+      showSuccess: false,
+      showFailure: false,
+      successMessage: "",
+      failMessage: "",
+      currentUser: null,
+      currentUserIndex: -1,
+      users: [],
+      url: "api/users",
+      pagination: []
+    };
+  },
+  methods: {
+    editUser: function editUser(user) {
+      this.currentUser = user;
+      this.showSuccess = false;
+    },
+    deleteUser: function deleteUser(user) {
+      var _this = this;
 
-						axios.delete("api/users/", { params: { id: user.id } }).then(function (response) {
-								_this.showSuccess = true;
-								_this.successMessage = "User Deleted";
-								_this.getUsers();
-						});
-				},
-				saveUser: function saveUser() {
-						this.currentUser = null;
-						this.$refs.usersListRef.editingUser = null;
-						this.showSuccess = true;
-						this.successMessage = "User Saved";
-				},
-				cancelEdit: function cancelEdit() {
-						this.currentUser = null;
-						this.$refs.usersListRef.editingUser = null;
-				},
-				restoreUser: function restoreUser(user) {
-						var _this2 = this;
+      axios.delete("api/users/", { params: { id: user.id } }).then(function (response) {
+        _this.showSuccess = true;
+        _this.successMessage = "User Deleted";
+        _this.getUsers();
+      });
+    },
+    saveUser: function saveUser() {
+      this.currentUser = null;
+      this.$refs.usersListRef.editingUser = null;
+      this.showSuccess = true;
+      this.successMessage = "User Saved";
+    },
+    cancelEdit: function cancelEdit() {
+      this.currentUser = null;
+      this.$refs.usersListRef.editingUser = null;
+    },
+    restoreUser: function restoreUser(user) {
+      var _this2 = this;
 
-						if (user.deleted_at === null) {
-								this.message = "User not Softdeleted";
-						} else {
-								this.message = "User  Softdeleted";
-						}
-						/* axios.post("api/users/delete/" + user.id)
-         .then(response => {
-           // Copy object properties from response.data.data to this.user
-           // without creating a new reference
-           user.deleted_at = !user.deleted_at;
-      	} else {
+      if (user.deleted_at === null) {
+        this.message = "User not Softdeleted";
+      } else {
+        this.message = "User  Softdeleted";
+      }
+      /* axios.post("api/users/delete/" + user.id)
+        .then(response => {
+          // Copy object properties from response.data.data to this.user
+          // without creating a new reference
+          user.deleted_at = !user.deleted_at;
+      } else {
       this.message = 'User  Softdeleted';
       }*/
-						axios.post('api/users/delete/' + user.id).then(function (response) {
-								// Copy object properties from response.data.data to this.user
-								// without creating a new reference
-								user.deleted_at = !user.deleted_at;
+      axios.post("api/users/delete/" + user.id).then(function (response) {
+        // Copy object properties from response.data.data to this.user
+        // without creating a new reference
+        user.deleted_at = !user.deleted_at;
 
-								//Object.assign(user, response.data.data);
-								_this2.$emit('message', _this2.message);
-						}).catch(function (erros) {
-								console.log(erros);
-						});
-				},
-				showPerformance: function showPerformance(id) {
-						this.$router.push("/statistics/orders/" + id);
-				},
+        //Object.assign(user, response.data.data);
+        _this2.$emit("message", _this2.message);
+      }).catch(function (erros) {
+        console.log(erros);
+      });
+    },
+    showPerformance: function showPerformance(id) {
+      this.$router.push("/statistics/orders/" + id);
+    },
 
-				childMessage: function childMessage(message) {
-						this.showSuccess = true;
-						this.successMessage = message;
-				},
-				toggleBlockUser: function toggleBlockUser(user) {
-						var _this3 = this;
+    childMessage: function childMessage(message) {
+      this.showSuccess = true;
+      this.successMessage = message;
+    },
+    toggleBlockUser: function toggleBlockUser(user) {
+      var _this3 = this;
 
-						if (user.blocked === 1) {
-								this.message = 'User Unblocked';
-						} else {
-								this.message = 'User Blocked';
-						}
-						axios.post('api/users/block/' + user.id).then(function (response) {
-								// Copy object properties from response.data.data to this.user
-								// without creating a new reference
-								Object.assign(user, response.data.data);
-								_this3.$emit('update-view', user);
-								_this3.$emit('message', _this3.message);
-						});
-				},
-				getUsers: function getUsers() {
-						var _this4 = this;
+      if (user.blocked === 1) {
+        this.message = "User Unblocked";
+      } else {
+        this.message = "User Blocked";
+      }
+      axios.post("api/users/block/" + user.id).then(function (response) {
+        // Copy object properties from response.data.data to this.user
+        // without creating a new reference
+        Object.assign(user, response.data.data);
+        _this3.$emit("update-view", user);
+        _this3.$emit("message", _this3.message);
+      });
+    },
+    getUsers: function getUsers() {
+      var t = this;
+      axios.get(t.url).then(function (response) {
+        console.log(response);
+        t.users = response.data.data;
+        t.makePagination(response.data);
+      }); // ver a estrutura do json
+    },
+    makePagination: function makePagination(data) {
+      var next = "";
+      var previous = "";
+      if (data.next_page_url != undefined) {
+        next = data.next_page_url.replace("http://projetodad.local/", "");
+      } else {
+        next = data.next_page_url;
+      }
+      if (data.prev_page_url != undefined) {
+        previous = data.prev_page_url.replace("http://projetodad.local/", "");
+      } else {
+        previous = data.prev_page_url;
+      }
 
-						axios.get('api/users').then(function (response) {
-								_this4.users = response.data;
-						}); // ver a estrutura do json
-				}
+      var pagination = {
+        currentPage: data.current_page,
+        lastPage: data.last_page,
+        nextPageUrl: next,
+        previousPageUrl: previous
+      };
 
-		},
-		components: {
-				'user-list': __WEBPACK_IMPORTED_MODULE_1__userList_vue___default.a,
-				'user-edit': __WEBPACK_IMPORTED_MODULE_0__userEdit_vue___default.a
-		},
-		mounted: function mounted() {
-				this.getUsers();
-		}
+      this.pagination = pagination;
+      console.log(this.pagination);
+    },
+    fetchPaginateUsers: function fetchPaginateUsers(url) {
+      console.log(url);
+      this.url = url;
+      this.getUsers();
+    }
+  },
+  components: {
+    "user-list": __WEBPACK_IMPORTED_MODULE_1__userList_vue___default.a,
+    "user-edit": __WEBPACK_IMPORTED_MODULE_0__userEdit_vue___default.a
+  },
+  mounted: function mounted() {
+    this.getUsers();
+  }
 });
 
 /***/ }),
@@ -70793,7 +70846,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$router.push("/users");
     },
     cancelEdit: function cancelEdit() {
-      this.$router.push("/");
+      this.$router.push("/use");
     },
     savePassword: function savePassword(user) {},
     getProfileImage: function getProfileImage(photo_url) {
@@ -71072,7 +71125,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\n\t\tbackground: #123456  !important;\n\t\tcolor: #fff          !important;\n}\n.center[data-v-32d347d4] {\n  text-align: center;\n}\n.button[data-v-32d347d4] {\n  background-color: #4caf50;\n  border: none;\n  color: white;\n  padding: 15px 32px;\n  text-align: center;\n  text-decoration: none;\n  display: inline-block;\n  font-size: 16px;\n  margin: 4px 2px;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\r\n  background: #123456 !important;\r\n  color: #fff !important;\n}\n.center[data-v-32d347d4] {\r\n  text-align: center;\n}\n.button[data-v-32d347d4] {\r\n  background-color: #4caf50;\r\n  border: none;\r\n  color: white;\r\n  padding: 15px 32px;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  display: inline-block;\r\n  font-size: 16px;\r\n  margin: 4px 2px;\r\n  cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -71138,77 +71191,110 @@ exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\n\t\tbackground: #123
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Component code (not registered)
 module.exports = {
-	props: ["users"],
-	data: function data() {
-		return {
-			selectedCategory: '',
-			editingUser: null
-		};
-	},
-	methods: {
-		editUser: function editUser(user) {
-			this.editingUser = user;
-			this.$emit('edit-click', user);
-		},
-		getProfileImage: function getProfileImage(photo_url) {
-			return 'storage/profiles/' + photo_url;
-		},
+  props: ["users"],
+  data: function data() {
+    return {
+      selectedCategory: "",
+      editingUser: null,
+      currentSort: "name",
+      currentSortDir: "asc"
+    };
+  },
+  methods: {
+    editUser: function editUser(user) {
+      this.editingUser = user;
+      this.$emit("edit-click", user);
+    },
+    getProfileImage: function getProfileImage(photo_url) {
+      return "storage/profiles/" + photo_url;
+    },
 
-		deleteUser: function deleteUser(user) {
-			this.$emit('delete-click', user);
-		},
-		restoreUser: function restoreUser(user) {
-			this.$emit('restore-click', user);
-		},
-		toggleBlockUser: function toggleBlockUser(user) {
-			var _this = this;
+    deleteUser: function deleteUser(user) {
+      this.$emit("delete-click", user);
+    },
+    restoreUser: function restoreUser(user) {
+      this.$emit("restore-click", user);
+    },
+    toggleBlockUser: function toggleBlockUser(user) {
+      var _this = this;
 
-			if (user.blocked === 1) {
-				this.message = 'User Unblocked';
-			} else {
-				this.message = 'User Blocked';
-			}
-			axios.post('api/users/block/' + user.id).then(function (response) {
-				// Copy object properties from response.data.data to this.user
-				// without creating a new reference
-				user.blocked = !user.blocked;
-				//Object.assign(user, response.data.data);
-				_this.$emit('message', _this.message);
-			}).catch(function (erros) {
-				console.log(erros);
-			});
-		},
-		showPerformance: function showPerformance(user) {
-			this.$emit('show-performance-click', user.id);
-		}
-	},
-	computed: {
-		filteredUsers: function filteredUsers() {
-			var category = this.selectedCategory;
+      if (user.blocked === 1) {
+        this.message = "User Unblocked";
+      } else {
+        this.message = "User Blocked";
+      }
+      axios.post("api/users/block/" + user.id).then(function (response) {
+        // Copy object properties from response.data.data to this.user
+        // without creating a new reference
+        user.blocked = !user.blocked;
+        //Object.assign(user, response.data.data);
+        _this.$emit("message", _this.message);
+      }).catch(function (erros) {
+        console.log(erros);
+      });
+    },
+    showPerformance: function showPerformance(user) {
+      this.$emit("show-performance-click", user.id);
+    },
+    sort: function sort(s) {
+      //if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+      }
+      this.currentSort = s;
+    }
+  },
+  computed: {
+    filteredUsers: function filteredUsers() {
+      var category = this.selectedCategory;
 
-			if (category === "All") {
+      if (category === "All") {
+        return this.users;
+      }
+      if (category === "Blocked") {
+        return this.users.filter(function (user) {
+          return user.blocked == 1;
+        });
+      }
+      if (category === "SoftDelete") {
+        return this.users.filter(function (user) {
+          return user.deleted_at != null;
+        });
+      }
+      if (!category) {
+        return this.users;
+      }
+    },
+    sortedUsers: function sortedUsers() {
+      var _this2 = this;
 
-				return this.users;
-			}
-			if (category === "Blocked") {
-				return this.users.filter(function (user) {
-					return user.blocked == 1;
-				});
-			}
-			if (category === "SoftDelete") {
-				return this.users.filter(function (user) {
-					return user.deleted_at != null;
-				});
-			}
-			if (!category) {
-				return this.users;
-			}
-		}
-	}
-
+      return this.users.sort(function (a, b) {
+        var modifier = 1;
+        if (_this2.currentSortDir === "desc") modifier = -1;
+        if (a[_this2.currentSort] < b[_this2.currentSort]) return -1 * modifier;
+        if (a[_this2.currentSort] > b[_this2.currentSort]) return 1 * modifier;
+        return 0;
+      });
+    }
+  }
 };
 
 /***/ }),
@@ -71257,7 +71343,7 @@ var render = function() {
             }
           }
         }),
-        _vm._v(" All\n      ")
+        _vm._v(" All\n    ")
       ]),
       _vm._v(" "),
       _c("label", [
@@ -71278,7 +71364,7 @@ var render = function() {
             }
           }
         }),
-        _vm._v(" Blocked\n      ")
+        _vm._v(" Blocked\n    ")
       ]),
       _vm._v(" "),
       _c("label", [
@@ -71299,17 +71385,59 @@ var render = function() {
             }
           }
         }),
-        _vm._v(" Soft Delete\n      ")
+        _vm._v(" Soft Delete\n    ")
       ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "container", attrs: { id: "people" } }, [
       _c("table", { staticClass: "table table-striped" }, [
-        _vm._m(0),
+        _c("thead", [
+          _c("tr", [
+            _c(
+              "th",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.sort("name")
+                  }
+                }
+              },
+              [_vm._v("Name")]
+            ),
+            _vm._v(" "),
+            _c(
+              "th",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.sort("username")
+                  }
+                }
+              },
+              [_vm._v("Username")]
+            ),
+            _vm._v(" "),
+            _c(
+              "th",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.sort("email")
+                  }
+                }
+              },
+              [_vm._v("Email")]
+            ),
+            _vm._v(" "),
+            _c("th", [_vm._v("Photo")]),
+            _vm._v(" "),
+            _c("th", [_vm._v("Actions")])
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.filteredUsers, function(user) {
+          _vm._l((_vm.sortedUsers, _vm.filteredUsers), function(user) {
             return _c(
               "tr",
               { key: user.id, class: { activerow: _vm.editingUser === user } },
@@ -71404,30 +71532,18 @@ var render = function() {
             )
           })
         )
-      ])
+      ]),
+      _vm._v(
+        "\n    debug: sort=" +
+          _vm._s(_vm.currentSort) +
+          ", dir=" +
+          _vm._s(_vm.currentSortDir) +
+          "\n  "
+      )
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Username")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Email")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Photo")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -71450,10 +71566,6 @@ var render = function() {
     [
       _c("div", { staticClass: "jumbotron" }, [
         _c("h1", [_vm._v(_vm._s(_vm.title))])
-      ]),
-      _vm._v(" "),
-      _c("router-link", { attrs: { to: "/users/add" } }, [
-        _c("button", [_vm._v("Add")])
       ]),
       _vm._v(" "),
       _vm.showSuccess
@@ -71486,6 +71598,44 @@ var render = function() {
           "show-performance-click": _vm.showPerformance
         }
       }),
+      _vm._v(" "),
+      _c("div", { staticClass: "pagination" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default",
+            attrs: { disabled: !_vm.pagination.previousPageUrl },
+            on: {
+              click: function($event) {
+                _vm.fetchPaginateUsers(_vm.pagination.previousPageUrl)
+              }
+            }
+          },
+          [_vm._v("Previous")]
+        ),
+        _vm._v(" "),
+        _c("span", [
+          _vm._v(
+            _vm._s(_vm.pagination.currentPage) +
+              " of " +
+              _vm._s(_vm.pagination.lastPage)
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-default",
+            attrs: { disabled: !_vm.pagination.nextPageUrl },
+            on: {
+              click: function($event) {
+                _vm.fetchPaginateUsers(_vm.pagination.nextPageUrl)
+              }
+            }
+          },
+          [_vm._v("Next")]
+        )
+      ]),
       _vm._v(" "),
       _vm.currentUser
         ? _c("user-edit", {
@@ -76531,6 +76681,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -76598,7 +76752,33 @@ var render = function() {
               [
                 _c(
                   "router-link",
-                  { staticClass: "button", attrs: { to: "/users" } },
+                  { staticClass: "button", attrs: { to: "/invoices" } },
+                  [_vm._v("Invoices")]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              [
+                _c(
+                  "router-link",
+                  { staticClass: "button", attrs: { to: "/staistics" } },
+                  [_vm._v("Statistics")]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "td",
+              [
+                _c(
+                  "router-link",
+                  { staticClass: "button", attrs: { to: "/invoices" } },
                   [_vm._v("Other")]
                 )
               ],

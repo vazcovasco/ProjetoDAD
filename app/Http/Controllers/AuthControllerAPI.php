@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Mail;
 
 class AuthControllerAPI extends Controller
 {
@@ -35,13 +36,13 @@ class AuthControllerAPI extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        $validation = $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
         ]);
 
-        return User::create([
+        $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
@@ -49,6 +50,13 @@ class AuthControllerAPI extends Controller
             'photo' => $request->photo,
             'type' => $request->type
         ]);
+        
+        Mail::send('mail.activation', ['user' => $user], function($message) use ($user) {
+            $message->to($user['email']);
+            $message->subject('Projeto DAD - Account Activation');
+        });
+
+        return $user; 
     }
 
     public function logout()

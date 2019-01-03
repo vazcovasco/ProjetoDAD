@@ -17,7 +17,8 @@ class UserControllerAPI extends Controller
 {
     public function getUsers(Request $request)
     {
-        return User::withTrashed()->get();
+        $users = User::orderBy('id', 'DESC')->paginate(5);
+        return response()->json($users);
     }
 
     public function getUser(Request $request)
