@@ -117,12 +117,7 @@ class UserControllerAPI extends Controller
 
         return $user;
     }
-/*
-    public function myProfile(Request $request)
-    {
-        return new UserResource($request->user());
-    }
-    
+
     public function blockUser($id)
     {
         $user = User::findOrFail($id);
@@ -134,6 +129,13 @@ class UserControllerAPI extends Controller
         $user->save();
         return response()->json($user, 200);
     }
+/*
+    public function myProfile(Request $request)
+    {
+        return new UserResource($request->user());
+    }
+    
+    
 
     public function myProfile(Request $request)
     {
