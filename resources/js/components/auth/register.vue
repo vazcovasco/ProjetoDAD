@@ -74,7 +74,7 @@
     </div>
 
     <div class="form-group">
-      <button class="btn btn-primary"  v-on:click.prevent="register()">Login</button>
+      <button class="btn btn-primary"  v-on:click.prevent="register()">Register</button>
       <button class="btn btn-light" v-on:click.prevent="cancel()">Cancel</button>
     </div>
   </div>
@@ -139,8 +139,9 @@ export default {
           type: this.user.type
         })
         .then(response => {
-          this.$store.dispatch("setUser");
-          this.$router.push("/");
+          this.typeofmsg = "alert-success";
+          this.message = "Email sent to new user";
+          this.showMessage = true;
         })
         .catch(err => {
           this.typeofmsg = "alert-danger";

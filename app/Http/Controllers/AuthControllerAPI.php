@@ -6,11 +6,20 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Mail;
+use App\Http\Resources\User as UserResource;
 
 class AuthControllerAPI extends Controller
 {
     public function login(Request $request)
     {
+
+        $user = User::where($request->loginByUsername ? 'username' : 'email', $request->credential)->first();
+
+        if(!$user)
+        {
+            return response()->json(['error: No user found'], 422);
+        }
+
         $http = new \GuzzleHttp\Client;
 
         try {
@@ -19,7 +28,7 @@ class AuthControllerAPI extends Controller
                     'grant_type' => 'password',
                     'client_id' => config('services.passport.client_id'),
                     'client_secret' => config('services.passport.client_secret'),
-                    'username' => $request->email,
+                    'username' => $user->email,
                     'password' => $request->password,
                 ]
             ]);
@@ -40,13 +49,14 @@ class AuthControllerAPI extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|min:3'
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => bcrypt($request->password),
             'photo' => $request->photo,
             'type' => $request->type
         ]);
@@ -56,7 +66,7 @@ class AuthControllerAPI extends Controller
             $message->subject('Projeto DAD - Account Activation');
         });
 
-        return $user; 
+        return new UserResource($user); 
     }
 
     public function logout()

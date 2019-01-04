@@ -68300,6 +68300,7 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
                     name: data.name,
                     username: data.username,
                     email: data.email,
+                    password: data.password,
                     photo: data.photo,
                     type: data.type
                 }).then(function (response) {
@@ -68336,11 +68337,7 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
         },
         retrieveToken: function retrieveToken(context, credentials) {
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('api/login', {
-                    username: credentials.username,
-                    email: credentials.email,
-                    password: credentials.password
-                }).then(function (response) {
+                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('api/login', credentials).then(function (response) {
                     var token = response.data.access_token;
                     localStorage.setItem('access_token', token);
                     context.commit('retrieveToken', token);
@@ -68376,6 +68373,9 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
                     reject(error);
                 });
             });
+        },
+        setShift: function setShift(context) {
+            return new Promise(function (resolve, reject) {});
         }
     }
 }));
@@ -71205,7 +71205,6 @@ exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\r\n  background: #123
 //
 //
 //
-//
 
 // Component code (not registered)
 module.exports = {
@@ -71532,14 +71531,7 @@ var render = function() {
             )
           })
         )
-      ]),
-      _vm._v(
-        "\n    debug: sort=" +
-          _vm._s(_vm.currentSort) +
-          ", dir=" +
-          _vm._s(_vm.currentSortDir) +
-          "\n  "
-      )
+      ])
     ])
   ])
 }
@@ -72193,8 +72185,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         photo: this.user.photo,
         type: this.user.type
       }).then(function (response) {
-        _this.$store.dispatch("setUser");
-        _this.$router.push("/");
+        _this.typeofmsg = "alert-success";
+        _this.message = "Email sent to new user";
+        _this.showMessage = true;
       }).catch(function (err) {
         _this.typeofmsg = "alert-danger";
         _this.message = "Invalid Credentials";
@@ -72443,7 +72436,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Login")]
+        [_vm._v("Register")]
       ),
       _vm._v(" "),
       _c(
@@ -72583,16 +72576,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      email: "",
-      username: "",
-      password: "",
-      loginByUsername: false,
+      loginData: {
+        credential: '',
+        password: '',
+        loginByUsername: false
+      },
       typeofmsg: 'alert-success',
       showMessage: false,
       message: ''
@@ -72602,11 +72594,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     login: function login() {
       var _this = this;
 
-      this.$store.dispatch("retrieveToken", {
-        username: this.username,
-        email: this.email,
-        password: this.password
-      }).then(function (response) {
+      this.$store.dispatch("retrieveToken", this.loginData).then(function (response) {
         _this.$store.dispatch("setUser");
         _this.$router.push("/");
       }).catch(function (err) {
@@ -72616,7 +72604,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     changeLoginType: function changeLoginType() {
-      this.loginByUsername = !this.loginByUsername;
+      this.loginData.loginByUsername = !this.loginData.loginByUsername;
+      this.loginData.credential = '';
     }
   }
 });
@@ -72664,7 +72653,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        !_vm.loginByUsername
+        !_vm.loginData.loginByUsername
           ? _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "inputEmail" } }, [_vm._v("Email")]),
               _vm._v(" "),
@@ -72673,8 +72662,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model.trim",
-                    value: _vm.email,
-                    expression: "email",
+                    value: _vm.loginData.credential,
+                    expression: "loginData.credential",
                     modifiers: { trim: true }
                   }
                 ],
@@ -72685,13 +72674,17 @@ var render = function() {
                   id: "inputEmail",
                   placeholder: "Email address"
                 },
-                domProps: { value: _vm.email },
+                domProps: { value: _vm.loginData.credential },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.email = $event.target.value.trim()
+                    _vm.$set(
+                      _vm.loginData,
+                      "credential",
+                      $event.target.value.trim()
+                    )
                   },
                   blur: function($event) {
                     _vm.$forceUpdate()
@@ -72701,7 +72694,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm.loginByUsername
+        _vm.loginData.loginByUsername
           ? _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "inputUsername" } }, [
                 _vm._v("Username")
@@ -72712,8 +72705,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model.trim",
-                    value: _vm.username,
-                    expression: "username",
+                    value: _vm.loginData.credential,
+                    expression: "loginData.credential",
                     modifiers: { trim: true }
                   }
                 ],
@@ -72724,13 +72717,17 @@ var render = function() {
                   id: "inputUsername",
                   placeholder: "Username"
                 },
-                domProps: { value: _vm.username },
+                domProps: { value: _vm.loginData.credential },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.username = $event.target.value.trim()
+                    _vm.$set(
+                      _vm.loginData,
+                      "credential",
+                      $event.target.value.trim()
+                    )
                   },
                   blur: function($event) {
                     _vm.$forceUpdate()
@@ -72750,19 +72747,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.password,
-                expression: "password"
+                value: _vm.loginData.password,
+                expression: "loginData.password"
               }
             ],
             staticClass: "form-control",
             attrs: { type: "password", name: "password", id: "inputPassword" },
-            domProps: { value: _vm.password },
+            domProps: { value: _vm.loginData.password },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.password = $event.target.value
+                _vm.$set(_vm.loginData, "password", $event.target.value)
               }
             }
           })
@@ -72771,23 +72768,17 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          !_vm.loginByUsername
+          !_vm.loginData.loginByUsername
             ? _c(
                 "a",
                 { attrs: { href: "#" }, on: { click: _vm.changeLoginType } },
                 [_vm._v("Login By Username")]
               )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _vm.loginByUsername
-            ? _c(
+            : _c(
                 "a",
                 { attrs: { href: "#" }, on: { click: _vm.changeLoginType } },
                 [_vm._v("Login By Email")]
               )
-            : _vm._e()
         ])
       ]
     )

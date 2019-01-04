@@ -48,6 +48,7 @@ export default new Vuex.Store({
                     name: data.name,
                     username: data.username,
                     email: data.email,
+                    password: data.password,
                     photo: data.photo,
                     type: data.type,
                 })
@@ -88,11 +89,7 @@ export default new Vuex.Store({
         },
         retrieveToken(context, credentials) {
             return new Promise((resolve, reject) => {
-                axios.post('api/login', {
-                    username: credentials.username,
-                    email: credentials.email,
-                    password: credentials.password
-                })
+                axios.post('api/login', credentials)
                     .then(response => {
                         const token = response.data.access_token;
                         localStorage.setItem('access_token', token);
@@ -131,5 +128,10 @@ export default new Vuex.Store({
                 });
             });
         },
+        setShift(context) {
+            return new Promise((resolve, reject) => {
+                
+            });
+        }
     }
 });
