@@ -8,24 +8,24 @@
         <strong>{{ message }}</strong>
       </div>
 
-      <div v-if="!loginByUsername" class="form-group">
+      <div v-if="!loginData.loginByUsername" class="form-group">
         <label for="inputEmail">Email</label>
         <input
           type="email"
           class="form-control"
-          v-model.trim="email"
+          v-model.trim="loginData.credential"
           name="email"
           id="inputEmail"
           placeholder="Email address"
         >
       </div>
 
-      <div v-if="loginByUsername" class="form-group">
+      <div v-if="loginData.loginByUsername" class="form-group">
         <label for="inputUsername">Username</label>
         <input
           type="username"
           class="form-control"
-          v-model.trim="username"
+          v-model.trim="loginData.credential"
           name="username"
           id="inputUsername"
           placeholder="Username"
@@ -37,7 +37,7 @@
         <input
           type="password"
           class="form-control"
-          v-model="password"
+          v-model="loginData.password"
           name="password"
           id="inputPassword"
         >
@@ -48,12 +48,10 @@
       </div>
 
       <div class="form-group">
-        <a href="#" v-if="!loginByUsername" @click="changeLoginType">Login By Username</a>
+        <a href="#" v-if="!loginData.loginByUsername" @click="changeLoginType">Login By Username</a>
+        <a href="#" v-else @click="changeLoginType">Login By Email</a>
       </div>
 
-      <div class="form-group">
-        <a href="#" v-if="loginByUsername" @click="changeLoginType">Login By Email</a>
-      </div>
     </form>
   </div>
 </template>
@@ -62,10 +60,11 @@
 export default {
   data: function() {
     return {
-      email: "",
-      username: "",
-      password: "",
-      loginByUsername: false,
+      loginData:{
+        credential: '',
+        password: '',
+        loginByUsername: false
+      },
       typeofmsg: 'alert-success',
       showMessage: false,
       message: ''
@@ -74,11 +73,7 @@ export default {
   methods: {
     login() {
       this.$store
-        .dispatch("retrieveToken", {
-          username: this.username,
-          email: this.email,
-          password: this.password
-        })
+        .dispatch("retrieveToken", this.loginData)
         .then(response => {
           this.$store.dispatch("setUser");
           this.$router.push("/");
@@ -90,7 +85,8 @@ export default {
         });
     },
     changeLoginType() {
-      this.loginByUsername = !this.loginByUsername;
+      this.loginData.loginByUsername = !this.loginData.loginByUsername;
+      this.loginData.credential = '';
     }
   }
 };

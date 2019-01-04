@@ -65,7 +65,6 @@
           </tr>
         </tbody>
       </table>
-      debug: sort={{currentSort}}, dir={{currentSortDir}}
     </div>
   </div>
 </template>
