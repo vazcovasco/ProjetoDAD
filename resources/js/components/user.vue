@@ -9,6 +9,16 @@
       <strong>{{ successMessage }}</strong>
     </div>
 
+    <div>
+      <table class="table">
+        <tbody class="center">
+          <tr>
+            <router-link class="button" to="/register">Register New User</router-link>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <user-list
       :users="users"
       @delete-click="deleteUser"

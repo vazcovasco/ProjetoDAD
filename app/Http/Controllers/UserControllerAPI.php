@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\StoreUserRequest;
 use Hash;
+use Carbon\Carbon;
 
 
 class UserControllerAPI extends Controller
@@ -25,7 +26,7 @@ class UserControllerAPI extends Controller
     {
         return $request->user();
     }
-    
+
     public function add(Request $request)
     {
         $user = new User();
@@ -58,9 +59,9 @@ class UserControllerAPI extends Controller
             ->where('meals.responsible_waiter_id', $id)
             ->count();
 
-        if($orders != 0 or $meals!=0){
+        if ($orders != 0 or $meals != 0) {
             $user->delete();
-        }else{
+        } else {
             $user->forceDelete();
         }
 
@@ -118,6 +119,49 @@ class UserControllerAPI extends Controller
         return $user;
     }
 
+    public function changeShiftActive(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        if($user->shift_active == 1) {
+            $user->shift_active = 0;
+        } else {
+            $user->shift_active = 1;
+        }
+
+        $user->update([
+            'shift_active' => $user->shift_active
+        ]);
+
+        return $user;
+    }
+
+    public function changeLastShiftStart(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->last_shift_start = Carbon::now();
+
+        $user->update([
+            'last_shift_start' => $user->last_shift_start
+        ]);
+
+        return $user;
+    }
+
+    public function changeLastShiftEnd(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->last_shift_end = Carbon::now();
+
+        $user->update([
+            'last_shift_end' => $user->last_shift_end
+        ]);
+
+        return $user;
+    }
+
     public function blockUser($id)
     {
         $user = User::findOrFail($id);
@@ -157,7 +201,7 @@ class UserControllerAPI extends Controller
         $user->save();
         return response()->json(new UserResource($user), 201);
     }
- */
+     */
 
     /*  public function emailAvailable(Request $request)
      {

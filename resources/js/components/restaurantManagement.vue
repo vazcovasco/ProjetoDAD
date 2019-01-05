@@ -15,7 +15,7 @@
                 </tr>
                 <tr>
                     <td><router-link class="button" to="/staistics">Statistics</router-link></td>
-                    <td><router-link class="button" to="/invoices">Other</router-link></td>
+                    <td><router-link class="button" to="/items">Items</router-link></td>
                 </tr>
             </tbody>
         </table>

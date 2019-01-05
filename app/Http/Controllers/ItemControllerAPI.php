@@ -13,8 +13,8 @@ class ItemControllerAPI extends Controller
 {
     public function getItems(Request $request)
     {
-        return Item::withTrashed()->get();
-
+        $items = Item::orderBy('id', 'DESC')->paginate(5);
+        return response()->json($items);
     }
     public function add(Request $request)
     {
@@ -62,5 +62,14 @@ class ItemControllerAPI extends Controller
         Item::withTrashed()->find($id)->restore();
 
         return response()->json(null, 204);;
+    }
+
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $filename = $request->file->getClientOriginalName();
+
+            return $request->file->storeAs('public/items', $filename);
+        }
     }
 }

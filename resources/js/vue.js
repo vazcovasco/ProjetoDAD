@@ -7,6 +7,7 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
+
 import store from '../store/store.js';
 
 //-------------------------ITEM----------------------------------------------
@@ -40,6 +41,7 @@ const orderList = Vue.component('order-list', require('./components/orderList.vu
 const orderAdd = Vue.component('order-add', require('./components/orderAdd.vue'));
 //-------------------------RESTAURANT-----------------------------------------
 const rm = Vue.component('rm', require('./components/restaurantManagement.vue'));
+const shift = Vue.component('shift', require('./components/shift.vue'));
 
 //-------------------------Statistics----------------------------------------------
 const statistics = Vue.component('statistics', require('./components/statistics.vue'));
@@ -149,6 +151,13 @@ const routes = [
         }
     },
     {
+        path: '/shift',
+        component: shift,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
         path: '/changePassword',
         component: changePassword,
         meta: {
@@ -198,5 +207,10 @@ const app = new Vue({
         orders: []
     },
     store,
+    computed: {
+        user() {
+            return this.$store.state.user;
+        }
+    }
 
 }).$mount('#app');

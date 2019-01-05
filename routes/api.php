@@ -27,6 +27,9 @@ Route::put('users/{id}', 'UserControllerAPI@update');
 Route::get('users/{id}', 'UserControllerAPI@show');
 Route::put('users', 'UserControllerAPI@edit');
 Route::post('users/changePassword/{id}', 'UserControllerAPI@changePassword');
+Route::post('users/changeShiftActive/{id}', 'UserControllerAPI@changeShiftActive');
+Route::post('users/changeLastShiftStart/{id}', 'UserControllerAPI@changeLastShiftStart');
+Route::post('users/changeLastShiftEnd/{id}', 'UserControllerAPI@changeLastShiftEnd');
 
 Route::delete('users', 'UserControllerAPI@destroy');
 Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
@@ -35,6 +38,7 @@ Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 
 /*-------------------PHOTO---------------------------*/
 Route::post('upload', 'UserControllerAPI@upload');
+Route::post('uploadItemPhoto', 'ItemControllerAPI@upload');
 
 /*-------------------ITEMS---------------------------*/
 Route::get('items', 'ItemControllerAPI@getItems');
