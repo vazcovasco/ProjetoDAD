@@ -60,6 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
+<<<<<<< HEAD
 /******/ 	return __webpack_require__(__webpack_require__.s = 153);
 /******/ })
 /************************************************************************/
@@ -78759,84 +78760,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ }),
 /* 295 */
 /***/ (function(module, exports, __webpack_require__) {
+=======
+/******/ 	return __webpack_require__(__webpack_require__.s = 155);
+/******/ })
+/************************************************************************/
+/******/ ({
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "jumbotron" }, [
-      _c("h1", [_vm._v(_vm._s(_vm.title))]),
-      _vm._v(" "),
-      _c("table", { staticClass: "table table-striped" }, [
-        _c("tbody", { staticClass: "center" }, [
-          _c("tr", [
-            _c(
-              "td",
-              [
-                _c(
-                  "router-link",
-                  { staticClass: "button", attrs: { to: "/users" } },
-                  [_vm._v("Users")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "td",
-              [
-                _c(
-                  "router-link",
-                  { staticClass: "button", attrs: { to: "/orders" } },
-                  [_vm._v("Orders")]
-                )
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c(
-              "td",
-              [
-                _c(
-                  "router-link",
-                  { staticClass: "button", attrs: { to: "/meals" } },
-                  [_vm._v("Meals")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "td",
-              [
-                _c(
-                  "router-link",
-                  { staticClass: "button", attrs: { to: "/users" } },
-                  [_vm._v("Other")]
-                )
-              ],
-              1
-            )
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-700dd7aa", module.exports)
-  }
-}
+/***/ 155:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(156);
+module.exports = __webpack_require__(316);
+>>>>>>> master
+
 
 /***/ }),
+<<<<<<< HEAD
 /* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -79302,9 +79241,22 @@ if (false) {
 
 /***/ }),
 /* 304 */
+=======
+
+/***/ 156:
+/***/ (function(module, __webpack_exports__) {
+
+"use strict";
+throw new Error("Module build failed: SyntaxError: C:/DAD/ProjetoDAD/resources/js/vue.js: Unexpected token (189:0)\n\n\u001b[0m \u001b[90m 187 | \u001b[39m        component\u001b[33m:\u001b[39m invoiceEdit\n \u001b[90m 188 | \u001b[39m    }\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 189 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 190 | \u001b[39m    {\n \u001b[90m 191 | \u001b[39m        path\u001b[33m:\u001b[39m \u001b[32m'/restaurantTables'\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 192 | \u001b[39m        component\u001b[33m:\u001b[39m r_tables\u001b[0m\n");
+
+/***/ }),
+
+/***/ 316:
+>>>>>>> master
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
-/******/ ]);
+
+/******/ });

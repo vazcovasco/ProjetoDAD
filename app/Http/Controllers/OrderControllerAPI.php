@@ -11,6 +11,9 @@ use App\Meal;
 use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Lcobucci\JWT\FunctionalTests\UnsignedTokenTest;
+use Auth;
+//use DB;
 
 
 class OrderControllerAPI extends Controller
@@ -20,7 +23,13 @@ class OrderControllerAPI extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getOrders()
+
+    public function getAll()
+    {
+        return Order::all();
+    }
+
+    public function getOrders(Request $request, $id)
     {
 
         $orders = DB::table('orders')
@@ -36,30 +45,16 @@ class OrderControllerAPI extends Controller
             ->get();
         return $orders;
     }
+    
     //para os waiters
     public function getOrdersWaiter(Request $request, $id)
     {
         $orders = DB::table('orders')
-            ->select('orders.id', 'orders.state', 'orders.item_id', 'orders.responsible_cook_id' ,'orders.meal_id','orders.start','orders.end','orders.created_at','orders.updated_at')
-            ->join('users', 'orders.responsible_cook_id', '=', 'users.id')
             ->join('meals', 'orders.meal_id', '=', 'meals.id')
+            ->select('orders.*')
             ->where([
                 ['meals.responsible_waiter_id', $id],
                 ['meals.state', 'active'],
-                ['meals.id', '=', 'orders.meal_id'],
-                ['orders.state', 'pending']
-            ])
-            ->orWhere([
-                ['meals.responsible_waiter_id', $id],
-                ['meals.state', 'active'],
-                ['meals.id', '=', 'orders.meal_id'],
-                ['orders.state', 'confirmed']
-            ])
-            ->orWhere([
-                ['meals.responsible_waiter_id', $id],
-                ['meals.state', 'active'],
-                ['meals.id', '=', 'orders.meal_id'],
-                ['orders.state', 'prepared']
             ])
             ->orderBy('state', 'DESC')
             ->orderBy('start', 'ASC')
@@ -69,17 +64,12 @@ class OrderControllerAPI extends Controller
 
     public function add(Request $request)
     {
-        $current = Carbon::now();
         $order = new Order();
-        $order->id = null;
-        $order->state = 'pending';
-        $order->item_id = null;
-        $order->meal_id= null;
-        $order->responsible_cook_id = null;
-        $order->start = $current;
-        $order->end = null;
+        $current = Carbon::now();
+        $order->state ='pending';
         $order->created_at = $current;
         $order->updated_at = $current;
+        $order->start = $current;
         $order->fill($request->all());
         $order->save();
         return response()->json($order, 200);
@@ -107,24 +97,33 @@ class OrderControllerAPI extends Controller
         //
     }
 
-    public function setState($id)
+    public function setState(Request $request, $id) 
     {
-        $order = order::findOrFail($id);
-        if($order->state === 'confirmed'){
-            $order->state = 'in preparation';
-        } else if ($order->state === 'in preparation') {
-            $order->state = 'prepared';
-        } else if ($order->state === 'prepared') {
-            $order->state = 'delivered';
-        } else if ($order->state === 'delivered') {
+        //$user = Auth::user();
+        $current = Carbon::now();   
+        $order = Order::findOrFail($id);
+        if ($order->state === 'pending') {
             $order->state = 'confirmed';
         }
+        else if($order->state === 'confirmed'){
+            $order->state = 'in preparation';
+            $order->updated_at = $current;
+            $order->responsible_cook_id = $request->id;
+        } else if ($order->state === 'in preparation') {
+            $order->state = 'prepared';
+            $order->updated_at = $current;
+        } else if ($order->state === 'prepared') {
+            $order->state = 'delivered';
+            $order->updated_at = $current;
+            $order->end = $current;
+        } 
         $order->save();
         return response()->json($order,200);
+        
     }
-    public function confirmOrder($id)
+    public function confirmOrder(Request $request, $id)
     {
-        $order = order::findOrFail($id);
+        $order = Order::findOrFail($id);
         if($order->state === 'pending'){
             $order->state = 'confirmed';
         }

@@ -9,7 +9,15 @@ class Order extends Model
 {
     use Notifiable;
     protected $fillable = [
+        'id',
         'state',
+        'item_id',
+        'meal_id',
+        'responsible_cook_id',
+        'start',
+        'end',
+        'created_at',
+        'updated_at',
     ];
 
     public function meals()

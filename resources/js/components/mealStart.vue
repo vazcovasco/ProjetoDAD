@@ -22,7 +22,7 @@
                     {{table}}</option>
             </select>
         </div>
-
+        
                 <div class="form-group">
                     <a class="btn btn-success" v-on:click.prevent="CreateMeal">Start Meal</a>
                 </div>

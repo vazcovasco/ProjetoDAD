@@ -38,7 +38,7 @@
 		},
 		methods: {
 			getMeals: function(){
-				axios.get('api/meals')
+				axios.get('api/meals/get/'+this.$store.state.user.id)
 						.then(response=>{this.meals = response.data;});
 			},
 			getRestaurantTables: function(){

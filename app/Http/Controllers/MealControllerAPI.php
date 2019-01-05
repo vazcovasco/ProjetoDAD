@@ -12,9 +12,32 @@ use Carbon\Carbon;
 
 class MealControllerAPI extends Controller
 {
-    public function getMeals(Request $request)
+    public function get()
     {
         return Meal::all();
+
+    }
+    public function getMeals(Request $request, $id)
+    {
+        //return Meal::all();
+        $meals = DB::table('meals')
+            ->select('meals.*')
+            ->where('meals.responsible_waiter_id', $id)
+            ->get();
+        return $meals;
+
+    }
+    public function getMyActiveMeals(Request $request, $id)
+    {
+        //return Meal::all();
+        $meals = DB::table('meals')
+            ->select('meals.*')
+            ->where([
+                ['meals.responsible_waiter_id', $id],
+                ['meals.state', 'active'],
+            ])
+            ->get();
+        return $meals;
 
     }
     public function add(Request $request)
@@ -52,6 +75,23 @@ class MealControllerAPI extends Controller
         $meals = Meal::findOrFail($id);
 
 
+        return $meals;
+
+    }
+
+    public function getMeal(Request $request, $id)
+    {
+        //return Meal::all();
+        $meals = DB::table('meals')
+            ->join('restaurant_tables', 'meals.table_number', '=', 'restaurant_tables.table_number')
+            ->select('meals.*')
+            ->where('meals.table_number', $id)
+            ->get();
+        return $meals;
+
+    }
+/*
+      
         $meals = DB::table('orders')
             ->join('items', 'items.id', '=', 'orders.item_id')
             ->join('meals', 'meals.id', '=', 'orders.meal_id')
@@ -79,7 +119,7 @@ class MealControllerAPI extends Controller
             ->select(DB::raw('DATE(start) as date'), DB::raw('count(*) as meals'))
             ->get();
 
-    }
+    }*/
 
     $sum = 0;
 
