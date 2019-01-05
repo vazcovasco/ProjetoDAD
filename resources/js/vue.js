@@ -44,6 +44,12 @@ const rm = Vue.component('rm', require('./components/restaurantManagement.vue'))
 //-------------------------Statistics----------------------------------------------
 const statistics = Vue.component('statistics', require('./components/statistics.vue'));
 
+//--------------------------Tables-------------------------------------------------------
+const r_tables = Vue.component('tables', require('./components/restaurantTables.vue'));
+const r_tablesList = Vue.component('tables-list', require('./components/restaurantTablesList.vue'));
+const r_tablesAdd = Vue.component('tables-add', require('./components/restaurantTablesAdd.vue'));
+const r_tablesShow = Vue.component('tables-show', require('./components/restaurantTablesShow.vue'));
+const r_tablesEdit = Vue.component('tables-edit', require('./components/restaurantTablesEdit.vue'));
 
 const routes = [
     {
@@ -116,7 +122,7 @@ const routes = [
         }
     },
     {
-        path: '/meals/:id',
+        path: '/meals/show/:id',
         component: mealShow
     },
     {
@@ -133,6 +139,7 @@ const routes = [
     {
         path: '/statistics/orders/:id',
         component: statistics
+    },
     {
         path: '/orders/add',
         component: orderAdd,
@@ -170,7 +177,22 @@ const routes = [
         path: '/invoices/:id',
         component: invoiceEdit
     },
-
+    {
+        path: '/restaurantTables',
+        component: r_tables
+    },
+    {
+        path: '/restaurantTables/add',
+        component: r_tablesAdd
+    },
+    {
+        path: '/restaurantTables/show/:table_number',
+        component: r_tablesShow
+    },
+    {
+        path: '/restaurantTables/edit/:table_number',
+        component: r_tablesEdit
+    }
 
 
 ];

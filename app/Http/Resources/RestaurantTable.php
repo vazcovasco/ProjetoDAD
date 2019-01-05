@@ -16,6 +16,8 @@ class RestaurantTable extends JsonResource
     {
         return [
             'table_number' => $this->table_number,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
 
         ];
     }

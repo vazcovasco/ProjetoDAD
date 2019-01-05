@@ -23,7 +23,9 @@
 
 	export default {
 		data: function(){
+			//user: this.$store.
 			return {
+				id: '',
 				title: 'List of Orders',
 				showSuccess: false,
 				successMessage: '',
@@ -48,24 +50,24 @@
 				} else {
 					this.message = 'Order is pending';
 				}
-				axios.post('api/orders/'+order.id)
+				axios.post('api/orders/setState/'+order.id, {id: this.$store.state.user.id}/*this.$store.state.user.id*/)
 						.then(response=>{
+							console.log("teste");
 							// Copy object properties from response.data.data to this.user
 							// without creating a new reference
 							if (order.state === 'pending') {
 								order.state = 'confirmed';
 							} else if(order.state === 'confirmed'){
 								order.state = 'in preparation';
+								order.resonpible_cook_id = this.$store.state.user.id;
 							} else if(order.state === 'in preparation'){
 								order.state = 'prepared';
 							} else if (order.state === 'prepared') {
 								order.state = 'delivered';
-							} else if(order.state === 'delivered'){
-								order.state = 'not delivered';
 							}
-							Object.assign(order, response.data.data);
-
+							//Object.assign(order, response.data.data);
 							this.$emit('message', this.message)
+							this.getOrders();
 						})
 						.catch(erros => {
 							console.log(erros);
@@ -79,26 +81,34 @@
 							this.getOrders();
 						});
 			},
-			/*savedOrder: function(){
-                this.currentOrder = null;
-                this.$refs.ordersListRef.editingOrder = null;
-                this.showSuccess = true;
-                this.successMessage = 'Order Saved';
-            },*/
 	        getOrders: function(){
-				console.log(this.$store.state.user.id);
-                axios.get('/api/orders/'+this.$store.state.user.id).then(response=>{
-				this.orders = response.data;})
-				.catch(error=>{
-					this.showFailure = true;
-					this.failMessage = 'Error while fetching the existing orders!';
-				});
-				//console.log(order);
+				//this.user = [];
+				//this.user = this.$store.state.user;
+				console.log(this.$store.state.user.type);
+				//se o user for waiter
+				if (this.$store.state.user.type == 'waiter'){
+					axios.get('/api/orders/waiter/'+this.$store.state.user.id).then(response=>{
+					this.orders = response.data;})
+					.catch(error=>{
+						this.showFailure = true;
+						this.failMessage = 'Error while fetching the existing orders!';
+					});
+				}
+				//se o user for cook
+				if (this.$store.state.user.type == 'cook'){
+					axios.get('/api/orders/'+this.$store.state.user.id).then(response=>{
+					this.orders = response.data;})
+					.catch(error=>{
+						this.showFailure = true;
+						this.failMessage = 'Error while fetching the existing orders!';
+					});
+					//console.log(order);
+				}
 			},
 			childMessage: function(message){
 				this.showSuccess = true;
 				this.successMessage = message;
-			}
+			},
 	    },
 	   	components: {
 	    	'order-list': OrderList,
