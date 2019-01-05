@@ -13,10 +13,12 @@
             <li style="float:right" class="active" v-if="this.$store.getters.loggedIn"><router-link to="/logout">Logout</router-link></li>
             <li><router-link to="/invoices">invoices</router-link></li>
             <li><router-link to="/orders">orders</router-link></li>
-            <li><router-link to="/statistics">statistics</router-link></li>
+            <li><router-link to="/users">users</router-link></li>
+            <li><router-link to="/meals">meals</router-link></li>
+
         </ul>
-    <div>
-        <shift v-if="this.$store.getters.loggedIn"></shift>
+   <div>
+        <shift :user="user" v-if="this.$store.getters.loggedIn" ></shift>
     </div>
         <router-view></router-view>
 

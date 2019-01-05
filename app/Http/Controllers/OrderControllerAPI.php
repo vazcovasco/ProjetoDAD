@@ -11,7 +11,7 @@ use App\Meal;
 use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-//use DB;
+
 
 class OrderControllerAPI extends Controller
 {
@@ -20,26 +20,21 @@ class OrderControllerAPI extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getOrders(Request $request, $id)
+    public function getOrders()
     {
+
         $orders = DB::table('orders')
-            ->select('orders.id', 'orders.state', 'orders.item_id', 'orders.responsible_cook_id' ,'orders.meal_id','orders.start','orders.end','orders.created_at','orders.updated_at')
-            ->join('users', 'orders.responsible_cook_id', '=', 'users.id')
-            ->where('orders.responsible_cook_id', 46)
-            ->get();
-        return $orders;
-        /*$orders = DB::table('orders')
-            ->select('orders.id', 'orders.state', 'orders.item_id', 'orders.responsible_cook_id' ,'orders.meal_id','orders.start','orders.end','orders.created_at','orders.updated_at')
-            ->join('users', 'orders.responsible_cook_id', '=', 'users.id')
+            ->select('orders.*')
             ->where([
+                ['orders.state', 'confirmed'],
                 ['orders.responsible_cook_id', null],
-                ['orders.state', 'pending'],
             ])
-            ->orWhere('orders.responsible_cook_id', $id)
+            ->orWhere([['orders.responsible_cook_id', $id],
+                ['orders.state', 'in preparation'],])
             ->orderBy('state', 'DESC')
             ->orderBy('start', 'ASC')
             ->get();
-        return $orders;*/
+        return $orders;
     }
     //para os waiters
     public function getOrdersWaiter(Request $request, $id)
@@ -206,5 +201,42 @@ class OrderControllerAPI extends Controller
         return $data;
 
 
+    }
+    public function getOrderByMonth()
+    {
+        $monthsOpen = Meal::select(DB::raw('count(distinct(EXTRACT(MONTH FROM start))) as months'))->first()->months;
+        $cenas =Order::all()->count()/ $monthsOpen;
+        $divisao  = $cenas /$monthsOpen;
+
+        return $divisao;
+
+    }
+    public function getOrderAverageTime(Item $item)
+    {
+
+
+        $itemIds = Item::where('item_id', $item->id)
+                ->pluck('id');
+
+            $data['data'] = Order::whereIn('id', $itemIds)
+                ->groupBy(DB::raw('EXTRACT(MONTH FROM start'))
+                ->select(DB::raw('EXTRACT(MONTH FROM start) as date'), DB::raw('count(*) as items'))
+                ->get();
+
+        $sum = 0;
+
+        foreach ($data['data'] as $item)
+        {
+            $sum +=$item['items'];
+        }
+
+        //diferent items that the restaurant have
+
+
+        /*$ = Meal::select(DB::raw('SEC_TO_TIME(AVG(TIME_TO_SEC(TIMEDIFF(meals.end,meals.start)))) as Meals'))
+            ->get(); average time of meals served*/
+
+
+        return $data;
     }
 }

@@ -2,7 +2,7 @@
     <div>
 
         <div v-if="user">
-            <h4> Performance - {{user.name}} (<b>{{user.performance}} {{currentFilter}} p/ day)  </b></h4>
+            <h4>  Daily Performance - {{user.name}} (<b>{{user.performance}} {{currentFilter}} p/ day)  </b></h4>
             <h5></h5>
 
         </div>
@@ -22,10 +22,24 @@
             <tbody>
             <tr v-for="day in data" >
                 <td>{{ day.date }}</td>
-                <td>{{ $data['user']['performance'] }}</td>
+                <td>{{ day[currentFilter] }}</td>
             </tr>
             </tbody>
         </table>
+
+      <!-- table of monthly performance-->
+
+        <div v-if="user">
+            <h4>  Restaurant Monthly Performance </h4>
+            <h5></h5>
+
+            <span>Restaurant average meals : {{meals}}</span> <br>
+            <span>Restaurant average orders : {{orders}}</span> <br>
+            <span>Restaurant average time  meals : {{mealsTime}}</span> <br>
+          <!--  <span>Restaurant average orders : {{ordersTime}}</span>-->
+
+
+    </div>
     </div>
 </template>
 
@@ -37,17 +51,22 @@
             return {
                 data: [],
                 currentFilter: 'orders',
+                currentFilterMonth: 'orders',
                 user: null,
+                meals:[],
+                orders:[],
+                mealsTime:[],
+                ordersTime:[],
             }
         },
         methods: {
             getMeals: function(){
 
-                if(this.user.type == 'meals')
+                if(this.user.type == 'waiter')
                 {
                     console.log("teste");
                     this.data = [];
-                    axios.get('api/statistics/meals' + this.$route.params.id)
+                    axios.get('api/statistics/meals/' + this.$route.params.id)
                         .then(response=>{
                             this.data = response.data.data;
                             this.user = response.data.user;
@@ -67,9 +86,42 @@
                     }); // ver a estrutura do json
 
             },
+            getNumberofMeals: function () {
+
+                axios.get('api/statistics/mealsMonth')
+                    .then(response=>{
+                        console.log("teste");
+                        this.meals= response.data}); // ver a estrutura do json
+            },
+            getNumberofOrders: function () {
+
+                axios.get('api/statistics/ordersMonth')
+                    .then(response=>{
+                        console.log("teste");
+                        this.orders= response.data}); // ver a estrutura do json
+            },
+            getMealTime: function () {
+
+                axios.get('api/statistics/mealsAverageTime')
+                    .then(response=>{
+                        console.log("teste");
+                        this.mealsTime= response.data}); // ver a estrutura do json
+            },
+            getOrderTime: function () {
+
+                axios.get('api/statistics/ordersAverageTime')
+                    .then(response=>{
+                        console.log("teste");
+                        this.mealsTime= response.data}); // ver a estrutura do json
+            },
+
         },
         mounted() {
             this.getOrders();
+            this.getNumberofMeals();
+            this.getNumberofOrders();
+            this.getMealTime();
+
 
         }
     }

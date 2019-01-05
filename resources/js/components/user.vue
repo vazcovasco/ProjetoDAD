@@ -7,7 +7,7 @@
 		<router-link to="/users/add"> <button>Add</button>  </router-link>
 
 		<div class="alert alert-success" v-if="showSuccess">
-			<button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
+			<button type="button" class="close-btn" v-on:click="showSuccess=false">&times;vue</button>
 			<strong>{{ successMessage }}</strong>
 		</div>
 
@@ -17,12 +17,14 @@
 
 		<user-edit :user="currentUser" @user-saved="saveUser"  @user-canceled="cancelEdit" v-if="currentUser"></user-edit>
 
+
   </div>
 </template>
 
 <script type="text/javascript">
 import UserEdit from "./userEdit.vue";
 import UserList from "./userList.vue";
+import shift from "./shift.vue";
 
 export default {
   data: function() {
@@ -93,6 +95,8 @@ export default {
 			{
 				this.$router.push("/statistics/orders/"+id);
 			},
+
+
 			childMessage: function(message){
 				this.showSuccess = true;
 				this.successMessage = message;
@@ -116,10 +120,10 @@ export default {
 			},
 			getUsers: function(){
 
-				axios.get('api/users')
-						.then(response=>{ this.users = response.data; }); // ver a estrutura do json
+		  axios.get('api/users')
+				  .then(response=>{ this.users = response.data; }); // ver a estrutura do json
 
-			},
+	  },
 	  		startShift: function(){
 					this.currentUser = null;
 					this.showSuccess = true;
@@ -137,11 +141,21 @@ export default {
   },
 		components: {
 			'user-list':UserList,
-			'user-edit':UserEdit
+			'user-edit':UserEdit,
+			'shift':shift,
 		},
 		mounted() {
 			this.getUsers();
-		}
+		},
+	sockets:{
+		connect(){
+			console.log('socket connected (socket ID = '+this.$socket.id+')');
+		},
+		msg_from_server(dataFromServer){
+			this.msgGlobalTextArea = dataFromServer + '\n' +
+					this.msgGlobalTextArea ;
+		},
+	},
 
 
 	}

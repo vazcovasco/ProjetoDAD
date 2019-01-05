@@ -32,10 +32,11 @@ Route::delete('users', 'UserControllerAPI@destroy');
 Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
 Route::post('users/delete/{id}', 'UserControllerAPI@restoreDestroy');
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
-Route::patch('users/{id}', 'UserControllerAPI@startShift');
-Route::patch('users/{id}', 'UserControllerAPI@endShift');
+Route::post('users/start/{id}', 'UserControllerAPI@startShift');
+Route::post('users/end/{id}', 'UserControllerAPI@endShift');
 
 
+/*-------------------PHOTO---------------------------*/
 /*-------------------PHOTO---------------------------*/
 Route::post('upload', 'UserControllerAPI@upload');
 
@@ -50,7 +51,7 @@ Route::post('items/delete/{id}', 'ItemControllerAPI@restoreDestroy');
 Route::get('meals', 'MealControllerAPI@getMeals');
 Route::post('meals', 'MealControllerAPI@add');
 Route::get('meals/{id}', 'MealControllerAPI@showMeal');
-Route::get('meals/waiter', 'MealControllerAPI@getMealWaiterPerDay');
+
 
 
 //ORDERS
@@ -66,14 +67,15 @@ Route::put('invoices/{id}', 'InvoiceControllerAPI@editPendingInvoice');
 Route::get('invoices/pdf/{id}', 'InvoiceControllerAPI@downloadInvoice');
 
 
-
-
 Route::get('restaurant_tables', 'RestaurantTableControllerAPI@getRestaurantTables');
-//Route::post('restaurant_tables', 'RestaurantTableControllerAPI@add');
 
 Route::get('/statistics/orders/{user}', 'OrderControllerAPI@getOrdersByDay');
+Route::get('/statistics/ordersMonth', 'OrderControllerAPI@getOrderByMonth');
+Route::get('/statistics/ordersAverageTime', 'OrderControllerAPI@getOrderAverageTime');
 
 Route::get('/statistics/meals/{user}', 'MealControllerAPI@getMealsByDay');
+Route::get('/statistics/mealsMonth', 'MealControllerAPI@getMealsByMonth');
+Route::get('/statistics/mealsAverageTime', 'MealControllerAPI@getMealAverageTime');
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:

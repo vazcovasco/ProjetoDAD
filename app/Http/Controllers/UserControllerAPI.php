@@ -180,17 +180,22 @@ class UserControllerAPI extends Controller
 
     public function startShift(Request $request, $id)
     {
+
         $user = User::findOrFail($id);
         $user->shift_active = 1;
         $user->last_shift_start =Carbon::now();
-        $user->update();
+        $user->save();
         return $user;
     }
     public function endShift(Request $request, $id)
     {
+
         $user = User::findOrFail($id);
         $user->shift_active = 0;
         $user->last_shift_end = Carbon::now();
-        $user->update();
+        $user->save();
+        return $user;
     }
+
+
 }

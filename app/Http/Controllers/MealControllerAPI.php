@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\Meal as MealResource;
 use SebastianBergmann\Environment\Console;
 use DB;
+use Carbon\Carbon;
 
 class MealControllerAPI extends Controller
 {
@@ -18,12 +19,18 @@ class MealControllerAPI extends Controller
     }
     public function add(Request $request)
     {
+        /*
+        $request->validate([
+            'table_number' => 'unique',
+        ]);*/
+
         $meal = new Meal();
-        $meal->fill($request->all());
+
         $meal->state ="active";
-        $mytime = Carbon\Carbon::now();
-        $meal->start = $mytime->toDateTimeString();
+        $meal->start = Carbon::now();
+        $meal->fill($request->all());
         $meal->save();
+
         return response()->json($meal, 200);
     }
     public function showMeal(Request $request, $id){
@@ -57,39 +64,85 @@ class MealControllerAPI extends Controller
     }
     public function getMealsByDay(User $user){
 
-        $data['user']['id'] = $user->id;
-        $data['user']['name'] = $user->name;
-            $data['user']['type'] = $user->type;
+    $data['user']['id'] = $user->id;
+    $data['user']['name'] = $user->name;
+    $data['user']['type'] = $user->type;
 
 
-        if($user->type == 'waiter'){
+    if($user->type == 'waiter'){
 
-            $mealIds = Meal::where('responsible_waiter_id', $user->id)
-                ->pluck('id');
+        $mealIds = Meal::where('responsible_waiter_id', $user->id)
+            ->pluck('id');
 
-            $data['data'] = Meal::whereIn('id', $mealIds)
-                ->groupBy(DB::raw('DATE(start)'))
-                ->select(DB::raw('DATE(start) as date'), DB::raw('count(*) as meals'))
-                ->get();
+        $data['data'] = Meal::whereIn('id', $mealIds)
+            ->groupBy(DB::raw('DATE(start)'))
+            ->select(DB::raw('DATE(start) as date'), DB::raw('count(*) as meals'))
+            ->get();
 
-        }
+    }
 
-        $sum = 0;
+    $sum = 0;
 
-        foreach ($data['data'] as $day)
-        {
-            $sum +=$day['meals'];
-        }
+    foreach ($data['data'] as $day)
+    {
+        $sum +=$day['meals'];
+    }
 
-        //days when the restaurant was open
-        $daysOpen = Meal::select(DB::raw('count(distinct(DATE(start))) as days'))->first()->days;
-        $data['user']['performance'] = $sum / $daysOpen;
+    //days when the restaurant was open
+    $daysOpen = Meal::select(DB::raw('count(distinct(DATE(start))) as days'))->first()->days;
+    $data['user']['performance'] = $sum / $daysOpen;
 
 
-        return $data;
+    return $data;
 
 
     }
+    public function getMealsByMonth()
+    {
+        $monthsOpen = Meal::select(DB::raw('count(distinct(EXTRACT(MONTH FROM start))) as months'))->first()->months;
+        $cenas =Meal::all()->count()/ $monthsOpen;
+        $divisao  = $cenas /$monthsOpen;
+
+        return $divisao;
+
+    }
+    public function getMealAverageTime()
+{
+    $meals = Meal::select(DB::raw('SEC_TO_TIME(AVG(TIME_TO_SEC(TIMEDIFF(meals.end,meals.start)))) as Meals'))
+        ->get();
+
+
+
+    return $meals;
+}
+
+       /* $data['user']['id'] = $user->id;
+        $data['user']['name'] = $user->name;
+        $data['user']['type'] = $user->type;
+
+        $data['data'] = Meal::groupBy(DB::raw('EXTRACT(MONTH FROM start)'))
+                ->select(DB::raw('EXTRACT(MONTH FROM start) as date'), DB::raw('count(*) as meals'))
+                ->get();
+
+
+
+        $sum = 0;
+
+        foreach ($data['data'] as $month)
+        {
+            $sum +=$month['meals'];
+        }
+
+        //days when the restaurant was open
+        $monthsOpen = Meal::select(DB::raw('count(distinct(EXTRACT(MONTH FROM start))) as months'))->first()->months;
+        $data['user']['performance'] = $sum / $monthsOpen;
+
+
+        return $data;
+        */
+
+
+
 
 
 

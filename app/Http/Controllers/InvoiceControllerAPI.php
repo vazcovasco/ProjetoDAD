@@ -18,7 +18,7 @@ class InvoiceControllerAPI extends Controller
         $invoices = DB::table('invoices')
             ->join('meals', 'invoices.meal_id', '=', 'meals.id')
             ->select('invoices.name', 'invoices.meal_id', 'invoices.total_price',
-                'meals.table_number','invoices.date','invoices.id','invoices.state')
+                'meals.table_number','invoices.date','invoices.id','invoices.state', 'meals.responsible_waiter_id')
             ->get();
 
         return $invoices;
@@ -45,6 +45,7 @@ class InvoiceControllerAPI extends Controller
         $invoice = Invoice::findOrFail($id);
 
         $invoice->update($request->all());
+        $invoice->state = "paid";
         return response()->json($invoice, 200);
 
     }
@@ -54,7 +55,7 @@ class InvoiceControllerAPI extends Controller
             ->join('meals', 'invoices.meal_id', '=', 'meals.id')
             ->where('invoices.id', '=', $id)
             ->select('invoices.name', 'invoices.meal_id', 'invoices.total_price',
-                'meals.table_number','invoices.date','invoices.id','invoices.state')
+                'meals.table_number','invoices.date','invoices.id','invoices.state', 'invoices.nif')
             ->get();
 
         $invoiceDownload = $invoices[0];

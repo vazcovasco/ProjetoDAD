@@ -1,57 +1,58 @@
 <template>
 <div>
-    <button @click="startShift(user)">edit</button>
-    <span v-if="user.shift_active==1">Current user is active -
-        last shit started  {{user.last_shift_start}}</span>
+    <a v-if="user.shift_active" class="btn btn-xs btn-success" @click.prevent="endShift(user)"
+    >End Shift</a>
+    <a v-else class="btn btn-xs btn-warning"  @click.prevent="startShift(user)"
+    >Start Shift</a>
+    <span v-if="user.shift_active">Current user is active - {{ this.$store.state.user.name}} -
+         last shift started  {{this.$store.state.user.last_shift_start}} </span>
+    <span v-else> Current user not active - {{ this.$store.state.user.name}} -
+        last shift ended  {{this.$store.state.user.last_shift_end}}</span>
 </div>
-
-
-
 </template>
-
 <script type="text/javascript">
     // Component code (not registered)
     module.exports={
-      //  props: ["users"],
+       props: ["user"],
         data: function(){
             return{
-
-
-
             };
         },
         methods: {
-            startShift() {
-                axios.patch('api/users/' + user.id)
-                    .then(response => {
+            startShift: function(user){
+               axios.post('api/users/start/'+user.id)
+                    .then(response=>{
                         // Copy object properties from response.data.data to this.user
                         // without creating a new reference
+                        //user.shift_active=!user.shift_active;
+                        Object.assign(user, response.data.data);
+                        this.$store.getters.startShift = response.data.shift_active;
+
                         user.shift_active = !user.shift_active;
-                        //Object.assign(user, response.data.data);
+                        this.$emit('update-view',user);
                         this.$emit('message', this.message)
-                    })
-                    .catch(erros => {
-                        console.log(erros);
-                    })
+                    });
+
             },
-            endShift() {
-                axios.patch('api/users/' + user.id)
-                    .then(response => {
+            endShift: function(user){
+               axios.post('api/users/end/'+user.id)
+                    .then(response=>{
                         // Copy object properties from response.data.data to this.user
                         // without creating a new reference
-                        user.shift_active = !user.shift_active;
-                        //Object.assign(user, response.data.data);
+                        user.shift_active=!user.shift_active;
+                        Object.assign(user, response.data.data);
+                        this.$emit('update-view',user);
                         this.$emit('message', this.message)
-                    })
-                    .catch(erros => {
-                        console.log(erros);
-                    })
-
+                    });
 
             },
 
-
-        }
+        },
+        /*computed:{
+            user(){
+                return this.$store.state.user;
+            }
+        }*/
     }
 </script>
 

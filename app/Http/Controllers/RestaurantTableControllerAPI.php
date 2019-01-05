@@ -10,16 +10,15 @@ class RestaurantTableControllerAPI extends Controller
 {
     public function getRestaurantTables(Request $request)
     {
-        $restaurant_tables = DB::table('restaurant_tables')
+        $tableNumbersNotAvailable = DB::table('meals')
+            ->where('meals.state', '=', 'active')
+            ->pluck('meals.table_number');
 
-            ->select('restaurant_tables.table_number')
-            ->join('meals', 'restaurant_tables.table_number', '=', 'meals.table_number')
-            ->where('meals.state','=', 'active')
-            ->orderBy('restaurant_tables.table_number', 'asc')
-            ->distinct()
-            ->get();
+        $tableNumbersAvailable = DB::table('restaurant_tables')
+            ->whereNotIn('restaurant_tables.table_number', $tableNumbersNotAvailable)
+            ->pluck('restaurant_tables.table_number');
 
-        return $restaurant_tables;
+        return $tableNumbersAvailable;
 
     }
 }

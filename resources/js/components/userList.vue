@@ -20,6 +20,16 @@
       <label>
         <input type="radio" v-model="selectedCategory" value="SoftDelete"> Soft Delete
       </label>
+		<div>
+			<input type="text" id="inputGlobal" class="inputchat"
+				   v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
+		</div>
+		<div>
+			<textarea id="textGlobal" class="inputchat"
+					  v-model="msgGlobalTextArea">Global Chat</textarea>
+
+		</div>
+
     </div>
 		<div class="container" id="people">
 			<table class="table table-striped">
@@ -39,18 +49,22 @@
 						<td>{{ user.email }}</td>
 						<td ><img width="100px" :src="getProfileImage(user.photo_url)"></td>
 						<td>
-							<button @click="editUser(user)">edit</button>
-							<button @click="deleteUser(user)">Delete</button>
+							<button class="btn btn-xs btn-warning" @click="editUser(user)">Edit</button>
+
 							<a :class="user.blocked ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="toggleBlockUser(user)"
 								v-text="user.blocked ?  'UnBlock' : 'Block'"></a>
-							<a :class="user.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="restoreUser(user)"
-								v-text="user.deleted_at ?  'Restore' : 'Delete'"></a>
-							<button @click="showPerformance(user)" v-if="user.type == 'cook' || user.type == 'waiter'">Performance</button>
+							<a v-if="user.deleted_at" class="btn btn-xs btn-success" @click.prevent="restoreUser(user)"
+							   >Restore</a>
+							<a v-else class="btn btn-xs btn-warning"  @click.prevent="deleteUser(user)"
+								>Delete</a>
+							<button  class="btn btn-xs btn-warning" @click="showPerformance(user)" v-if="user.type == 'cook' || user.type == 'waiter'">Performance</button>
 
 						</td>
 					</tr>
 				</tbody>
 			</table>
+
+
 		</div>
 	</div>
 </template>
@@ -63,6 +77,8 @@
 			return{
 				selectedCategory:'',
 				editingUser:null,
+				msgGlobalText:'',
+				msgGlobalTextArea:''
 			};
 		},
 		methods: {
@@ -102,15 +118,22 @@
 			showPerformance: function(user){
 				this.$emit('show-performance-click', user.id);
 			},
+
 			startShift: function(user){
 				this.$emit('start-shift-click', user.id);
 			},
 			endShift: function(user){
 				this.$emit('end-shift-click', user.id);
 			},
+			sendGlobalMsg: function(){
+				this.$socket.emit('msg_from_client', this.msgGlobalText);
+				this.msgGlobalText = "";
+			}
+
 
 		},
 		computed:{
+
 			filteredUsers: function() {
 				var category = this.selectedCategory;
 

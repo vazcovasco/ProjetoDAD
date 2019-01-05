@@ -28,7 +28,7 @@
 
             <br>
         <a class="btn btn-default" v-on:click.prevent="CreateItem()">Add</a>
-        <a class="btn btn-default" v-on:click.prevent="cancelAdd()">Cancel</a>
+        <a class="btn btn-default" v-on:click.prevent="cancelAddItem()">Cancel</a>
         </form>
 
         
@@ -54,14 +54,14 @@
 		},
         methods: {
             CreateItem(){
-                 this.form.post('api/items/')
-                   // .then(response => console.log("Success"))
-                   .then(response => {
-                       console.log(response);                        
-                   })
-                   .catch(error => console.log('Whoops'));
-                
-            },		
+                this.form.post('api/items/')
+                // .then(response => console.log("Success"))
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => console.log('Whoops'));
+
+            },
            	getProfileImage(photo_url) {
       			return `storage/profiles/${photo_url}`;
             },

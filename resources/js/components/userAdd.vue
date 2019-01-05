@@ -31,7 +31,7 @@
 
             <br>
             <a class="btn btn-default" v-on:click.prevent="CreateUser()">Add</a>
-            <a class="btn btn-default" v-on:click.prevent="cancelAdd()">Cancel</a>
+            <a class="btn btn-default" v-on:click.prevent="cancelAddUser()">Cancel</a>
         </form>
 
 
@@ -68,6 +68,10 @@
             getProfileImage(photo_url) {
                 return `storage/profiles/${photo_url}`;
             },
+            cancelAddUser(){
+                this.$router.push("/");
+            }
+
 
 
         },

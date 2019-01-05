@@ -4,8 +4,8 @@
 		<tr>
 			<th>Name</th>
 			<th>Description</th>
-			<th>Photo</th>
 			<th>Prices</th>
+			<th>Photo</th>
 			<th>Actions</th>
 		</tr>
 		</thead>
@@ -16,10 +16,11 @@
 			<td>{{ item.price }}</td>
 			<td ><img width="100px" :src="getFoodImage(item.photo_url)"></td>
 				<td v-if="isLoggedIn && isManager">
-				<button @click="editItem(item)">edit</button>
-				<button @click="deleteItem(item)">Delete</button>
-				<a :class="item.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"  @click.prevent="restoreItem(item)"
-				   v-text="item.deleted_at ?  'Restore' : 'Delete'"></a>
+				<button class="btn btn-xs btn-warning" @click="editItem(item)">edit</button>
+					<a v-if="item.deleted_at" class="btn btn-xs btn-success" @click.prevent="restoreItem(item)"
+					>Restore</a>
+					<a v-else class="btn btn-xs btn-warning"  @click.prevent="deleteItem(item)"
+					>Delete</a>
 			</td>
 
 

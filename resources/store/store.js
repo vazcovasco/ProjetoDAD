@@ -10,8 +10,9 @@ axios.defaults.baseURL = 'http://projetodad.local/';
 export default new Vuex.Store({
     state: {
         token: localStorage.getItem('access_token') || null,
-        user: /*JSON.parse(localStorage.getItem('user')) ||*/ null,
-        manager: localStorage.getItem('manager') || null
+        user: JSON.parse(localStorage.getItem('user')) || null,
+        manager: localStorage.getItem('manager') || null,
+        shift: localStorage.getItem('shift') || null
     },
     getters: {
         loggedIn(state) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
         },
         isManager(state) {
             return state.manager !== null;
+        },
+        startShift(state){
+            return state.shift !== null;
         }
     },
     mutations: {
@@ -39,7 +43,10 @@ export default new Vuex.Store({
         },
         removeManager: (state, manager) => {
             state.manager =  null;
-        }
+        },
+        setShift: (state, shift) => {
+            state.shift =  shift;
+        },
     },
     actions: {
         register(context, data) {
@@ -116,12 +123,17 @@ export default new Vuex.Store({
                 .then(function (response) {
                     const user = response.data;
                     const type =  user.type;
+                    const shift = user.shift_active;
                     console.log(user);
                     localStorage.setItem('user', JSON.stringify(user));
                     context.commit('setUser', user);
                     if(type === 'manager') {
                         localStorage.setItem('manager', type);
                         context.commit('setManager', type);
+                    }
+                    if(shift ===0){
+                        localStorage.setItem('shift', shift);
+                        context.commit('setshift', shift);
                     }
                     resolve(response);
                 })

@@ -2,10 +2,16 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueSocketio from 'vue-socket.io';
 import VueRouter from 'vue-router';
-
+import VueResource from "vue-resource";
 
 Vue.use(VueRouter);
+Vue.use(VueResource);
+Vue.use(new VueSocketio({
+    debug: true,
+    connection: 'http://192.168.10.1:8080'
+}));
 
 import store from '../store/store.js';
 
@@ -44,6 +50,7 @@ const rm = Vue.component('rm', require('./components/restaurantManagement.vue'))
 //-------------------------Statistics----------------------------------------------
 const statistics = Vue.component('statistics', require('./components/statistics.vue'));
 const shift = Vue.component('shift', require('./components/shift.vue'));
+const testView = Vue.component('testView', require('./components/testView.vue'));
 
 
 const routes = [
@@ -117,12 +124,16 @@ const routes = [
         }
     },
     {
-        path: '/meals/:id',
+        path: '/meals/show/:id',
         component: mealShow
     },
     {
         path: '/meals/start',
         component: mealStart
+    },
+    {
+        path: '/meals/test1',
+        component:testView
     },
     {
         path: '/orders',
@@ -156,10 +167,6 @@ const routes = [
         meta: {
             requiresAuth: true
         }
-    },
-    {
-        path: '/statistics/orders/:id',
-        component: statistics
     },
     {
         path: '/invoices',
@@ -207,5 +214,12 @@ const app = new Vue({
         orders: []
     },
     store,
+    computed:{
+            user(){
+                return this.$store.state.user;
+            }
+    }
+
+
 
 }).$mount('#app');

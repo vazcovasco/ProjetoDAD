@@ -4,28 +4,28 @@
         <div class="form-group">
             <label for="inputState">State</label>
             <input
-                    type="text" class="form-control" v-model="state"
+                    type="text" class="form-control" v-model="meal.state"
                     placeholder="state of the meal"/>
         </div>
 
         <div class="form-group">
             <label for="inputWaiter">Responsible Waiter</label>
             <input
-                    type="text" class="form-control" v-model="user.id"
+                    type="text" class="form-control" v-model="meal.responsible_waiter_id"
             />
         </div>
 
         <div class="form-group">
             <label for="inputWaiter">tables available</label>
-            <select v-model="table_number">
-                <option v-for="restaurant_table in restaurant_tables" :value="restaurant_table.id">
-                    {{restaurant_table.table_number}}</option>
+            <select v-model="meal.table_number">
+                <option v-for="table in restaurant_tables" v-bind:value="table">
+                    {{table}}</option>
             </select>
         </div>
-        <!--
+
                 <div class="form-group">
-                    <a class="btn btn-success" v-on:click.prevent="startMeal">Start Meal</a>
-                </div>-->
+                    <a class="btn btn-success" v-on:click.prevent="CreateMeal">Start Meal</a>
+                </div>
 
         <div class="alert" :class="typeofmsg" v-if="showMessage">
             <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>
@@ -47,35 +47,41 @@
                 user: this.$store.state.user,
                 showMessage: false,
                 successMessage: '',
-                table_number:'',
+                meal: {
+                    state: 'active',
+                    table_number: '',
+                    responsible_waiter_id: '',
+                },
                 restaurant_tables:[],
-
-                selectedItem: null,
-
-
             }
         },
         methods: {
             CreateMeal(){
-                this.form.post('api/meals/')
+                axios.post('api/meals', this.meal)
                 // .then(response => console.log("Success"))
                     .then(response => {
                         console.log(response);
                     })
                     .catch(error => console.log('Whoops'));
 
+
             },
             getRestaurantTables: function(){
 
                 axios.get('api/restaurant_tables')
-                    .then(response=>{ this.restaurant_tables = response.data; }); // ver a estrutura do json
+                    .then(response=>{
+                        this.restaurant_tables = response.data;
+                        this.meal.table_number = this.restaurant_tables[0];
+                    }); // ver a estrutura do json
 
             },
+
 
 
         },
         mounted() {
             this.getRestaurantTables();
+            this.meal.responsible_waiter_id = this.user.id;
         }
 
 
