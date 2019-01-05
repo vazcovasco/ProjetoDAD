@@ -16,8 +16,8 @@
         <shift :user="user" v-if="this.$store.getters.loggedIn"></shift>
 
         <router-view></router-view>
+
     </div>
-    
 </div>
     
 @endsection

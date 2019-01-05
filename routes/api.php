@@ -35,7 +35,11 @@ Route::delete('users', 'UserControllerAPI@destroy');
 Route::post('users/block/{id}', 'UserControllerAPI@blockUser');
 Route::post('users/delete/{id}', 'UserControllerAPI@restoreDestroy');
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
+Route::post('users/start/{id}', 'UserControllerAPI@startShift');
+Route::post('users/end/{id}', 'UserControllerAPI@endShift');
 
+
+/*-------------------PHOTO---------------------------*/
 /*-------------------PHOTO---------------------------*/
 Route::post('upload', 'UserControllerAPI@upload');
 Route::post('uploadItemPhoto', 'ItemControllerAPI@upload');
@@ -53,7 +57,7 @@ Route::get('meals/get/{id}', 'MealControllerAPI@getMeals');
 Route::get('meals/getActive/{id}', 'MealControllerAPI@getMyActiveMeals');
 Route::post('meals', 'MealControllerAPI@add');
 Route::get('meals/{id}', 'MealControllerAPI@showMeal');
-Route::get('meals/waiter', 'MealControllerAPI@getMealWaiterPerDay');
+
 
 
 //ORDERS
@@ -68,7 +72,7 @@ Route::post('orders', 'OrderControllerAPI@add');
 Route::get('invoices', 'InvoiceControllerAPI@getInvoices');
 Route::get('invoices/{id}', 'InvoiceControllerAPI@showInvoice');
 Route::put('invoices/{id}', 'InvoiceControllerAPI@editPendingInvoice');
-
+Route::get('invoices/pdf/{id}', 'InvoiceControllerAPI@downloadInvoice');
 
 
 Route::get('restaurant_tables', 'RestaurantTableControllerAPI@getRestaurantTables');
@@ -80,8 +84,12 @@ Route::post('restaurant_tables', 'RestaurantTableControllerAPI@add');
 Route::post('restaurant_tables/delete/{table_number}', 'RestaurantTableControllerAPI@restoreDestroy');
 
 Route::get('/statistics/orders/{user}', 'OrderControllerAPI@getOrdersByDay');
+Route::get('/statistics/ordersMonth', 'OrderControllerAPI@getOrderByMonth');
+Route::get('/statistics/ordersAverageTime', 'OrderControllerAPI@getOrderAverageTime');
 
 Route::get('/statistics/meals/{user}', 'MealControllerAPI@getMealsByDay');
+Route::get('/statistics/mealsMonth', 'MealControllerAPI@getMealsByMonth');
+Route::get('/statistics/mealsAverageTime', 'MealControllerAPI@getMealAverageTime');
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:

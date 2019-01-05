@@ -2,10 +2,16 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueSocketio from 'vue-socket.io';
 import VueRouter from 'vue-router';
-
+import VueResource from "vue-resource";
 
 Vue.use(VueRouter);
+Vue.use(VueResource);
+Vue.use(new VueSocketio({
+    debug: true,
+    connection: 'http://192.168.10.1:8080'
+}));
 
 
 import store from '../store/store.js';
@@ -45,6 +51,8 @@ const shift = Vue.component('shift', require('./components/shift.vue'));
 
 //-------------------------Statistics----------------------------------------------
 const statistics = Vue.component('statistics', require('./components/statistics.vue'));
+const shift = Vue.component('shift', require('./components/shift.vue'));
+const testView = Vue.component('testView', require('./components/testView.vue'));
 
 //--------------------------Tables-------------------------------------------------------
 const r_tables = Vue.component('tables', require('./components/restaurantTables.vue'));
@@ -132,6 +140,10 @@ const routes = [
         component: mealStart
     },
     {
+        path: '/meals/test1',
+        component:testView
+    },
+    {
         path: '/orders',
         component: order,
         meta: {
@@ -139,15 +151,16 @@ const routes = [
         }
     },
     {
-        path: '/statistics/orders/:id',
-        component: statistics
-    },
-    {
         path: '/orders/add',
         component: orderAdd,
         meta: {
             requiresAuth: true
         }
+    },
+    {
+        path: '/statistics/orders/:id',
+        component: statistics
+
     },
     {
         path: '/restaurantManagement',
@@ -169,10 +182,6 @@ const routes = [
         meta: {
             requiresAuth: true
         }
-    },
-    {
-        path: '/statistics/orders/:id',
-        component: statistics
     },
     {
         path: '/invoices',
@@ -201,7 +210,14 @@ const routes = [
     {
         path: '/restaurantTables/edit/:table_number',
         component: r_tablesEdit
+
+
     }
+    {
+        path: '/shift',
+        component: shift
+    },
+
 
 
 ];
@@ -236,5 +252,7 @@ const app = new Vue({
             return this.$store.state.user;
         }
     }
+
+
 
 }).$mount('#app');

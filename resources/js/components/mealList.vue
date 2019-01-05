@@ -2,26 +2,24 @@
     <div>
         <div class="container" id="meals">
             <div class="filter">
-                <label for="active">
-                    <input id="active" type="radio" v-model="selectedCategory" value="active"/>Active
+            <label for="active">
+                <input id="active" type="radio" v-model="selectedCategory" value="active"/>Active
+            </label>
+            <label><input type="radio" v-model="selectedCategory" value="terminated"/> Terminated</label>
+            <label><input type="radio" v-model="selectedCategory" value="paid"/> Paid</label>
+            <label><input type="radio" v-model="selectedCategory" value="not paid"/> Not Paid</label>
+        </div>
+            filter data
+            <div class="filter">
+                <label><input type="text"  v-model="writtenDate" value="date" id="date"/>
                 </label>
-                <label><input type="radio" v-model="selectedCategory" value="terminated"/> Terminated</label>
-                <label><input type="radio" v-model="selectedCategory" value="paid"/> Paid</label>
-                <label><input type="radio" v-model="selectedCategory" value="not paid"/> Not Paid</label>
             </div>
 
+            id_waiter_responsible
             <div class="filter">
-                <label><input type="text" @change="filteredMeals" v-model="writtenNumber" value="id_waiter"
+                <label><input type="text"  v-model="writtenNumber" value="id_waiter"
                               id="id_waiter"/> </label>
             </div>
-            id_waiter_responsible
-
-            <div class="filter">
-                <label><input type="text" @change="filteredMeals" v-model="writtenDate" value="date" id="date"/>
-                </label>
-            </div>
-            filter data
-
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -35,7 +33,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="meal in filteredMeals" :key="meal.id" >
+                <tr v-for="meal in filteredMeals" :key="meal.id">
                     <td>{{ meal.id }}</td>
                     <td>{{ meal.start }}</td>
                     <td>{{ meal.state }}</td>
@@ -51,9 +49,6 @@
             </table>
         </div>
     </div>
-
-
-
 </template>
 
 <script type="text/javascript">
@@ -79,6 +74,9 @@
                 this.showingMeal = meal;
                 this.$emit('show-click', meal);
             },
+            startMeal: function () {
+                this.$emit('meal-start-click');
+            }
         },
         computed: {
             filteredMeals() {
@@ -88,21 +86,40 @@
 
 
                 return this.meals.filter((meal) => {
-                    if (category === '' && (meal.state === 'active' || meal.state === 'terminated')) {
+                    if (category === '' && (meal.state === 'active' || meal.state ==='terminated')) {
                         return true;
                     }
 
                     if (category === meal.state) {
-                        if (inputValue === '') {
+
+                        let dateCmp = moment(inputDate, 'YYYY-MM-DD');
+                        // console.log(dateCmp);
+
+                        let dateCmpItem = moment(meal.start, 'YYYY-MM-DD');
+                        console.log(dateCmpItem);
+
+                        if (inputDate === '') {
                             return true;
+
                         }
+                        console.log(dateCmp.diff(dateCmpItem));
 
-                        if (inputValue.toString() === meal.responsible_waiter_id.toString()) {
+                        if(dateCmp.diff(dateCmpItem) === 0) {
 
-                            return true;
+                            if (inputValue === '') {
+                                return true;
+
+                            }
+
+                            if (inputValue.toString() === meal.responsible_waiter_id.toString()) {
+
+                                return true;
+                            }
+                            return false;
 
                         }
                         return false;
+
                     }
                     return false;
                 });

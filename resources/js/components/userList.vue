@@ -11,6 +11,16 @@
       <label>
         <input type="radio" v-model="selectedCategory" value="SoftDelete"> Soft Delete
       </label>
+		<div>
+			<input type="text" id="inputGlobal" class="inputchat"
+				   v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
+		</div>
+		<div>
+			<textarea id="textGlobal" class="inputchat"
+					  v-model="msgGlobalTextArea">Global Chat</textarea>
+
+		</div>
+
     </div>
     <div class="container" id="people">
       <table class="table table-striped">

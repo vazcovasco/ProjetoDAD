@@ -6,11 +6,12 @@
 		</div>
 
 		<router-link to="/meals/start"> <button>Start</button>  </router-link>
+		<router-link to="/meals/test1"> <button>test</button>  </router-link>
 
 
 		<div>
 
-			<meal-list :meals="meals"  @show-click="showMeal" ></meal-list>
+			<meal-list :meals="meals"  @show-click="showMeal"  ></meal-list>
 			<meal-show :meal="currentMeal" :meals="meals" v-if="currentMeal"   ></meal-show>
 
 
@@ -60,6 +61,7 @@
 						}); // ver a estrutura do json
 
 			},
+
 		},
 		mounted() {
 			this.getMeals();
@@ -67,6 +69,7 @@
 		components: {
 			'meal-list': mealList,
 			'meal-show': mealShow,
+
 
 		},
 

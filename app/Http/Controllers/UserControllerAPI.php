@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Jsonable;
 use App\Http\Resources\User as UserResource;
@@ -224,4 +225,25 @@ class UserControllerAPI extends Controller
             return $request->file->storeAs('public/profiles', $filename);
         }
     }
+
+    public function startShift(Request $request, $id)
+    {
+
+        $user = User::findOrFail($id);
+        $user->shift_active = 1;
+        $user->last_shift_start =Carbon::now();
+        $user->save();
+        return $user;
+    }
+    public function endShift(Request $request, $id)
+    {
+
+        $user = User::findOrFail($id);
+        $user->shift_active = 0;
+        $user->last_shift_end = Carbon::now();
+        $user->save();
+        return $user;
+    }
+
+
 }

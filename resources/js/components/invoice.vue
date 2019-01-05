@@ -6,7 +6,7 @@
         </div>
 
         <div>
-            <invoice-list :invoices="invoices"  @show-click="showInvoice" @edit-click="editInvoice"></invoice-list>
+            <invoice-list :invoices="invoices"  @show-click="showInvoice" @edit-click="editInvoice" @download-click="downloadInvoice"></invoice-list>
 
             <invoice-show :invoice="currentInvoiceShow" :items="items" v-if="showingInvoice"   ></invoice-show>
 
@@ -103,6 +103,23 @@
                 this.currentInvoice= null;
                 this.$refs.invoicesListRef.editingInvoice= null;
             },
+            downloadInvoice: function (invoice) {
+                console.log("cheguei");
+                axios.get('api/invoices/pdf/' + invoice.id,{
+                    url: 'http://api.dev/file-download',
+                    responseType: 'blob', // important
+                })
+                    .then((response) => {
+                        const url = window.URL.createObjectURL(new Blob([response.data]));
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.setAttribute('download', 'edgar.pdf');
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    });
+
+            }
 
         },
         components: {

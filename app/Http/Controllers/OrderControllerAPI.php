@@ -15,6 +15,7 @@ use Lcobucci\JWT\FunctionalTests\UnsignedTokenTest;
 use Auth;
 //use DB;
 
+
 class OrderControllerAPI extends Controller
 {
     /**
@@ -30,14 +31,15 @@ class OrderControllerAPI extends Controller
 
     public function getOrders(Request $request, $id)
     {
+
         $orders = DB::table('orders')
             ->select('orders.*')
             ->where([
                 ['orders.state', 'confirmed'],
                 ['orders.responsible_cook_id', null],
-                ])
+            ])
             ->orWhere([['orders.responsible_cook_id', $id],
-            ['orders.state', 'in preparation'],])
+                ['orders.state', 'in preparation'],])
             ->orderBy('state', 'DESC')
             ->orderBy('start', 'ASC')
             ->get();
@@ -198,5 +200,42 @@ class OrderControllerAPI extends Controller
         return $data;
 
 
+    }
+    public function getOrderByMonth()
+    {
+        $monthsOpen = Meal::select(DB::raw('count(distinct(EXTRACT(MONTH FROM start))) as months'))->first()->months;
+        $cenas =Order::all()->count()/ $monthsOpen;
+        $divisao  = $cenas /$monthsOpen;
+
+        return $divisao;
+
+    }
+    public function getOrderAverageTime(Item $item)
+    {
+
+
+        $itemIds = Item::where('item_id', $item->id)
+                ->pluck('id');
+
+            $data['data'] = Order::whereIn('id', $itemIds)
+                ->groupBy(DB::raw('EXTRACT(MONTH FROM start'))
+                ->select(DB::raw('EXTRACT(MONTH FROM start) as date'), DB::raw('count(*) as items'))
+                ->get();
+
+        $sum = 0;
+
+        foreach ($data['data'] as $item)
+        {
+            $sum +=$item['items'];
+        }
+
+        //diferent items that the restaurant have
+
+
+        /*$ = Meal::select(DB::raw('SEC_TO_TIME(AVG(TIME_TO_SEC(TIMEDIFF(meals.end,meals.start)))) as Meals'))
+            ->get(); average time of meals served*/
+
+
+        return $data;
     }
 }

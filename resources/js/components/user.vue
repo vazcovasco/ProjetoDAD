@@ -54,6 +54,7 @@
 <script type="text/javascript">
 import UserEdit from "./userEdit.vue";
 import UserList from "./userList.vue";
+import shift from "./shift.vue";
 
 export default {
   data: function() {
