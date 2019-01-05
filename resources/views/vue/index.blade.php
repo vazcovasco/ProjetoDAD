@@ -11,10 +11,10 @@
             <li v-if="this.$store.getters.loggedIn"><router-link to="/profile">Profile</router-link></li>        
             <li style="float:right" class="active" v-if="!this.$store.getters.loggedIn"><router-link to="/login">Login</router-link></li>
             <li style="float:right" class="active" v-if="this.$store.getters.loggedIn"><router-link to="/logout">Logout</router-link></li>
-            <li><router-link to="/invoices">invoices</router-link></li>
-            <li><router-link to="/orders">orders</router-link></li>
-            <li><router-link to="/statistics">statistics</router-link></li>
         </ul>
+
+        <shift :user="user" v-if="this.$store.getters.loggedIn"></shift>
+
         <router-view></router-view>
     </div>
     
@@ -24,6 +24,19 @@
 
 @section('pagescript')
 <script src="js/vue.js">
+
+import shift from '../../assets/js/components/shift.vue'
+
+    export default {
+        data: function(){
+            return {
+            }
+        },  
+        components: {
+            'shift': shift
+        },
+    }
+
 </script>
  @stop  
 

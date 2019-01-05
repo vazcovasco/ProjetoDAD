@@ -1,21 +1,53 @@
 <template>
-	<div>
-		<div class="jumbotron">
-			<h1>{{ title }}</h1>
-		</div>
+  <div>
+    <div class="jumbotron">
+      <h1>{{ title }}</h1>
+    </div>
 
-		<router-link to="/users/add"> <button>Add</button>  </router-link>
+    <div class="alert alert-success" v-if="showSuccess">
+      <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
+      <strong>{{ successMessage }}</strong>
+    </div>
 
-		<div class="alert alert-success" v-if="showSuccess">
-			<button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
-			<strong>{{ successMessage }}</strong>
-		</div>
+    <div>
+      <table class="table">
+        <tbody class="center">
+          <tr>
+            <router-link class="button" to="/register">Register New User</router-link>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-		<user-list :users="users" @delete-click="deleteUser" @restore-click ="restoreUser" ref="usersListRef"
-				   @edit-click="editUser" @show-performance-click="showPerformance"></user-list>
+    <user-list
+      :users="users"
+      @delete-click="deleteUser"
+      @restore-click="restoreUser"
+      ref="usersListRef"
+      @edit-click="editUser"
+      @show-performance-click="showPerformance"
+    ></user-list>
 
-		<user-edit :user="currentUser" @user-saved="saveUser"  @user-canceled="cancelEdit" v-if="currentUser"></user-edit>
+    <div class="pagination">
+      <button
+        class="btn btn-default"
+        v-on:click="fetchPaginateUsers(pagination.previousPageUrl)"
+        :disabled="!pagination.previousPageUrl"
+      >Previous</button>
+      <span>{{ pagination.currentPage }} of {{ pagination.lastPage }}</span>
+      <button
+        class="btn btn-default"
+        v-on:click="fetchPaginateUsers(pagination.nextPageUrl)"
+        :disabled="!pagination.nextPageUrl"
+      >Next</button>
+    </div>
 
+    <user-edit
+      :user="currentUser"
+      @user-saved="saveUser"
+      @user-canceled="cancelEdit"
+      v-if="currentUser"
+    ></user-edit>
   </div>
 </template>
 
@@ -34,7 +66,9 @@ export default {
       failMessage: "",
       currentUser: null,
       currentUserIndex: -1,
-      users: []
+      users: [],
+      url: "api/users",
+      pagination: []
     };
   },
   methods: {
@@ -65,7 +99,7 @@ export default {
       } else {
         this.message = "User  Softdeleted";
       }
-     /* axios.post("api/users/delete/" + user.id)
+      /* axios.post("api/users/delete/" + user.id)
         .then(response => {
           // Copy object properties from response.data.data to this.user
           // without creating a new reference
@@ -74,65 +108,87 @@ export default {
 				} else {
 					this.message = 'User  Softdeleted';
 				}*/
-				axios.post('api/users/delete/'+ user.id)
-						.then(response=>{
-							// Copy object properties from response.data.data to this.user
-							// without creating a new reference
-							user.deleted_at = !user.deleted_at;
+      axios
+        .post("api/users/delete/" + user.id)
+        .then(response => {
+          // Copy object properties from response.data.data to this.user
+          // without creating a new reference
+          user.deleted_at = !user.deleted_at;
 
-							//Object.assign(user, response.data.data);
-							this.$emit('message', this.message)
-						})
-						.catch(erros => {
-							console.log(erros);
-						})
+          //Object.assign(user, response.data.data);
+          this.$emit("message", this.message);
+        })
+        .catch(erros => {
+          console.log(erros);
+        });
+    },
+    showPerformance(id) {
+      this.$router.push("/statistics/orders/" + id);
+    },
+    childMessage: function(message) {
+      this.showSuccess = true;
+      this.successMessage = message;
+    },
+    toggleBlockUser: function(user) {
+      if (user.blocked === 1) {
+        this.message = "User Unblocked";
+      } else {
+        this.message = "User Blocked";
+      }
+      axios.post("api/users/block/" + user.id).then(response => {
+        // Copy object properties from response.data.data to this.user
+        // without creating a new reference
+        Object.assign(user, response.data.data);
+        this.$emit("update-view", user);
+        this.$emit("message", this.message);
+      });
+    },
+    getUsers: function() {
+      let t = this;
+      axios.get(t.url).then(response => {
+        console.log(response)
+        t.users = response.data.data;
+        t.makePagination(response.data);
+      }); // ver a estrutura do json
+    },
+    makePagination(data) {
+      var next = "";
+      var previous = "";
+      if(data.next_page_url != undefined) {
+        next = data.next_page_url.replace("http://projetodad.local/", "");
+      } else {
+        next = data.next_page_url;
+      }
+      if(data.prev_page_url != undefined) {
+        previous = data.prev_page_url.replace("http://projetodad.local/", "");
+      }else {
+        previous = data.prev_page_url;
+      }
 
-			},
-			showPerformance(id)
-			{
-				this.$router.push("/statistics/orders/"+id);
-			},
-			childMessage: function(message){
-				this.showSuccess = true;
-				this.successMessage = message;
-			},
-			toggleBlockUser: function(user){
-				if (user.blocked === 1) {
-					this.message = 'User Unblocked';
+      let pagination = {
+        currentPage: data.current_page,
+        lastPage: data.last_page,
+        nextPageUrl: next,
+        previousPageUrl: previous
+      }
 
-				} else {
-					this.message = 'User Blocked';
-				}
-				axios.post('api/users/block/'+user.id)
-						.then(response=>{
-							// Copy object properties from response.data.data to this.user
-							// without creating a new reference
-							Object.assign(user, response.data.data);
-							this.$emit('update-view',user);
-							this.$emit('message', this.message)
-						});
-
-			},
-			getUsers: function(){
-
-				axios.get('api/users')
-						.then(response=>{ this.users = response.data; }); // ver a estrutura do json
-
-			},
-
-
-
-		},
-		components: {
-			'user-list':UserList,
-			'user-edit':UserEdit
-		},
-		mounted() {
-			this.getUsers();
-		}
-
-
-	}
+      this.pagination = pagination;
+      console.log(this.pagination)
+    },
+    fetchPaginateUsers(url) {
+      console.log(url)
+      this.url = url
+      this.getUsers();
+    }
+  },
+  components: {
+    "user-list": UserList,
+    "user-edit": UserEdit
+  },
+  mounted() {
+    this.getUsers();
+  }
+};
 </script>
 
 <style scoped>
