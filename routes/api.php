@@ -48,7 +48,9 @@ Route::delete('items', 'ItemControllerAPI@destroy');
 Route::post('items/delete/{id}', 'ItemControllerAPI@restoreDestroy');
 
 /*-------------------MEALS---------------------------*/
-Route::get('meals', 'MealControllerAPI@getMeals');
+Route::get('meals', 'MealControllerAPI@get');
+Route::get('meals/get/{id}', 'MealControllerAPI@getMeals');
+Route::get('meals/getActive/{id}', 'MealControllerAPI@getMyActiveMeals');
 Route::post('meals', 'MealControllerAPI@add');
 Route::get('meals/{id}', 'MealControllerAPI@showMeal');
 Route::get('meals/waiter', 'MealControllerAPI@getMealWaiterPerDay');
@@ -56,9 +58,11 @@ Route::get('meals/waiter', 'MealControllerAPI@getMealWaiterPerDay');
 
 //ORDERS
 Route::get('orders/{id}', 'OrderControllerAPI@getOrders');
+Route::get('orders/waiter/{id}', 'OrderControllerAPI@getOrdersWaiter');
+Route::get('orders', 'OrderControllerAPI@getAll');
 Route::delete('orders/{id}', 'OrderControllerAPI@delete');
-Route::post('orders/{id}', 'OrderControllerAPI@setState');
-Route::post('orders/{id}', 'OrderControllerAPI@confirmOrder');
+Route::post('orders/setState/{id}', 'OrderControllerAPI@setState');
+Route::post('orders/confirmOrder/{id}', 'OrderControllerAPI@confirmOrder');
 Route::post('orders', 'OrderControllerAPI@add');
 
 Route::get('invoices', 'InvoiceControllerAPI@getInvoices');
@@ -68,7 +72,12 @@ Route::put('invoices/{id}', 'InvoiceControllerAPI@editPendingInvoice');
 
 
 Route::get('restaurant_tables', 'RestaurantTableControllerAPI@getRestaurantTables');
-//Route::post('restaurant_tables', 'RestaurantTableControllerAPI@add');
+Route::get('restaurant_tables/meal/{table_number}', 'MealControllerAPI@getMeal');
+Route::get('restaurant_tables/all', 'RestaurantTableControllerAPI@getAllTables');
+Route::delete('restaurant_tables', 'RestaurantTableControllerAPI@destroy');
+Route::put('restaurant_tables/{table}', 'RestaurantTableControllerAPI@update');
+Route::post('restaurant_tables', 'RestaurantTableControllerAPI@add');
+Route::post('restaurant_tables/delete/{table_number}', 'RestaurantTableControllerAPI@restoreDestroy');
 
 Route::get('/statistics/orders/{user}', 'OrderControllerAPI@getOrdersByDay');
 
