@@ -1,14 +1,5 @@
 <template>
   <div class="container" id="people">
-    <div>
-      <table class="table">
-        <tbody class="center">
-          <tr>
-            <router-link class="button" to="/register">Register New User</router-link>
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
     <div class="filter">
       <label>
