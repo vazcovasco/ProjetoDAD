@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\StoreUserRequest;
 use Hash;
-use Carbon\Carbon;
 
 
 class UserControllerAPI extends Controller

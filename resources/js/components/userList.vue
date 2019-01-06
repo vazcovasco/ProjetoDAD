@@ -1,6 +1,5 @@
 <template>
   <div class="container" id="people">
-
     <div class="filter">
       <label>
         <input type="radio" v-model="selectedCategory" value="All"> All
@@ -11,16 +10,18 @@
       <label>
         <input type="radio" v-model="selectedCategory" value="SoftDelete"> Soft Delete
       </label>
-		<div>
-			<input type="text" id="inputGlobal" class="inputchat"
-				   v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
-		</div>
-		<div>
-			<textarea id="textGlobal" class="inputchat"
-					  v-model="msgGlobalTextArea">Global Chat</textarea>
-
-		</div>
-
+      <div>
+        <input
+          type="text"
+          id="inputGlobal"
+          class="inputchat"
+          v-model="msgGlobalText"
+          @keypress.enter="sendGlobalMsg"
+        >
+      </div>
+      <div>
+        <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
+      </div>
     </div>
     <div class="container" id="people">
       <table class="table table-striped">
@@ -58,9 +59,8 @@
                 @click.prevent="restoreUser(user)"
                 v-text="user.deleted_at ?  'Restore' : 'Delete'"
               ></a>
-              <button
+              <button v-if="user.type == 'cook' || user.type == 'waiter'"
                 @click="showPerformance(user)"
-                v-if="user.type == 'cook' || user.type == 'waiter'"
               >Performance</button>
             </td>
           </tr>
@@ -79,7 +79,10 @@ module.exports = {
       selectedCategory: "",
       editingUser: null,
       currentSort: "name",
-      currentSortDir: "asc"
+      currentSortDir: "asc",
+      msgGlobalText: "",
+      msgGlobalTextArea: "",
+      isCookOrWaiter: false,
     };
   },
   methods: {
@@ -124,7 +127,8 @@ module.exports = {
         this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
       }
       this.currentSort = s;
-    }
+    },
+    sendGlobalMsg() {}
   },
   computed: {
     filteredUsers: function() {
@@ -156,7 +160,7 @@ module.exports = {
         return 0;
       });
     }
-  }
+  },
 };
 </script>
 

@@ -27,8 +27,28 @@
 export default {
     data() {
         return {
-            title: 'Restaurant Management'
+            title: 'Restaurant Management',
+            type: this.$store.state.user.type,
+            isCook: false,
+            isWaiter: false,
+            isCashier: false,
+            isManager: this.$store.getters.isManager
         }
+    },
+    methods: {
+        returnUserType() {
+            console.log(this.type);
+            if(this.type === 'cook') {
+                this.isCook = true;
+            } else if(this.type === 'waiter') {
+                this.isWaiter = true;
+            } else if(this.type === 'cashier') {
+                this.isWaiter = true;
+            }
+        }
+    },
+    created() {
+        this.returnUserType();
     }
 }
 </script>

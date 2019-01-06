@@ -61,6 +61,7 @@
                 // .then(response => console.log("Success"))
                     .then(response => {
                         console.log(response);
+                        this.$router.push('/meals');
                     })
                     .catch(error => console.log('Whoops'));
 

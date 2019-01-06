@@ -46,6 +46,7 @@ Route::post('uploadItemPhoto', 'ItemControllerAPI@upload');
 
 /*-------------------ITEMS---------------------------*/
 Route::get('items', 'ItemControllerAPI@getItems');
+Route::get('items/all', 'ItemControllerAPI@getItemsAll');
 Route::post('items', 'ItemControllerAPI@add');
 Route::put('items', 'ItemControllerAPI@edit');
 Route::delete('items', 'ItemControllerAPI@destroy');
@@ -64,6 +65,7 @@ Route::get('meals/{id}', 'MealControllerAPI@showMeal');
 Route::get('orders/{id}', 'OrderControllerAPI@getOrders');
 Route::get('orders/waiter/{id}', 'OrderControllerAPI@getOrdersWaiter');
 Route::get('orders', 'OrderControllerAPI@getAll');
+Route::get('orders/activeMeals','OrderControllerAPI@getActiveMeals');
 Route::delete('orders/{id}', 'OrderControllerAPI@delete');
 Route::post('orders/setState/{id}', 'OrderControllerAPI@setState');
 Route::post('orders/confirmOrder/{id}', 'OrderControllerAPI@confirmOrder');

@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Lcobucci\JWT\FunctionalTests\UnsignedTokenTest;
 use Auth;
-//use DB;
+
 
 
 class OrderControllerAPI extends Controller
@@ -35,11 +35,13 @@ class OrderControllerAPI extends Controller
         $orders = DB::table('orders')
             ->select('orders.*')
             ->where([
-                ['orders.state', 'confirmed'],
-                ['orders.responsible_cook_id', null],
+                ['orders.state', 'delivered'],
+                ['orders.responsible_cook_id', $id],
             ])
-            ->orWhere([['orders.responsible_cook_id', $id],
-                ['orders.state', 'in preparation'],])
+            ->orWhere([
+                ['orders.state', 'not delivered'],
+                ['orders.responsible_cook_id', $id],
+            ])
             ->orderBy('state', 'DESC')
             ->orderBy('start', 'ASC')
             ->get();
@@ -60,6 +62,22 @@ class OrderControllerAPI extends Controller
             ->orderBy('start', 'ASC')
             ->get();
         return $orders;
+    }
+
+    public function getOrdersWithActiveMeals(Meal $meal, $id)
+    {
+        $meals = Meal::where([
+            ['state', '=', 'active'],
+            ['responsible_waiter_id', '=', $id]
+        ]);
+
+        $orders = Order::where([
+            ['meal_id', '=', $meals->id],
+            ['state', '=', 'pending']
+        ])
+        ->orWhere([
+            ['state', '=', 'confirmed']
+        ]);
     }
 
     public function add(Request $request)
@@ -116,7 +134,10 @@ class OrderControllerAPI extends Controller
             $order->state = 'delivered';
             $order->updated_at = $current;
             $order->end = $current;
-        } 
+        } else if ($order->state === 'not delivered') {
+            $order->state = 'prepared';
+            $order->updated_at = $current;
+        }
         $order->save();
         return response()->json($order,200);
         
