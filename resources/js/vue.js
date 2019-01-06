@@ -4,13 +4,11 @@ window.Vue = require('vue');
 
 import VueSocketio from 'vue-socket.io';
 import VueRouter from 'vue-router';
-import VueResource from "vue-resource";
 
 Vue.use(VueRouter);
-Vue.use(VueResource);
 Vue.use(new VueSocketio({
     debug: true,
-    connection: 'http://192.168.10.1:8080'
+    connection: 'http://localhost:8080'
 }));
 
 
@@ -51,7 +49,6 @@ const shift = Vue.component('shift', require('./components/shift.vue'));
 
 //-------------------------Statistics----------------------------------------------
 const statistics = Vue.component('statistics', require('./components/statistics.vue'));
-const shift = Vue.component('shift', require('./components/shift.vue'));
 const testView = Vue.component('testView', require('./components/testView.vue'));
 
 //--------------------------Tables-------------------------------------------------------
@@ -61,8 +58,7 @@ const r_tablesAdd = Vue.component('tables-add', require('./components/restaurant
 const r_tablesShow = Vue.component('tables-show', require('./components/restaurantTablesShow.vue'));
 const r_tablesEdit = Vue.component('tables-edit', require('./components/restaurantTablesEdit.vue'));
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         redirect: '/items'
     },
@@ -141,7 +137,7 @@ const routes = [
     },
     {
         path: '/meals/test1',
-        component:testView
+        component: testView
     },
     {
         path: '/orders',
@@ -212,14 +208,7 @@ const routes = [
         component: r_tablesEdit
 
 
-    }
-    {
-        path: '/shift',
-        component: shift
     },
-
-
-
 ];
 
 
@@ -242,7 +231,7 @@ const app = new Vue({
     data: {
         items: [],
         users: [],
-        invoices:[],
+        invoices: [],
         meals: [],
         orders: []
     },

@@ -6,7 +6,6 @@
 		</div>
 
 		<router-link to="/meals/start"> <button>Start</button>  </router-link>
-		<router-link to="/meals/test1"> <button>test</button>  </router-link>
 
 
 		<div>
@@ -33,13 +32,25 @@
 				currentMeal: null,
 				showingMeal: false,
 				meals:[],
+				
 				restaurant_tables:[]
 			}
 		},
 		methods: {
 			getMeals: function(){
+				if(this.$store.state.user.type == 'waiter'){
 				axios.get('api/meals/get/'+this.$store.state.user.id)
 						.then(response=>{this.meals = response.data;});
+				}
+				if((this.$store.state.user.type == 'manager'))
+				{
+					axios.get('api/meals')
+						.then(response=>{this.meals = response.data;});	
+				}
+			},
+			getMealsManager: function(){
+				axios.get('api/meals')
+						.then(response=>{this.meals2 = response.data;});
 			},
 			getRestaurantTables: function(){
 
@@ -65,6 +76,7 @@
 		},
 		mounted() {
 			this.getMeals();
+			
 		},
 		components: {
 			'meal-list': mealList,

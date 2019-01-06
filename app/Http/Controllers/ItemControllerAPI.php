@@ -16,6 +16,12 @@ class ItemControllerAPI extends Controller
         $items = Item::orderBy('id', 'DESC')->paginate(5);
         return response()->json($items);
     }
+    public function getItemsAll(Request $request)
+    {
+        $items = Item::all();
+        return $items;
+       
+    }
     public function add(Request $request)
     {
         $item = new Item();

@@ -64,12 +64,13 @@
 
                 if(this.user.type == 'waiter')
                 {
+                    let t = this;
                     console.log("teste");
                     this.data = [];
                     axios.get('api/statistics/meals/' + this.$route.params.id)
                         .then(response=>{
-                            this.data = response.data.data;
-                            this.user = response.data.user;
+                            t.data = response.data.data;
+                            t.user = response.data.user;
                         }); // ver a estrutura do json
                 }
 

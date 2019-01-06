@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Invoice;
 use App\Meals;
 use Illuminate\Http\Request;
