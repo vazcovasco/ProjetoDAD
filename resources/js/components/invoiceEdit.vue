@@ -7,10 +7,42 @@
       <strong>{{ message }}</strong>
     </div>
 
-    <div class="form-group">
-      <label for="name">Fullname</label>
-      <input type="text" class="form-control" v-model="invoiceCopy.name" name="name" id="inputName">
-      <span v-if="errors.has('name')">{{ errors.get('name') }}</span>
+        <div class="alert" :class="typeOfMessage" v-if="showMessage">
+            <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
+            <strong>{{ message }}</strong>
+        </div>
+
+
+        <div class="form-group">
+            <label for="name">Fullname</label>
+            <input
+
+                    type="text"
+                    class="form-control"
+                    v-model="invoiceCopy.name"
+                    name="name"
+                    id="inputName"
+
+            >
+            <span v-if="errors.has('name')">{{ errors.get('name') }}</span>
+
+        </div>
+        <div class="form-group">
+            <label for="nif">nif</label>
+            <input
+
+                    type="text"
+                    class="form-control"
+                    v-model="invoiceCopy.nif"
+                    name="nif"
+                    id="inputNif"
+            >
+            <span v-if="errors.has('nif')">{{ errors.get('nif') }}</span>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary"  v-on:click.prevent="saveInvoice()">Save</button>
+            <button class="btn btn-light" v-on:click.prevent="cancelEdit()">Cancel</button>
+        </div>
     </div>
     <div class="form-group">
       <label for="nif">nif</label>

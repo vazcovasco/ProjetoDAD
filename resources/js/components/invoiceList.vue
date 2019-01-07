@@ -1,7 +1,7 @@
 <template>
     <div class="container" id="people">
         <div class="filter" >
-            <label><input  id="active"  v-on:click="isNinja = true" type="radio" v-model="selectedCategory" value="pending"/>pending </label>
+            <label><input  id="active"  v-on:click="isNinja = true" type="radio" v-model="selectedCategory" value="pending"/>Pending </label>
             <label><input  type="radio"  v-on:click="isNinja = true" v-model="selectedCategory" value="paid"/> Paid</label>
             <label><input  type="radio" v-on:click="isNinja =true" v-model="selectedCategory" value="not paid" /> Not Paid</label>
         </div>
@@ -30,7 +30,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="invoice in filteredInvoices"  :key="invoice.id" :class="{activerow: showingInvoice === invoice}">
+            <tr  v-if="filteredInvoices.length !=0" v-for="invoice in filteredInvoices"  :key="invoice.id" :class="{activerow: showingInvoice === invoice}">
                 <td>{{ invoice.name }}</td>
                 <td>{{ invoice.meal_id }}</td>
                 <td>{{ invoice.total_price }}</td>
@@ -44,6 +44,11 @@
                 </td>
 
             </tr>
+           <tr v-show="!filteredInvoices.length">
+               <td colspan="6">  {{selectedCategory}} invoices not found</td>
+               <
+           </tr>
+
             </tbody>
         </table>
     </div>
@@ -57,11 +62,12 @@
         data: function() {
             return {
                 showingInvoice:null,
-                selectedCategory:'',
+                selectedCategory:'pending',
                 writtenNumber:'',
                 writtenDate:'',
                 isNinja: false,
                 isNinja2: false,
+
             };
         },
         methods: {

@@ -101,48 +101,49 @@ export default {
         .then(response => {
           this.restaurant_tables = response.data;
 
-          console.log(response);
-        }); // ver a estrutura do json
-    },
-    deleteTable: function(restaurant_table) {
-      console.log(restaurant_table);
-      axios
-        .delete("api/restaurant_tables/", {
-          params: { tableDelete: restaurant_table.table_number }
-        })
-        .then(response => {
-          this.showSuccess = true;
-          this.successMessage = "Table Deleted";
-          this.getTables();
-        });
-    },
-    restoreTable: function(restaurant_table) {
-      if (restaurant_table.deleted_at === null) {
-        this.message = "Table not Softdeleted";
-      } else {
-        this.message = "Table  Softdeleted";
-      }
-      console.log(restaurant_table);
-      axios
-        .post("api/restaurant_tables/delete/" + restaurant_table.table_number)
-        .then(response => {
-          restaurant_table.deleted_at = !restaurant_table.deleted_at;
-          this.$emit("message", this.message);
-        })
-        .catch(erros => {
-          console.log(erros);
-        });
-    }
-  },
-  components: {
-    "tables-list": r_tablesList,
-    "table-edit": r_tablesEdit,
-    "table-show": r_tablesShow
-  },
-  mounted() {
-    this.getTables();
-  }
-};
+                        console.log(response);
+                    }); // ver a estrutura do json
+
+				
+    		},
+			deleteTable: function(restaurant_table) {
+				console.log(restaurant_table);
+				axios.delete("api/restaurant_tables/", { params: { tableDelete: restaurant_table.table_number } }).then(response => {
+					this.showSuccess = true;
+					this.successMessage = "Table Deleted";
+					console.log(response.data);
+					this.getTables();
+				});
+			   },
+			restoreTable: function(restaurant_table){
+				if (restaurant_table.deleted_at === null) {
+					this.message = 'Table not Softdeleted';
+				} else {
+					this.message = 'Table  Softdeleted';
+				}
+				console.log(restaurant_table);
+				axios.post('api/restaurant_tables/delete/'+ restaurant_table.table_number)
+						.then(response=>{
+							restaurant_table.deleted_at = !restaurant_table.deleted_at;
+							this.$emit('message', this.message)
+							this.getTables();
+						})
+						.catch(erros => {
+							console.log(erros);
+						})
+
+			},
+	    },
+	   	components: {
+			'tables-list': r_tablesList,
+			'table-edit': r_tablesEdit,
+			'table-show': r_tablesShow
+	    },
+	    mounted() {
+			this.getTables();
+		}
+
+	}
 </script>
 
 <style scoped>

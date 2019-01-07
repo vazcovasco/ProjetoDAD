@@ -65,6 +65,10 @@
               >Performance</button>
             </td>
           </tr>
+          <tr v-show="!filteredUsers.length">
+            <td colspan="6">  {{selectedCategory}} user not found</td>
+            <
+          </tr>
         </tbody>
       </table>
     </div>

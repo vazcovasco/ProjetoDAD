@@ -33,6 +33,14 @@ class RestaurantTableControllerAPI extends Controller
         return $restaurant_tables;
 
     }
+    public function getTablesDependent(Request $request, $tableNumber){
+        $meals = DB::table('meals')
+            ->where('meals.table_number', $tableNumber);
+        
+        return $meals;
+       
+    }
+
     public function destroy(Request $request)
     {
         $tableNumber = $request->query('tableDelete');
@@ -40,7 +48,7 @@ class RestaurantTableControllerAPI extends Controller
         $table = RestaurantTable::withTrashed()->findOrFail($tableNumber);
 
         $meals = DB::table('meals')
-            ->where('meals.responsible_waiter_id', $tableNumber)
+            ->where('meals.table_number', $tableNumber)
             ->count();
 
         if($meals!=0){
@@ -62,7 +70,6 @@ class RestaurantTableControllerAPI extends Controller
 
     public function update(Request $request, RestaurantTable $table)
     {
-
         //validator a ver se se o novo numero não existe
         $request->validate([
             'table_number' => 'unique:restaurant_tables',
