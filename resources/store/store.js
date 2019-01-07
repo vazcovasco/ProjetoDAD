@@ -14,6 +14,9 @@ export default new Vuex.Store({
         token: localStorage.getItem('access_token') || null,
         user: JSON.parse(localStorage.getItem('user')) || null,
         manager: localStorage.getItem('manager') || null,
+        cook: localStorage.getItem('cook') || null,
+        waiter: localStorage.getItem('waiter') || null,
+        cashier: localStorage.getItem('cashier') || null,
         shift: localStorage.getItem('shift'),
         shiftStarted: localStorage.getItem('shiftStarted'),
         shiftEnded: localStorage.getItem('shiftEnded')
@@ -24,6 +27,15 @@ export default new Vuex.Store({
         },
         isManager(state) {
             return state.manager !== null;
+        },
+        isCook(state) {
+            return state.cook !== null;
+        },
+        isWaiter(state) {
+            return state.waiter !== null;
+        },
+        isCashier(state) {
+            return state.cashier !== null;
         },
         isShiftStarted(state) {
             return state.shift != 0;
@@ -42,11 +54,29 @@ export default new Vuex.Store({
         setManager: (state, manager) => {
             state.manager = manager;
         },
+        setCook: (state, cook) => {
+            state.cook = cook;
+        },
+        setWaiter: (state, waiter) => {
+            state.waiter = waiter;
+        },
+        setCashier: (state, cashier) => {
+            state.cashier = cashier;
+        },
         removeUser: (state) => {
             state.user = null;
         },
         removeManager: (state) => {
             state.manager = null;
+        },
+        removeCook: (state) => {
+            state.cook = null;
+        },
+        removeWaiter: (state) => {
+            state.waiter = null;
+        },
+        removeCashier: (state) => {
+            state.cashier = null;
         },
         setShift: (state, shift) => {
             state.shift = shift;
@@ -99,6 +129,12 @@ export default new Vuex.Store({
                             context.commit('removeUser');
                             localStorage.removeItem('manager');
                             context.commit('removeManager');
+                            localStorage.removeItem('cook');
+                            context.commit('removeCook');
+                            localStorage.removeItem('waiter');
+                            context.commit('removeWaiter');
+                            localStorage.removeItem('cashier');
+                            context.commit('removeCashier');
                             localStorage.removeItem('shift');
                             context.commit('removeShift');
                             localStorage.removeItem('shiftStarted');
@@ -114,6 +150,12 @@ export default new Vuex.Store({
                             context.commit('removeUser');
                             localStorage.removeItem('manager');
                             context.commit('removeManager');
+                            localStorage.removeItem('cook');
+                            context.commit('removeCook');
+                            localStorage.removeItem('waiter');
+                            context.commit('removeWaiter');
+                            localStorage.removeItem('cashier');
+                            context.commit('removeCashier');
                             localStorage.removeItem('shift');
                             context.commit('removeShift');
                             localStorage.removeItem('shiftStarted');
@@ -159,6 +201,18 @@ export default new Vuex.Store({
                         if (type === 'manager') {
                             localStorage.setItem('manager', type);
                             context.commit('setManager', type);
+                        }
+                        else if (type === 'cook') {
+                            localStorage.setItem('cook', type);
+                            context.commit('setCook', type);
+                        }
+                        else if (type === 'waiter') {
+                            localStorage.setItem('waiter', type);
+                            context.commit('setWaiter', type);
+                        }
+                        else if (type === 'cashier') {
+                            localStorage.setItem('cashier', type);
+                            context.commit('setCashier', type);
                         }
                         localStorage.setItem('shift', shift);
                         context.commit('setShift', shift);

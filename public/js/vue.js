@@ -43609,29 +43609,44 @@ var routes = [{
     path: '/meals',
     component: meal,
     meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        permissionMeals: true
     }
 }, {
     path: '/meals/show/:id',
-    component: mealShow
+    component: mealShow,
+    meta: {
+        requiresAuth: true,
+        permissionMeals: true
+    }
 }, {
     path: '/meals/start',
-    component: mealStart
+    component: mealStart,
+    meta: {
+        requiresAuth: true,
+        permissionWaiter: true
+    }
 }, {
     path: '/orders',
     component: order,
     meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        permissionOrderList: true
     }
 }, {
     path: '/orders/add',
     component: orderAdd,
     meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        permissionWaiter: true
+
     }
 }, {
     path: '/statistics/orders/:id',
-    component: statistics
+    component: statistics,
+    meta: {
+        requiresAuth: true
+    }
 
 }, {
     path: '/restaurantManagement',
@@ -43653,7 +43668,11 @@ var routes = [{
     }
 }, {
     path: '/invoices',
-    component: invoice
+    component: invoice,
+    meta: {
+        requiresAuth: true,
+        permissionInvoices: true
+    }
 }, {
     path: '/invoiceList',
     component: invoice,
@@ -43662,26 +43681,54 @@ var routes = [{
     }
 }, {
     path: '/invoices/:id',
-    component: invoiceShow
+    component: invoiceShow,
+    meta: {
+        requiresAuth: true,
+        permissionInvoices: true
+    }
 }, {
     path: '/invoices/:id',
-    component: invoiceEdit
+    component: invoiceEdit,
+    meta: {
+        requiresAuth: true,
+        permissionCashier: true
+    }
 }, {
     path: '/restaurantTables',
-    component: r_tables
+    component: r_tables,
+    meta: {
+        requiresAuth: true,
+        permissionManager: true
+    }
 }, {
     path: '/restaurantTables/add',
-    component: r_tablesAdd
+    component: r_tablesAdd,
+    meta: {
+        requiresAuth: true,
+        permissionManager: true
+    }
 }, {
     path: '/restaurantTables/show/:table_number',
-    component: r_tablesShow
+    component: r_tablesShow,
+    meta: {
+        requiresAuth: true,
+        permissionManager: true
+    }
 }, {
     path: '/restaurantTables/edit/:table_number',
+<<<<<<< HEAD
     component: r_tablesEdit
 
 }, {
     path: '/restaurant_statistics',
     component: restaurant_statistics
+=======
+    component: r_tablesEdit,
+    meta: {
+        requiresAuth: true,
+        permissionManager: true
+    }
+>>>>>>> master
 }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
@@ -43693,7 +43740,56 @@ router.beforeEach(function (to, from, next) {
         return record.meta.requiresAuth;
     })) {
         if (!__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.loggedIn) {
+            alert('you are not a logged in!');
             next("/login");
+            return;
+        }
+    }if (to.matched.some(function (record) {
+        return record.meta.permissionManager;
+    })) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.isManager) {
+            next("/");
+            alert('you are not a Manager!');
+            return;
+        }
+    } else if (to.matched.some(function (record) {
+        return record.meta.permissionWaiter;
+    })) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.isWaiter) {
+            next("/");
+            alert('you are not a Waiter!');
+            return;
+        }
+    } else if (to.matched.some(function (record) {
+        return record.meta.permissionCashier;
+    })) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.isCashier) {
+            next("/");
+            alert('you are not a Cashier!');
+            return;
+        }
+    } else if (to.matched.some(function (record) {
+        return record.meta.permissionOrderList;
+    })) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.isWaiter && !__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.isCook) {
+            next("/");
+            alert('You dont have permission to access the list of orders!');
+            return;
+        }
+    } else if (to.matched.some(function (record) {
+        return record.meta.permissionMeals;
+    })) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.isWaiter && !__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.isManager) {
+            next("/");
+            alert('You dont have permission to access the list of orders!');
+            return;
+        }
+    } else if (to.matched.some(function (record) {
+        return record.meta.permissionInvoices;
+    })) {
+        if (!__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.isManager && !__WEBPACK_IMPORTED_MODULE_2__store_store_js__["a" /* default */].getters.isCashier) {
+            next("/");
+            alert('You dont have permission to access the list of orders!');
             return;
         }
     }
@@ -68660,6 +68756,9 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
         token: localStorage.getItem('access_token') || null,
         user: JSON.parse(localStorage.getItem('user')) || null,
         manager: localStorage.getItem('manager') || null,
+        cook: localStorage.getItem('cook') || null,
+        waiter: localStorage.getItem('waiter') || null,
+        cashier: localStorage.getItem('cashier') || null,
         shift: localStorage.getItem('shift'),
         shiftStarted: localStorage.getItem('shiftStarted'),
         shiftEnded: localStorage.getItem('shiftEnded')
@@ -68670,6 +68769,15 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
         },
         isManager: function isManager(state) {
             return state.manager !== null;
+        },
+        isCook: function isCook(state) {
+            return state.cook !== null;
+        },
+        isWaiter: function isWaiter(state) {
+            return state.waiter !== null;
+        },
+        isCashier: function isCashier(state) {
+            return state.cashier !== null;
         },
         isShiftStarted: function isShiftStarted(state) {
             return state.shift != 0;
@@ -68689,11 +68797,29 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
         setManager: function setManager(state, manager) {
             state.manager = manager;
         },
+        setCook: function setCook(state, cook) {
+            state.cook = cook;
+        },
+        setWaiter: function setWaiter(state, waiter) {
+            state.waiter = waiter;
+        },
+        setCashier: function setCashier(state, cashier) {
+            state.cashier = cashier;
+        },
         removeUser: function removeUser(state) {
             state.user = null;
         },
         removeManager: function removeManager(state) {
             state.manager = null;
+        },
+        removeCook: function removeCook(state) {
+            state.cook = null;
+        },
+        removeWaiter: function removeWaiter(state) {
+            state.waiter = null;
+        },
+        removeCashier: function removeCashier(state) {
+            state.cashier = null;
         },
         setShift: function setShift(state, shift) {
             state.shift = shift;
@@ -68743,6 +68869,12 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
                         context.commit('removeUser');
                         localStorage.removeItem('manager');
                         context.commit('removeManager');
+                        localStorage.removeItem('cook');
+                        context.commit('removeCook');
+                        localStorage.removeItem('waiter');
+                        context.commit('removeWaiter');
+                        localStorage.removeItem('cashier');
+                        context.commit('removeCashier');
                         localStorage.removeItem('shift');
                         context.commit('removeShift');
                         localStorage.removeItem('shiftStarted');
@@ -68757,6 +68889,12 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
                         context.commit('removeUser');
                         localStorage.removeItem('manager');
                         context.commit('removeManager');
+                        localStorage.removeItem('cook');
+                        context.commit('removeCook');
+                        localStorage.removeItem('waiter');
+                        context.commit('removeWaiter');
+                        localStorage.removeItem('cashier');
+                        context.commit('removeCashier');
                         localStorage.removeItem('shift');
                         context.commit('removeShift');
                         localStorage.removeItem('shiftStarted');
@@ -68801,6 +68939,15 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
                     if (type === 'manager') {
                         localStorage.setItem('manager', type);
                         context.commit('setManager', type);
+                    } else if (type === 'cook') {
+                        localStorage.setItem('cook', type);
+                        context.commit('setCook', type);
+                    } else if (type === 'waiter') {
+                        localStorage.setItem('waiter', type);
+                        context.commit('setWaiter', type);
+                    } else if (type === 'cashier') {
+                        localStorage.setItem('cashier', type);
+                        context.commit('setCashier', type);
                     }
                     localStorage.setItem('shift', shift);
                     context.commit('setShift', shift);
@@ -77456,7 +77603,11 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
+<<<<<<< HEAD
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\t  Specific style applied only on the component*/\n", ""]);
+=======
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\t  Specific style applied only on the component*/\n", ""]);
+>>>>>>> master
 
 // exports
 
@@ -77512,9 +77663,12 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 //
 //
 //
+<<<<<<< HEAD
 //
 //
 //
+=======
+>>>>>>> master
 
 // Component code (not registered)
 module.exports = {
@@ -77552,6 +77706,11 @@ module.exports = {
 				});
 			}
 			if (category === "prepared") {
+				return this.orders.filter(function (order) {
+					return order.state == 'prepared';
+				});
+			}
+			if (category === "in preparation") {
 				return this.orders.filter(function (order) {
 					return order.state == 'prepared';
 				});
@@ -77598,7 +77757,7 @@ var render = function() {
             }
           }
         }),
-        _vm._v("Prepared\n            ")
+        _vm._v(" Prepared\n            ")
       ]),
       _vm._v(" "),
       _c("label", [
@@ -77641,7 +77800,32 @@ var render = function() {
           }
         }),
         _vm._v(" Confirmed")
-      ])
+      ]),
+      _vm._v(" "),
+      _vm.isCook
+        ? _c("label", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selectedCategory,
+                  expression: "selectedCategory"
+                }
+              ],
+              attrs: { type: "radio", value: "in preparation" },
+              domProps: {
+                checked: _vm._q(_vm.selectedCategory, "in preparation")
+              },
+              on: {
+                change: function($event) {
+                  _vm.selectedCategory = "in preparation"
+                }
+              }
+            }),
+            _vm._v(" In preperation")
+          ])
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("table", { staticClass: "table table-striped" }, [
@@ -77688,9 +77872,43 @@ var render = function() {
                       ? _c("td", [_vm._v(_vm._s(order.state))])
                       : order.state === "delivered"
                         ? _c("td", [_vm._v(_vm._s(order.state))])
+<<<<<<< HEAD
                         : order.state === "not delivered"
                           ? _c("td", [_vm._v(_vm._s(order.state))])
                           : _vm._e(),
+=======
+                        : _vm._e(),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(order.item_id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(order.meal_id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(order.responsible_cook_id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(order.start))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(order.end))]),
+            _vm._v(" "),
+            _c("td", [
+              (_vm.isCook &&
+                (order.state == "confirmed" ||
+                  order.state == "in preperation")) ||
+              (_vm.isWaiter && order.state == "prepared")
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-sm btn-primary",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.setState(order)
+                        }
+                      }
+                    },
+                    [_vm._v("State")]
+                  )
+                : _vm._e(),
+>>>>>>> master
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(order.item_id))]),
               _vm._v(" "),
@@ -79261,6 +79479,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.delete("api/restaurant_tables/", { params: { tableDelete: restaurant_table.table_number } }).then(function (response) {
 				_this3.showSuccess = true;
 				_this3.successMessage = "Table Deleted";
+				console.log(response.data);
 				_this3.getTables();
 			});
 		},
@@ -79276,6 +79495,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.post('api/restaurant_tables/delete/' + restaurant_table.table_number).then(function (response) {
 				restaurant_table.deleted_at = !restaurant_table.deleted_at;
 				_this4.$emit('message', _this4.message);
+				_this4.getTables();
 			}).catch(function (erros) {
 				console.log(erros);
 			});
@@ -79326,7 +79546,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\t  Specific style applied only on the component*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\t  Specific style applied only on the component*/\n", ""]);
 
 // exports
 
@@ -79359,7 +79579,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 //
 //
 //
-//
 
 // Component code (not registered)
 module.exports = {
@@ -79368,7 +79587,8 @@ module.exports = {
 		return {
 			showingRestaurant_table: null,
 			currentRestaurant_table: null,
-			editingRestaurantTable: null
+			editingRestaurantTable: null,
+			tables_dependent: []
 		};
 	},
 	methods: {
@@ -79387,6 +79607,10 @@ module.exports = {
 			this.showingRestaurant_table = restaurant_table;
 			this.$emit('show-restaurant-table-click', restaurant_table);
 		}
+		/*getTablesDependent: function(){
+  	axios.get('api/restaurant_tables/dependent')
+  		.then(response=>{ this.tables_dependent = response.data; }); // ver a estrutura do json
+  }*/
 
 	}
 };
@@ -79439,7 +79663,7 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    staticClass: "btn btn-sm btn-danger",
+                    staticClass: "btn tbn-xs btn-warning",
                     on: {
                       click: function($event) {
                         $event.preventDefault()
@@ -79447,25 +79671,22 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Delete")]
+                  [_vm._v(" Delete ")]
                 ),
                 _vm._v(" "),
-                _c("a", {
-                  class: restaurant_table.deleted_at
-                    ? "btn btn-xs btn-success"
-                    : "btn btn-xs btn-warning",
-                  domProps: {
-                    textContent: _vm._s(
-                      restaurant_table.deleted_at ? "Restore" : "Delete"
-                    )
-                  },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.restoreTable(restaurant_table)
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn tbn-xs btn-success",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.restoreTable(restaurant_table)
+                      }
                     }
-                  }
-                }),
+                  },
+                  [_vm._v(" Restore ")]
+                ),
                 _vm._v(" "),
                 _c(
                   "button",
