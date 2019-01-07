@@ -30,6 +30,7 @@ import InvoiceList from "./invoiceList.vue";
 import InvoiceShow from "./invoiceShow.vue";
 import InvoiceEdit from "./invoiceEdit.vue";
 
+
 export default {
   data: function() {
     return {
@@ -57,9 +58,6 @@ export default {
       this.editingInvoice = false;
       this.currentInvoiceEdit = null;
 
-    import  InvoiceList from './invoiceList.vue';
-    import InvoiceShow from './invoiceShow.vue';
-    import InvoiceEdit from './invoiceEdit.vue';
       this.showingInvoice = true;
       this.currentInvoiceShow = invoice;
 
