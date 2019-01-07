@@ -72886,7 +72886,7 @@ var moment = __webpack_require__(0);
     return {
       moment: moment,
       isShiftStarted: this.$store.getters.isShiftStarted,
-      timer: null
+      timer: ""
     };
   },
 
@@ -72921,18 +72921,22 @@ var moment = __webpack_require__(0);
       });
     },
     startTimer: function startTimer() {
+      var _this = this;
+
       var setTimeStamp = this.moment().startOf(this.startShift);
-      console.log('timestamp - ' + setTimeStamp);
+      console.log("timestamp - " + setTimeStamp);
 
       setInterval(function () {
-        setTimeStamp.add(1, 'second');
-        this.timer = setTimeStamp.format("HH:mm:ss");
-        console.log('timer - ' + this.timer);
+        setTimeStamp.add(1, "second");
+        _this.timer = null;
+        _this.timer = setTimeStamp.format("HH:mm:ss");
+        console.log("timer - " + _this.timer);
       }, 1000);
     }
   },
   created: function created() {
     console.log(this.isShiftStarted);
+    this.startTimer();
   }
 });
 
@@ -72979,7 +72983,7 @@ var render = function() {
                       _vm._v("Shift started at: " + _vm._s(_vm.shiftStart))
                     ]),
                     _vm._v(" "),
-                    _c("p", [_vm._v("Time Past: " + _vm._s(_vm.timer))])
+                    _c("p", [_vm._v("Time Past: " + _vm._s(this.timer))])
                   ])
                 : _vm._e(),
               _vm._v(" "),
