@@ -49,6 +49,7 @@ const shift = Vue.component('shift', require('./components/shift.vue'));
 
 //-------------------------Statistics----------------------------------------------
 const statistics = Vue.component('statistics', require('./components/statistics.vue'));
+const restaurant_statistics = Vue.component('restaurant_statistics', require('./components/restaurant_statistics.vue'));
 const testView = Vue.component('testView', require('./components/testView.vue'));
 
 //--------------------------Tables-------------------------------------------------------
@@ -136,10 +137,6 @@ const routes = [{
         component: mealStart
     },
     {
-        path: '/meals/test1',
-        component: testView
-    },
-    {
         path: '/orders',
         component: order,
         meta: {
@@ -184,6 +181,13 @@ const routes = [{
         component: invoice
     },
     {
+        path: '/invoiceList',
+        component: invoice,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
         path: '/invoices/:id',
         component: invoiceShow
     },
@@ -209,6 +213,11 @@ const routes = [{
 
 
     },
+    {
+        path: '/restaurant_statistics',
+        component: restaurant_statistics
+    },
+
 ];
 
 

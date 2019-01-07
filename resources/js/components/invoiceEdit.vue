@@ -7,6 +7,11 @@
 
         </ul>
 
+        <div class="alert" :class="typeOfMessage" v-if="showMessage">
+            <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
+            <strong>{{ message }}</strong>
+        </div>
+
 
         <div class="form-group">
             <label for="name">Fullname</label>
@@ -53,7 +58,11 @@
                 invoiceCopy: {
                     name: '',
                     nif: '',
-                }
+                },
+                message:'',
+                showMessage:false,
+                typeOfMessage:'alert-success',
+
 
             };
         },
@@ -79,7 +88,9 @@
                             this.$emit('invoice-saved', this.invoice);
                         })
                         .catch(errors => {
-                            this.errors.record(errors.response.data.errors);
+                            this.message = this.errors.nif[0];
+                            this.typeOfMessage="alert-danger";
+                            this.showMessage = true;
 
                         });
 
@@ -87,15 +98,19 @@
 
             },
             cancelEdit: function() {
-                this.$router.push("/");
+                    this.$emit('invoice-canceled', this.invoice);
             },
             checkForm: function () {
 
                 if (!this.invoiceCopy.name) {
-                    this.errors.set('name',"Name required.");
+                    this.message="name required";
+                    this.typeOfMessage="alert-danger";
+                    this.showMessage = true;
                 }
                 if (!this.invoiceCopy.nif) {
-                    this.errors.set('nif','Nif required.');
+                    this.message="nif required";
+                    this.typeOfMessage="alert-danger";
+                    this.showMessage = true;
 
                 }
 

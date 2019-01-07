@@ -7,6 +7,7 @@ use App\Http\Resources\User as UserResource;
 use Illuminate\Support\Facades\DB;
 
 use App\Order;
+use App\Item;
 use App\Meal;
 use App\User;
 use Illuminate\Http\Request;

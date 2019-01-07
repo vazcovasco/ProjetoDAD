@@ -113,7 +113,7 @@
                 axios.get('api/statistics/ordersAverageTime')
                     .then(response=>{
                         console.log("teste");
-                        this.mealsTime= response.data}); // ver a estrutura do json
+                        this.ordersTime= response.data}); // ver a estrutura do json
             },
 
         },

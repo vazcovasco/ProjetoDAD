@@ -6,7 +6,7 @@
         </div>
 
         <div>
-            <invoice-list :invoices="invoices"  @show-click="showInvoice" @edit-click="editInvoice" @download-click="downloadInvoice"></invoice-list>
+            <invoice-list :invoices="invoices"  @show-click="showInvoice" @edit-click="editInvoice" @invoice-canceled="cancelEdit" @download-click="downloadInvoice"></invoice-list>
 
             <invoice-show :invoice="currentInvoiceShow" :items="items" v-if="showingInvoice"   ></invoice-show>
 
@@ -21,7 +21,7 @@
 <script type="text/javascript">
 
 
-    import InvoiceList from './invoiceList.vue';
+    import  InvoiceList from './invoiceList.vue';
     import InvoiceShow from './invoiceShow.vue';
     import InvoiceEdit from './invoiceEdit.vue';
 

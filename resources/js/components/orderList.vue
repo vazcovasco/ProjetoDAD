@@ -39,6 +39,10 @@
 						<a v-if="order.state=='pending'" class="btn btn-sm btn-danger" v-on:click.prevent="deleteOrder(order)">Delete</a>
 					</td>
 				</tr>
+				<tr v-show="!filteredOrders.length">
+					<td colspan="6">  {{selectedCategory}} orders not found</td>
+					<
+				</tr>
 			</tbody>
 		</table>
 	</div>

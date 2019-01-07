@@ -43330,13 +43330,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(310)
+  __webpack_require__(313)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(312)
+var __vue_script__ = __webpack_require__(315)
 /* template */
-var __vue_template__ = __webpack_require__(313)
+var __vue_template__ = __webpack_require__(316)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43381,13 +43381,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(314)
+  __webpack_require__(317)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(316)
+var __vue_script__ = __webpack_require__(319)
 /* template */
-var __vue_template__ = __webpack_require__(317)
+var __vue_template__ = __webpack_require__(320)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43432,13 +43432,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(318)
+  __webpack_require__(321)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(320)
+var __vue_script__ = __webpack_require__(323)
 /* template */
-var __vue_template__ = __webpack_require__(321)
+var __vue_template__ = __webpack_require__(324)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43481,7 +43481,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(158);
-module.exports = __webpack_require__(328);
+module.exports = __webpack_require__(331);
 
 
 /***/ }),
@@ -43544,12 +43544,13 @@ var shift = Vue.component('shift', __webpack_require__(147));
 
 //-------------------------Statistics----------------------------------------------
 var statistics = Vue.component('statistics', __webpack_require__(298));
-var testView = Vue.component('testView', __webpack_require__(301));
+var restaurant_statistics = Vue.component('restaurant_statistics', __webpack_require__(301));
+var testView = Vue.component('testView', __webpack_require__(304));
 
 //--------------------------Tables-------------------------------------------------------
-var r_tables = Vue.component('tables', __webpack_require__(306));
+var r_tables = Vue.component('tables', __webpack_require__(309));
 var r_tablesList = Vue.component('tables-list', __webpack_require__(154));
-var r_tablesAdd = Vue.component('tables-add', __webpack_require__(323));
+var r_tablesAdd = Vue.component('tables-add', __webpack_require__(326));
 var r_tablesShow = Vue.component('tables-show', __webpack_require__(156));
 var r_tablesEdit = Vue.component('tables-edit', __webpack_require__(155));
 
@@ -43617,9 +43618,6 @@ var routes = [{
     path: '/meals/start',
     component: mealStart
 }, {
-    path: '/meals/test1',
-    component: testView
-}, {
     path: '/orders',
     component: order,
     meta: {
@@ -43657,6 +43655,12 @@ var routes = [{
     path: '/invoices',
     component: invoice
 }, {
+    path: '/invoiceList',
+    component: invoice,
+    meta: {
+        requiresAuth: true
+    }
+}, {
     path: '/invoices/:id',
     component: invoiceShow
 }, {
@@ -43675,6 +43679,9 @@ var routes = [{
     path: '/restaurantTables/edit/:table_number',
     component: r_tablesEdit
 
+}, {
+    path: '/restaurant_statistics',
+    component: restaurant_statistics
 }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
@@ -71832,7 +71839,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$router.push("/users");
     },
     cancelEdit: function cancelEdit() {
-      this.$router.push("/use");
+      this.$emit("user-canceled", this.user);
     },
     savePassword: function savePassword(user) {},
     getProfileImage: function getProfileImage(photo_url) {
@@ -72192,6 +72199,10 @@ exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\r\n  background: #123
 //
 //
 //
+//
+//
+//
+//
 
 // Component code (not registered)
 module.exports = {
@@ -72470,100 +72481,128 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l((_vm.sortedUsers, _vm.filteredUsers), function(user) {
-            return _c(
-              "tr",
-              { key: user.id, class: { activerow: _vm.editingUser === user } },
-              [
-                _c("td", [_vm._v(_vm._s(user.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(user.username))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(user.email))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("img", {
-                    attrs: {
-                      width: "100px",
-                      src: _vm.getProfileImage(user.photo_url)
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.editUser(user)
-                        }
-                      }
-                    },
-                    [_vm._v("edit")]
-                  ),
+          [
+            _vm._l((_vm.sortedUsers, _vm.filteredUsers), function(user) {
+              return _c(
+                "tr",
+                {
+                  key: user.id,
+                  class: { activerow: _vm.editingUser === user }
+                },
+                [
+                  _c("td", [_vm._v(_vm._s(user.name))]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.deleteUser(user)
-                        }
-                      }
-                    },
-                    [_vm._v("Delete")]
-                  ),
+                  _c("td", [_vm._v(_vm._s(user.username))]),
                   _vm._v(" "),
-                  _c("a", {
-                    class: user.blocked
-                      ? "btn btn-xs btn-success"
-                      : "btn btn-xs btn-warning",
-                    domProps: {
-                      textContent: _vm._s(user.blocked ? "UnBlock" : "Block")
-                    },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.toggleBlockUser(user)
-                      }
-                    }
-                  }),
+                  _c("td", [_vm._v(_vm._s(user.email))]),
                   _vm._v(" "),
-                  _c("a", {
-                    class: user.deleted_at
-                      ? "btn btn-xs btn-success"
-                      : "btn btn-xs btn-warning",
-                    domProps: {
-                      textContent: _vm._s(
-                        user.deleted_at ? "Restore" : "Delete"
-                      )
-                    },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.restoreUser(user)
+                  _c("td", [
+                    _c("img", {
+                      attrs: {
+                        width: "100px",
+                        src: _vm.getProfileImage(user.photo_url)
                       }
-                    }
-                  }),
+                    })
+                  ]),
                   _vm._v(" "),
-                  user.type == "cook" || user.type == "waiter"
-                    ? _c(
-                        "button",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.showPerformance(user)
-                            }
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.editUser(user)
                           }
-                        },
-                        [_vm._v("Performance")]
-                      )
-                    : _vm._e()
-                ])
+                        }
+                      },
+                      [_vm._v("edit")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.deleteUser(user)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    ),
+                    _vm._v(" "),
+                    _c("a", {
+                      class: user.blocked
+                        ? "btn btn-xs btn-success"
+                        : "btn btn-xs btn-warning",
+                      domProps: {
+                        textContent: _vm._s(user.blocked ? "UnBlock" : "Block")
+                      },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.toggleBlockUser(user)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("a", {
+                      class: user.deleted_at
+                        ? "btn btn-xs btn-success"
+                        : "btn btn-xs btn-warning",
+                      domProps: {
+                        textContent: _vm._s(
+                          user.deleted_at ? "Restore" : "Delete"
+                        )
+                      },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.restoreUser(user)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    user.type == "cook" || user.type == "waiter"
+                      ? _c(
+                          "button",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.showPerformance(user)
+                              }
+                            }
+                          },
+                          [_vm._v("Performance")]
+                        )
+                      : _vm._e()
+                  ])
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _c(
+              "tr",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.filteredUsers.length,
+                    expression: "!filteredUsers.length"
+                  }
+                ]
+              },
+              [
+                _c("td", { attrs: { colspan: "6" } }, [
+                  _vm._v(
+                    "  " + _vm._s(_vm.selectedCategory) + " user not found"
+                  )
+                ]),
+                _vm._v("\n          <\n        ")
               ]
             )
-          })
+          ],
+          2
         )
       ])
     ])
@@ -74912,6 +74951,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 // Component code (not registered)
 
@@ -74920,10 +74960,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ["meals"],
     data: function data() {
         return {
-            selectedCategory: '',
+            selectedCategory: 'active',
+            selectedCategory2: 'terminated',
             writtenNumber: '',
             writtenDate: '',
-            showingMeal: null
+            showingMeal: null,
+            isNinja: false,
+            isNinja2: false
 
         };
     },
@@ -74995,27 +75038,6 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "container", attrs: { id: "meals" } }, [
       _c("div", { staticClass: "filter" }, [
-        _c("label", { attrs: { for: "active" } }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.selectedCategory,
-                expression: "selectedCategory"
-              }
-            ],
-            attrs: { id: "active", type: "radio", value: "active" },
-            domProps: { checked: _vm._q(_vm.selectedCategory, "active") },
-            on: {
-              change: function($event) {
-                _vm.selectedCategory = "active"
-              }
-            }
-          }),
-          _vm._v("Active\n        ")
-        ]),
-        _vm._v(" "),
         _c("label", [
           _c("input", {
             directives: [
@@ -75026,15 +75048,18 @@ var render = function() {
                 expression: "selectedCategory"
               }
             ],
-            attrs: { type: "radio", value: "terminated" },
-            domProps: { checked: _vm._q(_vm.selectedCategory, "terminated") },
+            attrs: { id: "active", type: "radio", value: "pending" },
+            domProps: { checked: _vm._q(_vm.selectedCategory, "pending") },
             on: {
+              click: function($event) {
+                _vm.isNinja = true
+              },
               change: function($event) {
-                _vm.selectedCategory = "terminated"
+                _vm.selectedCategory = "pending"
               }
             }
           }),
-          _vm._v(" Terminated")
+          _vm._v("pending ")
         ]),
         _vm._v(" "),
         _c("label", [
@@ -75050,6 +75075,9 @@ var render = function() {
             attrs: { type: "radio", value: "paid" },
             domProps: { checked: _vm._q(_vm.selectedCategory, "paid") },
             on: {
+              click: function($event) {
+                _vm.isNinja = true
+              },
               change: function($event) {
                 _vm.selectedCategory = "paid"
               }
@@ -75071,6 +75099,9 @@ var render = function() {
             attrs: { type: "radio", value: "not paid" },
             domProps: { checked: _vm._q(_vm.selectedCategory, "not paid") },
             on: {
+              click: function($event) {
+                _vm.isNinja = true
+              },
               change: function($event) {
                 _vm.selectedCategory = "not paid"
               }
@@ -75079,93 +75110,158 @@ var render = function() {
           _vm._v(" Not Paid")
         ])
       ]),
-      _vm._v("\n        filter data\n        "),
-      _c("div", { staticClass: "filter" }, [
-        _c("label", [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.writtenDate,
-                expression: "writtenDate"
-              }
-            ],
-            attrs: { type: "text", value: "date", id: "date" },
-            domProps: { value: _vm.writtenDate },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.writtenDate = $event.target.value
-              }
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.isNinja,
+              expression: "isNinja"
             }
-          })
-        ])
-      ]),
-      _vm._v("\n\n        id_waiter_responsible\n        "),
-      _c("div", { staticClass: "filter" }, [
-        _c("label", [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.writtenNumber,
-                expression: "writtenNumber"
-              }
-            ],
-            attrs: { type: "text", value: "id_waiter", id: "id_waiter" },
-            domProps: { value: _vm.writtenNumber },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          ],
+          staticClass: "filter"
+        },
+        [
+          _vm._v("\n            filter data\n            "),
+          _c("label", [
+            _c("input", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isNinja,
+                  expression: "isNinja"
+                },
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.writtenDate,
+                  expression: "writtenDate"
                 }
-                _vm.writtenNumber = $event.target.value
+              ],
+              attrs: { type: "text", value: "date", id: "date" },
+              domProps: { value: _vm.writtenDate },
+              on: {
+                click: function($event) {
+                  _vm.isNinja2 = !_vm.isNinja2
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.writtenDate = $event.target.value
+                }
               }
-            }
-          })
-        ])
-      ]),
+            })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _vm.writtenDate != ""
+        ? _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isNinja2,
+                  expression: "isNinja2"
+                }
+              ],
+              staticClass: "filter"
+            },
+            [
+              _vm._v("\n            id_waiter_responsible\n            "),
+              _c("label", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.writtenNumber,
+                      expression: "writtenNumber"
+                    }
+                  ],
+                  attrs: { type: "text", value: "id_waiter", id: "id_waiter" },
+                  domProps: { value: _vm.writtenNumber },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.writtenNumber = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c("table", { staticClass: "table table-striped" }, [
         _vm._m(0),
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.filteredMeals, function(meal) {
-            return _c("tr", { key: meal.id }, [
-              _c("td", [_vm._v(_vm._s(meal.id))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(meal.start))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(meal.state))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(meal.table_number))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(meal.responsible_waiter_id))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(meal.total_price_preview))]),
-              _vm._v(" "),
-              _c("td", [
-                meal.state == "active"
-                  ? _c(
-                      "button",
-                      {
-                        on: {
-                          click: function($event) {
-                            _vm.showMeal(meal)
+          [
+            _vm._l(_vm.filteredMeals, function(meal) {
+              return _c("tr", { key: meal.id }, [
+                _c("td", [_vm._v(_vm._s(meal.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(meal.start))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(meal.state))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(meal.table_number))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(meal.responsible_waiter_id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(meal.total_price_preview))]),
+                _vm._v(" "),
+                _c("td", [
+                  meal.state == "active"
+                    ? _c(
+                        "button",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.showMeal(meal)
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("Show")]
-                    )
-                  : _vm._e()
+                        },
+                        [_vm._v("Show")]
+                      )
+                    : _vm._e()
+                ])
               ])
-            ])
-          })
+            }),
+            _vm._v(" "),
+            _c(
+              "tr",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.filteredMeals.length,
+                    expression: "!filteredMeals.length"
+                  }
+                ]
+              },
+              [
+                _c("td", { attrs: { colspan: "6" } }, [
+                  _vm._v(
+                    "  " + _vm._s(_vm.selectedCategory) + " meals not found"
+                  )
+                ])
+              ]
+            )
+          ],
+          2
         )
       ])
     ])
@@ -76060,6 +76156,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 // Component code (not registered)
 
@@ -76068,11 +76169,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             showingInvoice: null,
-            selectedCategory: '',
+            selectedCategory: 'pending',
             writtenNumber: '',
             writtenDate: '',
             isNinja: false,
             isNinja2: false
+
         };
     },
     methods: {
@@ -76166,7 +76268,7 @@ var render = function() {
             }
           }
         }),
-        _vm._v("pending ")
+        _vm._v("Pending ")
       ]),
       _vm._v(" "),
       _c("label", [
@@ -76314,70 +76416,97 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.filteredInvoices, function(invoice) {
-          return _c(
+        [
+          _vm._l(_vm.filteredInvoices, function(invoice) {
+            return _vm.filteredInvoices.length != 0
+              ? _c(
+                  "tr",
+                  {
+                    key: invoice.id,
+                    class: { activerow: _vm.showingInvoice === invoice }
+                  },
+                  [
+                    _c("td", [_vm._v(_vm._s(invoice.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(invoice.meal_id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(invoice.total_price))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(invoice.table_number))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(invoice.responsible_waiter_id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(invoice.date))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.showInvoice(invoice)
+                            }
+                          }
+                        },
+                        [_vm._v("Show")]
+                      ),
+                      _vm._v(" "),
+                      invoice.state == "paid"
+                        ? _c(
+                            "button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.downloadInvoice(invoice)
+                                }
+                              }
+                            },
+                            [_vm._v("Download")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      invoice.state == "pending"
+                        ? _c(
+                            "button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.editInvoice(invoice)
+                                }
+                              }
+                            },
+                            [_vm._v("Nif/Name")]
+                          )
+                        : _vm._e()
+                    ])
+                  ]
+                )
+              : _vm._e()
+          }),
+          _vm._v(" "),
+          _c(
             "tr",
             {
-              key: invoice.id,
-              class: { activerow: _vm.showingInvoice === invoice }
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.filteredInvoices.length,
+                  expression: "!filteredInvoices.length"
+                }
+              ]
             },
             [
-              _c("td", [_vm._v(_vm._s(invoice.name))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(invoice.meal_id))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(invoice.total_price))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(invoice.table_number))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(invoice.responsible_waiter_id))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(invoice.date))]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    on: {
-                      click: function($event) {
-                        _vm.showInvoice(invoice)
-                      }
-                    }
-                  },
-                  [_vm._v("Show")]
-                ),
-                _vm._v(" "),
-                invoice.state == "paid"
-                  ? _c(
-                      "button",
-                      {
-                        on: {
-                          click: function($event) {
-                            _vm.downloadInvoice(invoice)
-                          }
-                        }
-                      },
-                      [_vm._v("Download")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                invoice.state == "pending"
-                  ? _c(
-                      "button",
-                      {
-                        on: {
-                          click: function($event) {
-                            _vm.editInvoice(invoice)
-                          }
-                        }
-                      },
-                      [_vm._v("Nif/Name")]
-                    )
-                  : _vm._e()
-              ])
+              _c("td", { attrs: { colspan: "6" } }, [
+                _vm._v(
+                  "  " + _vm._s(_vm.selectedCategory) + " invoices not found"
+                )
+              ]),
+              _vm._v("\n           <\n       ")
             ]
           )
-        })
+        ],
+        2
       )
     ])
   ])
@@ -76628,7 +76757,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -76639,6 +76768,11 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -76694,7 +76828,10 @@ var Errors = __webpack_require__(276);
             invoiceCopy: {
                 name: '',
                 nif: ''
-            }
+            },
+            message: '',
+            showMessage: false,
+            typeOfMessage: 'alert-success'
 
         };
     },
@@ -76717,20 +76854,26 @@ var Errors = __webpack_require__(276);
                     Object.assign(_this.invoice, response.data.data);
                     _this.$emit('invoice-saved', _this.invoice);
                 }).catch(function (errors) {
-                    _this.errors.record(errors.response.data.errors);
+                    _this.message = _this.errors.nif[0];
+                    _this.typeOfMessage = "alert-danger";
+                    _this.showMessage = true;
                 });
             }
         },
         cancelEdit: function cancelEdit() {
-            this.$router.push("/");
+            this.$emit('invoice-canceled', this.invoice);
         },
         checkForm: function checkForm() {
 
             if (!this.invoiceCopy.name) {
-                this.errors.set('name', "Name required.");
+                this.message = "name required";
+                this.typeOfMessage = "alert-danger";
+                this.showMessage = true;
             }
             if (!this.invoiceCopy.nif) {
-                this.errors.set('nif', 'Nif required.');
+                this.message = "nif required";
+                this.typeOfMessage = "alert-danger";
+                this.showMessage = true;
             }
         }
         /*validEmail: function (email) {
@@ -76820,6 +76963,26 @@ var render = function() {
     _c("h2", [_vm._v("Edit Pending Invoice")]),
     _vm._v(" "),
     _vm._m(0),
+    _vm.showMessage
+      ? _c("div", { staticClass: "alert", class: _vm.typeOfMessage }, [
+          _c(
+            "button",
+            {
+              staticClass: "close-btn",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.showSuccess = false
+                }
+              }
+            },
+            [_vm._v("×")]
+          ),
+          _vm._v(" "),
+          _c("strong", [_vm._v(_vm._s(_vm.message))])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "name" } }, [_vm._v("Fullname")]),
       _vm._v(" "),
@@ -76953,6 +77116,7 @@ var render = function() {
           on: {
             "show-click": _vm.showInvoice,
             "edit-click": _vm.editInvoice,
+            "invoice-canceled": _vm.cancelEdit,
             "download-click": _vm.downloadInvoice
           }
         }),
@@ -77292,7 +77456,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\t  Specific style applied only on the component*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\t  Specific style applied only on the component*/\n", ""]);
 
 // exports
 
@@ -77301,6 +77465,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /* 285 */
 /***/ (function(module, exports) {
 
+//
+//
+//
+//
 //
 //
 //
@@ -77499,76 +77667,101 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.filteredOrders, function(order) {
-          return _c("tr", { key: order.id }, [
-            _c("td", [_vm._v(_vm._s(order.id))]),
-            _vm._v(" "),
-            order.state === "confirmed"
-              ? _c("td", { staticStyle: { color: "green" } }, [
-                  _vm._v(_vm._s(order.state))
-                ])
-              : order.state === "in preparation"
-                ? _c("td", { staticStyle: { color: "blue" } }, [
+        [
+          _vm._l(_vm.filteredOrders, function(order) {
+            return _c("tr", { key: order.id }, [
+              _c("td", [_vm._v(_vm._s(order.id))]),
+              _vm._v(" "),
+              order.state === "confirmed"
+                ? _c("td", { staticStyle: { color: "green" } }, [
                     _vm._v(_vm._s(order.state))
                   ])
-                : order.state === "pending"
-                  ? _c("td", { staticStyle: { color: "red" } }, [
+                : order.state === "in preparation"
+                  ? _c("td", { staticStyle: { color: "blue" } }, [
                       _vm._v(_vm._s(order.state))
                     ])
-                  : order.state === "prepared"
-                    ? _c("td", [_vm._v(_vm._s(order.state))])
-                    : order.state === "delivered"
+                  : order.state === "pending"
+                    ? _c("td", { staticStyle: { color: "red" } }, [
+                        _vm._v(_vm._s(order.state))
+                      ])
+                    : order.state === "prepared"
                       ? _c("td", [_vm._v(_vm._s(order.state))])
-                      : order.state === "not delivered"
+                      : order.state === "delivered"
                         ? _c("td", [_vm._v(_vm._s(order.state))])
-                        : _vm._e(),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.item_id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.meal_id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.responsible_cook_id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.start))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(order.end))]),
-            _vm._v(" "),
-            _c("td", [
-              (_vm.isCook && order.state == "confirmed") ||
-              (_vm.isWaiter && order.state == "prepared")
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-sm btn-primary",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.setState(order)
-                        }
-                      }
-                    },
-                    [_vm._v("State")]
-                  )
-                : _vm._e(),
+                        : order.state === "not delivered"
+                          ? _c("td", [_vm._v(_vm._s(order.state))])
+                          : _vm._e(),
               _vm._v(" "),
-              order.state == "pending"
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-sm btn-danger",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.deleteOrder(order)
+              _c("td", [_vm._v(_vm._s(order.item_id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.meal_id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.responsible_cook_id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.start))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.end))]),
+              _vm._v(" "),
+              _c("td", [
+                (_vm.isCook && order.state == "confirmed") ||
+                (_vm.isWaiter && order.state == "prepared")
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-sm btn-primary",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.setState(order)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Delete")]
-                  )
-                : _vm._e()
+                      },
+                      [_vm._v("State")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                order.state == "pending"
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-sm btn-danger",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.deleteOrder(order)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  : _vm._e()
+              ])
             ])
-          ])
-        })
+          }),
+          _vm._v(" "),
+          _c(
+            "tr",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.filteredOrders.length,
+                  expression: "!filteredOrders.length"
+                }
+              ]
+            },
+            [
+              _c("td", { attrs: { colspan: "6" } }, [
+                _vm._v(
+                  "  " + _vm._s(_vm.selectedCategory) + " orders not found"
+                )
+              ]),
+              _vm._v("\n\t\t\t\t\t<\n\t\t\t\t")
+            ]
+          )
+        ],
+        2
       )
     ])
   ])
@@ -78214,8 +78407,11 @@ var render = function() {
               [
                 _c(
                   "router-link",
-                  { staticClass: "button", attrs: { to: "/staistics" } },
-                  [_vm._v("Statistics")]
+                  {
+                    staticClass: "button",
+                    attrs: { to: "/restaurant_statistics" }
+                  },
+                  [_vm._v(" Restaurant Statistics")]
                 )
               ],
               1
@@ -78412,7 +78608,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('api/statistics/ordersAverageTime').then(function (response) {
                 console.log("teste");
-                _this5.mealsTime = response.data;
+                _this5.ordersTime = response.data;
             }); // ver a estrutura do json
         }
 
@@ -78573,15 +78769,174 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(302)
+/* template */
+var __vue_template__ = __webpack_require__(303)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/restaurant_statistics.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-600b30ac", Component.options)
+  } else {
+    hotAPI.reload("data-v-600b30ac", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 302 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    data: function data() {
+        return {
+            data: [],
+            user: null,
+            meals: [],
+            orders: [],
+            mealsTime: [],
+            ordersTime: []
+        };
+    },
+    methods: {
+        getNumberofMeals: function getNumberofMeals() {
+            var _this = this;
+
+            axios.get('api/statistics/mealsMonth').then(function (response) {
+                console.log("teste");
+                _this.meals = response.data;
+            }); // ver a estrutura do json
+        },
+        getNumberofOrders: function getNumberofOrders() {
+            var _this2 = this;
+
+            axios.get('api/statistics/ordersMonth').then(function (response) {
+                console.log("teste");
+                _this2.orders = response.data;
+            }); // ver a estrutura do json
+        },
+        getMealTime: function getMealTime() {
+            var _this3 = this;
+
+            axios.get('api/statistics/mealsAverageTime').then(function (response) {
+                console.log("teste");
+                _this3.mealsTime = response.data;
+            }); // ver a estrutura do json
+        }
+
+    },
+    mounted: function mounted() {
+        this.getNumberofMeals();
+        this.getNumberofOrders();
+        this.getMealTime();
+    }
+});
+
+/***/ }),
+/* 303 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", [
+      _c("h4", [_vm._v("  Restaurant Monthly Performance ")]),
+      _vm._v(" "),
+      _c("h5"),
+      _vm._v(" "),
+      _c("span", [
+        _vm._v(
+          "Restaurant total Number of Orders by month : " + _vm._s(_vm.orders)
+        )
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("span", [
+        _vm._v(
+          "Restaurant total Number of Meals by month: " + _vm._s(_vm.meals)
+        )
+      ]),
+      _vm._v(" "),
+      _c("br")
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-600b30ac", module.exports)
+  }
+}
+
+/***/ }),
+/* 304 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(302)
+  __webpack_require__(305)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(304)
+var __vue_script__ = __webpack_require__(307)
 /* template */
-var __vue_template__ = __webpack_require__(305)
+var __vue_template__ = __webpack_require__(308)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78620,13 +78975,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 302 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(303);
+var content = __webpack_require__(306);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -78646,7 +79001,7 @@ if(false) {
 }
 
 /***/ }),
-/* 303 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -78660,7 +79015,7 @@ exports.push([module.i, "\ntr.activerow[data-v-fb81cfbc] {\n    background: #123
 
 
 /***/ }),
-/* 304 */
+/* 307 */
 /***/ (function(module, exports) {
 
 //
@@ -78693,7 +79048,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 305 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -78713,19 +79068,19 @@ if (false) {
 }
 
 /***/ }),
-/* 306 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(307)
+  __webpack_require__(310)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(309)
+var __vue_script__ = __webpack_require__(312)
 /* template */
-var __vue_template__ = __webpack_require__(322)
+var __vue_template__ = __webpack_require__(325)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78764,13 +79119,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 307 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(308);
+var content = __webpack_require__(311);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -78790,7 +79145,7 @@ if(false) {
 }
 
 /***/ }),
-/* 308 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -78804,7 +79159,7 @@ exports.push([module.i, "\np[data-v-87903d66] {\n\tfont-size: 2em;\n\ttext-align
 
 
 /***/ }),
-/* 309 */
+/* 312 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78937,13 +79292,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 310 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(311);
+var content = __webpack_require__(314);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -78963,7 +79318,7 @@ if(false) {
 }
 
 /***/ }),
-/* 311 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -78977,7 +79332,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 312 */
+/* 315 */
 /***/ (function(module, exports) {
 
 //
@@ -79037,7 +79392,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 313 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -79155,13 +79510,13 @@ if (false) {
 }
 
 /***/ }),
-/* 314 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(315);
+var content = __webpack_require__(318);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79181,7 +79536,7 @@ if(false) {
 }
 
 /***/ }),
-/* 315 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -79195,7 +79550,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 316 */
+/* 319 */
 /***/ (function(module, exports) {
 
 //
@@ -79246,7 +79601,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 317 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -79329,13 +79684,13 @@ if (false) {
 }
 
 /***/ }),
-/* 318 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(319);
+var content = __webpack_require__(322);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79355,7 +79710,7 @@ if(false) {
 }
 
 /***/ }),
-/* 319 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -79369,7 +79724,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 320 */
+/* 323 */
 /***/ (function(module, exports) {
 
 //
@@ -79424,7 +79779,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 321 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -79490,7 +79845,7 @@ if (false) {
 }
 
 /***/ }),
-/* 322 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -79570,19 +79925,19 @@ if (false) {
 }
 
 /***/ }),
-/* 323 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(324)
+  __webpack_require__(327)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(326)
+var __vue_script__ = __webpack_require__(329)
 /* template */
-var __vue_template__ = __webpack_require__(327)
+var __vue_template__ = __webpack_require__(330)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -79621,13 +79976,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 324 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(325);
+var content = __webpack_require__(328);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79647,7 +80002,7 @@ if(false) {
 }
 
 /***/ }),
-/* 325 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -79661,7 +80016,7 @@ exports.push([module.i, "\ntr.activerow[data-v-0fa83878] {\n  \t\tbackground: #1
 
 
 /***/ }),
-/* 326 */
+/* 329 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79727,7 +80082,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 327 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -79809,7 +80164,7 @@ if (false) {
 }
 
 /***/ }),
-/* 328 */
+/* 331 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -141,6 +141,7 @@ class MealControllerAPI extends Controller
     public function getMealAverageTime()
     {
         $meals = Meal::select(DB::raw('SEC_TO_TIME(AVG(TIME_TO_SEC(TIMEDIFF(meals.end,meals.start)))) as Meals'))
+
             ->get();
 
 
