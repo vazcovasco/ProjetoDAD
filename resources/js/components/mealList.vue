@@ -1,24 +1,22 @@
 <template>
     <div>
         <div class="container" id="meals">
-            <div class="filter">
-            <label for="active">
-                <input id="active" type="radio" v-model="selectedCategory" value="active"/>Active
-            </label>
-            <label><input type="radio" v-model="selectedCategory" value="terminated"/> Terminated</label>
-            <label><input type="radio" v-model="selectedCategory" value="paid"/> Paid</label>
-            <label><input type="radio" v-model="selectedCategory" value="not paid"/> Not Paid</label>
-        </div>
-            filter data
-            <div class="filter">
-                <label><input type="text"  v-model="writtenDate" value="date" id="date"/>
+            <div class="filter" >
+                <label><input  id="active"  v-on:click="isNinja = true" type="radio" v-model="selectedCategory" value="pending"/>pending </label>
+                <label><input  type="radio"  v-on:click="isNinja = true" v-model="selectedCategory" value="paid"/> Paid</label>
+                <label><input  type="radio" v-on:click="isNinja =true" v-model="selectedCategory" value="not paid" /> Not Paid</label>
+            </div>
+            <div class="filter" v-show="isNinja" >
+                filter data
+                <label><input type="text" v-on:click="isNinja2 = !isNinja2" v-show="isNinja" v-model="writtenDate" value="date" id="date"/>
                 </label>
             </div>
 
-            id_waiter_responsible
-            <div class="filter">
-                <label><input type="text"  v-model="writtenNumber" value="id_waiter"
-                              id="id_waiter"/> </label>
+
+            <div class="filter" v-show ="isNinja2"  v-if="writtenDate!=''">
+                id_waiter_responsible
+                <label><input  type="text"  v-model="writtenNumber" value="id_waiter"
+                               id="id_waiter"/> </label>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -45,6 +43,9 @@
                     </td>
 
                 </tr>
+                <tr v-show="!filteredMeals.length">
+                    <td colspan="6">  {{selectedCategory}} meals not found</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -59,10 +60,14 @@
         props: ["meals"],
         data: function () {
             return {
-                selectedCategory: '',
+                selectedCategory: 'active',
+                selectedCategory2: 'terminated',
                 writtenNumber: '',
                 writtenDate: '',
                 showingMeal: null,
+                isNinja: false,
+                isNinja2: false,
+
 
             };
         },

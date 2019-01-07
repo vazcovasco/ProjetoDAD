@@ -50,6 +50,7 @@
               <button @click="editUser(user)">edit</button>
               <button @click="deleteUser(user)">Delete</button>
               <a
+                v-if="user.id != currentUserId"
                 :class="user.blocked ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"
                 @click.prevent="toggleBlockUser(user)"
                 v-text="user.blocked ?  'UnBlock' : 'Block'"
@@ -63,6 +64,10 @@
                 @click="showPerformance(user)"
               >Performance</button>
             </td>
+          </tr>
+          <tr v-show="!filteredUsers.length">
+            <td colspan="6">  {{selectedCategory}} user not found</td>
+            <
           </tr>
         </tbody>
       </table>
@@ -83,6 +88,7 @@ module.exports = {
       msgGlobalText: "",
       msgGlobalTextArea: "",
       isCookOrWaiter: false,
+      currentUserId: this.$store.state.user.id
     };
   },
   methods: {

@@ -49,6 +49,7 @@ const shift = Vue.component('shift', require('./components/shift.vue'));
 
 //-------------------------Statistics----------------------------------------------
 const statistics = Vue.component('statistics', require('./components/statistics.vue'));
+const restaurant_statistics = Vue.component('restaurant_statistics', require('./components/restaurant_statistics.vue'));
 const testView = Vue.component('testView', require('./components/testView.vue'));
 
 //--------------------------Tables-------------------------------------------------------
@@ -124,38 +125,49 @@ const routes = [{
         path: '/meals',
         component: meal,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            permissionMeals: true,
         }
     },
     {
         path: '/meals/show/:id',
-        component: mealShow
+        component: mealShow,
+        meta: {
+            requiresAuth: true,
+            permissionMeals: true,
+        }
     },
     {
         path: '/meals/start',
-        component: mealStart
-    },
-    {
-        path: '/meals/test1',
-        component: testView
+        component: mealStart,
+        meta: {
+            requiresAuth: true,
+            permissionWaiter: true,
+        }
     },
     {
         path: '/orders',
         component: order,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            permissionOrderList: true,
         }
     },
     {
         path: '/orders/add',
         component: orderAdd,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            permissionWaiter: true,
+            
         }
     },
     {
         path: '/statistics/orders/:id',
-        component: statistics
+        component: statistics,
+        meta: {
+            requiresAuth: true
+        }
 
     },
     {
@@ -181,34 +193,72 @@ const routes = [{
     },
     {
         path: '/invoices',
-        component: invoice
+        component: invoice,
+        meta: {
+            requiresAuth: true,
+            permissionInvoices : true,
+        }
+    },
+    {
+        path: '/invoiceList',
+        component: invoice,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/invoices/:id',
-        component: invoiceShow
+        component: invoiceShow,
+        meta: {
+            requiresAuth: true,
+            permissionInvoices : true,
+        }
     },
     {
         path: '/invoices/:id',
-        component: invoiceEdit
+        component: invoiceEdit,
+        meta: {
+            requiresAuth: true,
+            permissionCashier : true,
+        }
     },
     {
         path: '/restaurantTables',
-        component: r_tables
+        component: r_tables,
+        meta: {
+            requiresAuth: true,
+            permissionManager: true,
+        }
     },
     {
         path: '/restaurantTables/add',
-        component: r_tablesAdd
+        component: r_tablesAdd,
+        meta: {
+            requiresAuth: true,
+            permissionManager: true,
+        }
     },
     {
         path: '/restaurantTables/show/:table_number',
-        component: r_tablesShow
+        component: r_tablesShow,
+        meta: {
+            requiresAuth: true,
+            permissionManager: true,
+        }
     },
     {
         path: '/restaurantTables/edit/:table_number',
-        component: r_tablesEdit
-
-
+        component: r_tablesEdit,
+        meta: {
+            requiresAuth: true,
+            permissionManager: true,
+        }
     },
+    {
+        path: '/restaurant_statistics',
+        component: restaurant_statistics
+    },
+
 ];
 
 
@@ -219,7 +269,44 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.getters.loggedIn) {
+            alert('you are not a logged in!');
             next("/login");
+            return;
+        }
+    }if (to.matched.some(record => record.meta.permissionManager)) {
+        if (!store.getters.isManager) {
+            next("/");
+            alert('you are not a Manager!');
+            return;
+        }
+    }else if (to.matched.some(record => record.meta.permissionWaiter)) {
+        if (!store.getters.isWaiter) {
+            next("/");
+            alert('you are not a Waiter!');
+            return;
+        }
+    }else if (to.matched.some(record => record.meta.permissionCashier)) {
+        if (!store.getters.isCashier) {
+            next("/");
+            alert('you are not a Cashier!');
+            return;
+        }
+    }else if (to.matched.some(record => record.meta.permissionOrderList)) {
+        if (!store.getters.isWaiter && !store.getters.isCook ) {
+            next("/");
+            alert('You dont have permission to access the list of orders!');
+            return;
+        }
+    }else if (to.matched.some(record => record.meta.permissionMeals)) {
+        if (!store.getters.isWaiter && !store.getters.isManager ) {
+            next("/");
+            alert('You dont have permission to access the list of orders!');
+            return;
+        }
+    }else if (to.matched.some(record => record.meta.permissionInvoices)) {
+        if (!store.getters.isManager && !store.getters.isCashier ) {
+            next("/");
+            alert('You dont have permission to access the list of orders!');
             return;
         }
     }

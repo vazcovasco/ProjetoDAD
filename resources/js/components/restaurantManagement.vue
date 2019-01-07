@@ -14,8 +14,11 @@
                     <td><router-link class="button" to="/invoices">Invoices</router-link></td>
                 </tr>
                 <tr>
-                    <td><router-link class="button" to="/staistics">Statistics</router-link></td>
+                    <td><router-link class="button" to="/restaurant_statistics"> Restaurant Statistics</router-link></td>
                     <td><router-link class="button" to="/items">Items</router-link></td>
+                </tr>
+                <tr>
+                    <td><router-link class="button" to="/restaurantTables">Tables</router-link></td>
                 </tr>
             </tbody>
         </table>

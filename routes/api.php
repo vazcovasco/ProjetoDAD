@@ -79,6 +79,7 @@ Route::get('invoices/pdf/{id}', 'InvoiceControllerAPI@downloadInvoice');
 
 Route::get('restaurant_tables', 'RestaurantTableControllerAPI@getRestaurantTables');
 Route::get('restaurant_tables/meal/{table_number}', 'MealControllerAPI@getMeal');
+Route::get('restaurant_tables/dependent', 'RestaurantTableControllerAPI@getTablesDependent');
 Route::get('restaurant_tables/all', 'RestaurantTableControllerAPI@getAllTables');
 Route::delete('restaurant_tables', 'RestaurantTableControllerAPI@destroy');
 Route::put('restaurant_tables/{table}', 'RestaurantTableControllerAPI@update');
@@ -87,7 +88,7 @@ Route::post('restaurant_tables/delete/{table_number}', 'RestaurantTableControlle
 
 Route::get('/statistics/orders/{user}', 'OrderControllerAPI@getOrdersByDay');
 Route::get('/statistics/ordersMonth', 'OrderControllerAPI@getOrderByMonth');
-Route::get('/statistics/ordersAverageTime', 'OrderControllerAPI@getOrderAverageTime');
+Route::get('/statistics/ordersAverageTime/{item}', 'OrderControllerAPI@getOrderAverageTime');
 
 Route::get('/statistics/meals/{user}', 'MealControllerAPI@getMealsByDay');
 Route::get('/statistics/mealsMonth', 'MealControllerAPI@getMealsByMonth');
