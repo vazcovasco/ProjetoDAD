@@ -125,12 +125,12 @@ export default {
       var next = "";
       var previous = "";
       if (data.next_page_url != undefined) {
-        next = data.next_page_url.replace("http://projetodad.local/", "");
+        next = data.next_page_url.replace("http://157.230.136.9/", "");
       } else {
         next = data.next_page_url;
       }
       if (data.prev_page_url != undefined) {
-        previous = data.prev_page_url.replace("http://projetodad.local/", "");
+        previous = data.prev_page_url.replace("http://157.230.136.9/", "");
       } else {
         previous = data.prev_page_url;
       }
