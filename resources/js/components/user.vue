@@ -156,12 +156,12 @@ export default {
       var next = "";
       var previous = "";
       if(data.next_page_url != undefined) {
-        next = data.next_page_url.replace("http://projetodad.local/", "");
+        next = data.next_page_url.replace("http://157.230.136.9/", "");
       } else {
         next = data.next_page_url;
       }
       if(data.prev_page_url != undefined) {
-        previous = data.prev_page_url.replace("http://projetodad.local/", "");
+        previous = data.prev_page_url.replace("http://157.230.136.9/", "");
       }else {
         previous = data.prev_page_url;
       }
@@ -177,7 +177,6 @@ export default {
       console.log(this.pagination)
     },
     fetchPaginateUsers(url) {
-      console.log(url)
       this.url = url
       this.getUsers();
     }
@@ -196,5 +195,22 @@ export default {
 p {
   font-size: 2em;
   text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+.button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 </style>

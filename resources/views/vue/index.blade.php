@@ -15,6 +15,22 @@
 
         <shift :user="user" v-if="this.$store.getters.loggedIn"></shift>
 
+        <div v-if="this.$store.getters.loggedIn">
+            <table class="table">
+                <tbody class="center">
+                    <tr>
+                        <div>
+                        <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
+                        </div> 
+                        <div> 
+                        <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
+                        </div> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+          
+
         <router-view></router-view>
 
     </div>
@@ -68,5 +84,9 @@ li a:hover:not(.active) {
 
 .active {
   background-color: #4CAF50;
+}
+
+.center {
+  text-align: center;
 }
 </style>

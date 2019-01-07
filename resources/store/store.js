@@ -105,7 +105,7 @@ export default new Vuex.Store({
                         username: data.username,
                         email: data.email,
                         password: data.password,
-                        photo: data.photo,
+                        photo_url: data.photo_url,
                         type: data.type,
                     })
                     .then(response => {

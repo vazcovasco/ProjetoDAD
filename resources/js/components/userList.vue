@@ -50,6 +50,7 @@
               <button class="btn btn-xs btn-warning" @click="editUser(user)">Edit</button>
 
               <a
+                v-if="user.id != currentUserId"
                 :class="user.blocked ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"
                 @click.prevent="toggleBlockUser(user)"
                 v-text="user.blocked ?  'UnBlock' : 'Block'"
@@ -86,7 +87,7 @@ module.exports = {
       msgGlobalText: "",
       msgGlobalTextArea: "",
       isCookOrWaiter: false,
-      authUser: this.$store.state.user.id,
+      currentUserId: this.$store.state.user.id
     };
   },
   methods: {

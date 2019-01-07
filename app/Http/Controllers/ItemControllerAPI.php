@@ -13,7 +13,7 @@ class ItemControllerAPI extends Controller
 {
     public function getItems(Request $request)
     {
-        $items = Item::orderBy('id', 'DESC')->paginate(5);
+        $items = Item::withTrashed()->orderBy('id', 'DESC')->paginate(5);
         return response()->json($items);
     }
     public function getItemsAll(Request $request)

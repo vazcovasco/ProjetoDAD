@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user != null">
     <table class="table">
       <tbody class="center">
         <tr>
@@ -12,7 +12,7 @@
               <strong>{{user.name}} is working!!</strong>
             </p>
             <p>Shift started at: {{shiftStart}}</p>
-            <p>Time Past: {{ timer }}</p>
+            <p>Time Past: {{ this.timer }}</p>
           </div>
           <div v-if="!isShiftStarted" class="alert alert-danger">
             <p>
@@ -34,11 +34,19 @@ export default {
     return {
       moment: moment,
       isShiftStarted: this.$store.getters.isShiftStarted,
-      shiftStart: this.$store.state.shiftStarted,
-      shiftEnd: this.$store.state.shiftEnded,
-      timer: null
+      timer: ""
     };
   },
+
+  computed: {
+    shiftStart() {
+      return this.$store.state.shiftStarted;
+    },
+    shiftEnd() {
+      return this.$store.state.shiftEnded;
+    }
+  },
+
   methods: {
     startShift() {
       let t = this;
@@ -65,17 +73,19 @@ export default {
     },
     startTimer() {
       var setTimeStamp = this.moment().startOf(this.startShift);
-      console.log('timestamp - ' + setTimeStamp);
+      console.log("timestamp - " + setTimeStamp);
 
-      setInterval(function() {
-        setTimeStamp.add(1, 'second');
+      setInterval(() => {
+        setTimeStamp.add(1, "second");
+        this.timer = null;
         this.timer = setTimeStamp.format("HH:mm:ss");
-        console.log('timer - ' + this.timer);
+        console.log("timer - " + this.timer);
       }, 1000);
     }
   },
   created() {
     console.log(this.isShiftStarted);
+    this.startTimer();
   }
 };
 </script>

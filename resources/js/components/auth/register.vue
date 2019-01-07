@@ -60,7 +60,7 @@
       <div class="container">
         <div v-if="imgExists">
           <br>
-          <img width="100px" :src="getProfileImage(user.photo)">
+          <img width="100px" :src="getProfileImage(user.photo_url)">
           <br>
           <br>
         </div>
@@ -91,7 +91,7 @@ export default {
         username: "",
         email: "",
         password: "123",
-        photo: "",
+        photo_url: "",
         type: ""
       },
       imgExists: false,
@@ -118,9 +118,8 @@ export default {
           }
         })
         .then(response => {
-          console.log("response - " + response);
-          t.user.photo = response.data.replace("public/profiles/", "");
-          console.log(t.user.photo)
+          t.user.photo_url = response.data.replace("public/profiles/", "");
+          t.imgExists = true;
 
           console.log("SUCCESS!!");
         })
@@ -135,7 +134,7 @@ export default {
           username: this.user.username,
           email: this.user.email,
           password: this.user.password,
-          photo: this.user.photo,
+          photo_url: this.user.photo_url,
           type: this.user.type
         })
         .then(response => {

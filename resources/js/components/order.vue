@@ -15,6 +15,7 @@
     </div>
 
     <order-list :orders="orders" @set_state-click="setState" @delete-click="deleteOrder"></order-list>
+
     <!--<order-list :orders="orders" @delete-click="deleteOrder" @message="childMessage" ref="ordersListRef"></order-list> -->
     <div class="alert alert-success" v-if="showSuccess">
       <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
@@ -28,7 +29,6 @@ import OrderList from "./orderList.vue";
 var moment = require("moment");
 
 export default {
-  
   data: function() {
     //user: this.$store.
     return {
@@ -42,7 +42,7 @@ export default {
       meals: [],
       items: [],
       isWaiter: false,
-      pendingOrders: []
+      pendingOrders: [],
     };
   },
   methods: {
@@ -133,50 +133,41 @@ export default {
       this.successMessage = message;
     },
     filterPendingOrders() {
-      this.pendingOrders = this.orders.filter(element => element.state == "pending");
+      this.pendingOrders = this.orders.filter(
+        element => element.state == "pending"
+      );
 
-      if(this.pendingOrders.length > 0){
-
+      if (this.pendingOrders.length > 0) {
         setTimeout(() => {
-          
           this.updatePendingOrders();
-
-
-        }, 7000)
+        }, 7000);
       }
-
     },
 
-    updatePendingOrders(){
+    updatePendingOrders() {
+      this.pendingOrders.forEach(element => {
+        axios
+          .post("api/orders/confirmOrder/" + element.id)
+          .then(response => {
+            // Copy object properties from response.data.data to this.user
+            // without creating a new reference
 
-      this.pendingOrders.forEach( element => {
+            element.state = "confirmed";
+            //Object.assign(order, response.data.data);
 
-
-        axios.post("api/orders/confirmOrder/" + element.id)
-        .then(response => {
-          // Copy object properties from response.data.data to this.user
-          // without creating a new reference
-          
-          element.state = "confirmed";
-        //Object.assign(order, response.data.data);
-       
-          //this.$emit("message", this.message);
-        })
-        .catch(erros => {
-          console.log(erros);
-        });
-
-
-
-      })
-
-    }
+            //this.$emit("message", this.message);
+          })
+          .catch(erros => {
+            console.log(erros);
+          });
+      });
+    },
   },
   components: {
     "order-list": OrderList
   },
   mounted() {
-    console.log('mounted - order.vue')
+    console.log("mounted - order.vue");
     this.getOrders();
   }
 };
