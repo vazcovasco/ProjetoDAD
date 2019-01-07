@@ -24,12 +24,20 @@ class ItemControllerAPI extends Controller
     }
     public function add(Request $request)
     {
-        $item = new Item();
-        $item->fill($request->all());
-        $item->photo_url= "dsfds";
-        $item->save();
+        $validation = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|integer',
+            'description' => 'required|string',
+        ]);
 
-        return response()->json($item,200);
+        $item = Item::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'photo_url' => $request->photo_url,
+        ]);
+
+        return new ItemResource($item);
     }
 
     public function edit(Request $request)
