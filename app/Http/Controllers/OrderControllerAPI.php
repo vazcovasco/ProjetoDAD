@@ -58,6 +58,7 @@ class OrderControllerAPI extends Controller
                 ['meals.responsible_waiter_id', $id],
                 ['meals.state', 'active'],
             ])
+            ->whereNotIn('orders.state', ['in preparation', 'delivered', 'not delivered'])
             ->orderBy('state', 'DESC')
             ->orderBy('start', 'ASC')
             ->get();
@@ -233,8 +234,6 @@ class OrderControllerAPI extends Controller
     }
     public function getOrderAverageTime(Item $item)
     {
-
-
         $itemIds = Item::where('item_id', $item->id)
                 ->pluck('id');
 

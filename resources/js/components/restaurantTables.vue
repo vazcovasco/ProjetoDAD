@@ -86,6 +86,7 @@ import r_tablesShow from './restaurantTablesShow.vue';
 				axios.delete("api/restaurant_tables/", { params: { tableDelete: restaurant_table.table_number } }).then(response => {
 					this.showSuccess = true;
 					this.successMessage = "Table Deleted";
+					console.log(response.data);
 					this.getTables();
 				});
 			   },
@@ -100,6 +101,7 @@ import r_tablesShow from './restaurantTablesShow.vue';
 						.then(response=>{
 							restaurant_table.deleted_at = !restaurant_table.deleted_at;
 							this.$emit('message', this.message)
+							this.getTables();
 						})
 						.catch(erros => {
 							console.log(erros);

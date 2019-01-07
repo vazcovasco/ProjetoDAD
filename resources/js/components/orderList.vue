@@ -2,10 +2,11 @@
 	<div>
 		<div class="filter">
             <label for="prepared">
-                <input id="prepared" type="radio" v-model="selectedCategory" value="prepared"/>Prepared
+                <input id="prepared" type="radio" v-model="selectedCategory" value="prepared"/> Prepared
             </label>
             <label><input type="radio" v-model="selectedCategory" value="pending"/> Pending</label>
             <label><input type="radio" v-model="selectedCategory" value="confirmed"/> Confirmed</label>
+			<label v-if="isCook"><input type="radio" v-model="selectedCategory" value="in preparation"/> In preperation</label>
         </div>
 		<table class="table table-striped">
 			<thead>
@@ -35,7 +36,7 @@
 					<td>{{ order.start }}</td>
 					<td>{{ order.end }}</td>
 					<td>
-						<a v-if="(isCook && order.state=='confirmed') || (isWaiter && order.state=='prepared')" class="btn btn-sm btn-primary"  v-on:click.prevent="setState(order)">State</a>
+						<a v-if="(isCook && (order.state=='confirmed' || order.state=='in preperation')) || (isWaiter && order.state=='prepared')" class="btn btn-sm btn-primary"  v-on:click.prevent="setState(order)">State</a>
 						<a v-if="order.state=='pending'" class="btn btn-sm btn-danger" v-on:click.prevent="deleteOrder(order)">Delete</a>
 					</td>
 				</tr>
@@ -82,6 +83,11 @@
 					});
 				}
 				if(category ===	 "prepared") {
+					return this.orders.filter(function(order) {
+						return order.state == 'prepared';
+					});
+				}
+				if(category ===	 "in preparation") {
 					return this.orders.filter(function(order) {
 						return order.state == 'prepared';
 					});
