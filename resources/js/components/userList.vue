@@ -47,20 +47,19 @@
               <img width="100px" :src="getProfileImage(user.photo_url)">
             </td>
             <td>
-              <button @click="editUser(user)">edit</button>
-              <button @click="deleteUser(user)">Delete</button>
+              <button class="btn btn-xs btn-warning" @click="editUser(user)">Edit</button>
+
               <a
                 :class="user.blocked ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"
                 @click.prevent="toggleBlockUser(user)"
                 v-text="user.blocked ?  'UnBlock' : 'Block'"
               ></a>
-              <a
-                :class="user.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"
-                @click.prevent="restoreUser(user)"
-                v-text="user.deleted_at ?  'Restore' : 'Delete'"
-              ></a>
+              <a v-if="user.deleted_at" class="btn btn-xs btn-success" @click.prevent="restoreUser(user)"
+              >Restore</a>
+              <a v-else class="btn btn-xs btn-warning"  @click.prevent="deleteUser(user)"
+              >Delete</a>
               <button v-if="user.type == 'cook' || user.type == 'waiter'"
-                @click="showPerformance(user)"
+                @click="showPerformance(user)" class="btn btn-xs btn-warning"
               >Performance</button>
             </td>
           </tr>
@@ -87,6 +86,7 @@ module.exports = {
       msgGlobalText: "",
       msgGlobalTextArea: "",
       isCookOrWaiter: false,
+      authUser: this.$store.state.user.id,
     };
   },
   methods: {

@@ -36,7 +36,7 @@
 					<td>{{ order.start }}</td>
 					<td>{{ order.end }}</td>
 					<td>
-						<a v-if="(isCook && (order.state=='confirmed' || order.state=='in preperation')) || (isWaiter && order.state=='prepared')" class="btn btn-sm btn-primary"  v-on:click.prevent="setState(order)">State</a>
+						<a v-if="(isCook && (order.state=='confirmed' || order.state=='in preperation')) || (isWaiter && order.state=='prepared')" class="btn btn-xs btn-warning"  v-on:click.prevent="setState(order)">State</a>
 						<a v-if="order.state=='pending'" class="btn btn-sm btn-danger" v-on:click.prevent="deleteOrder(order)">Delete</a>
 					</td>
 				</tr>
