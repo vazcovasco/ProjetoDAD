@@ -18,13 +18,11 @@
           <img width="100px" :src="getFoodImage(item.photo_url)">
         </td>
         <td v-if="isLoggedIn && isManager">
-          <button @click="editItem(item)">edit</button>
-          <button @click="deleteItem(item)">Delete</button>
-          <a
-            :class="item.deleted_at ?  'btn btn-xs btn-success' : 'btn btn-xs btn-warning'"
-            @click.prevent="restoreItem(item)"
-            v-text="item.deleted_at ?  'Restore' : 'Delete'"
-          ></a>
+          <button class="btn btn-xs btn-warning" @click="editItem(item)">Edit</button>
+          <a v-if="item.deleted_at" class="btn btn-xs btn-success" @click.prevent="restoreItem(item)"
+          >Restore</a>
+          <a v-else class="btn btn-xs btn-warning"  @click.prevent="deleteItem(user)"
+          >Delete</a>
         </td>
       </tr>
     </tbody>

@@ -39,7 +39,7 @@
                     <td>{{ meal.responsible_waiter_id }}</td>
                     <td>{{ meal.total_price_preview}}</td>
                     <td>
-                        <button v-if="meal.state=='active'" @click="showMeal(meal)">Show</button>
+                        <button v-if="meal.state=='active'" class="btn btn-xs btn-warning" @click="showMeal(meal)">Show</button>
                     </td>
 
                 </tr>

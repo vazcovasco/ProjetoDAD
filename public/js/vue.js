@@ -70949,8 +70949,6 @@ exports.push([module.i, "\ntr.activerow[data-v-f3e3e1c8] {\r\n  background: #123
 //
 //
 //
-//
-//
 
 // Component code (not registered)
 module.exports = {
@@ -71078,41 +71076,43 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    staticClass: "btn btn-xs btn-warning",
                     on: {
                       click: function($event) {
                         _vm.editItem(item)
                       }
                     }
                   },
-                  [_vm._v("edit")]
+                  [_vm._v("Edit")]
                 ),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    on: {
-                      click: function($event) {
-                        _vm.deleteItem(item)
-                      }
-                    }
-                  },
-                  [_vm._v("Delete")]
-                ),
-                _vm._v(" "),
-                _c("a", {
-                  class: item.deleted_at
-                    ? "btn btn-xs btn-success"
-                    : "btn btn-xs btn-warning",
-                  domProps: {
-                    textContent: _vm._s(item.deleted_at ? "Restore" : "Delete")
-                  },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.restoreItem(item)
-                    }
-                  }
-                })
+                item.deleted_at
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-xs btn-success",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.restoreItem(item)
+                          }
+                        }
+                      },
+                      [_vm._v("Restore")]
+                    )
+                  : _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-xs btn-warning",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.deleteItem(_vm.user)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
               ])
             : _vm._e()
         ])
@@ -72383,7 +72383,6 @@ exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\r\n  background: #123
 //
 //
 //
-//
 
 // Component code (not registered)
 module.exports = {
@@ -72691,25 +72690,14 @@ var render = function() {
                     _c(
                       "button",
                       {
+                        staticClass: "btn btn-xs btn-warning",
                         on: {
                           click: function($event) {
                             _vm.editUser(user)
                           }
                         }
                       },
-                      [_vm._v("edit")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        on: {
-                          click: function($event) {
-                            _vm.deleteUser(user)
-                          }
-                        }
-                      },
-                      [_vm._v("Delete")]
+                      [_vm._v("Edit")]
                     ),
                     _vm._v(" "),
                     user.id != _vm.currentUserId
@@ -72731,27 +72719,39 @@ var render = function() {
                         })
                       : _vm._e(),
                     _vm._v(" "),
-                    _c("a", {
-                      class: user.deleted_at
-                        ? "btn btn-xs btn-success"
-                        : "btn btn-xs btn-warning",
-                      domProps: {
-                        textContent: _vm._s(
-                          user.deleted_at ? "Restore" : "Delete"
+                    user.deleted_at
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-xs btn-success",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.restoreUser(user)
+                              }
+                            }
+                          },
+                          [_vm._v("Restore")]
                         )
-                      },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.restoreUser(user)
-                        }
-                      }
-                    }),
+                      : _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-xs btn-warning",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.deleteUser(user)
+                              }
+                            }
+                          },
+                          [_vm._v("Delete")]
+                        ),
                     _vm._v(" "),
                     user.type == "cook" || user.type == "waiter"
                       ? _c(
                           "button",
                           {
+                            staticClass: "btn btn-xs btn-warning",
                             on: {
                               click: function($event) {
                                 _vm.showPerformance(user)
@@ -72886,7 +72886,7 @@ var moment = __webpack_require__(0);
     return {
       moment: moment,
       isShiftStarted: this.$store.getters.isShiftStarted,
-      timer: null
+      timer: ""
     };
   },
 
@@ -72921,18 +72921,22 @@ var moment = __webpack_require__(0);
       });
     },
     startTimer: function startTimer() {
+      var _this = this;
+
       var setTimeStamp = this.moment().startOf(this.startShift);
-      console.log('timestamp - ' + setTimeStamp);
+      console.log("timestamp - " + setTimeStamp);
 
       setInterval(function () {
-        setTimeStamp.add(1, 'second');
-        this.timer = setTimeStamp.format("HH:mm:ss");
-        console.log('timer - ' + this.timer);
+        setTimeStamp.add(1, "second");
+        _this.timer = null;
+        _this.timer = setTimeStamp.format("HH:mm:ss");
+        console.log("timer - " + _this.timer);
       }, 1000);
     }
   },
   created: function created() {
     console.log(this.isShiftStarted);
+    this.startTimer();
   }
 });
 
@@ -72979,7 +72983,7 @@ var render = function() {
                       _vm._v("Shift started at: " + _vm._s(_vm.shiftStart))
                     ]),
                     _vm._v(" "),
-                    _c("p", [_vm._v("Time Past: " + _vm._s(_vm.timer))])
+                    _c("p", [_vm._v("Time Past: " + _vm._s(this.timer))])
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -75422,6 +75426,7 @@ var render = function() {
                     ? _c(
                         "button",
                         {
+                          staticClass: "btn btn-xs btn-warning",
                           on: {
                             click: function($event) {
                               _vm.showMeal(meal)
@@ -77976,7 +77981,7 @@ var render = function() {
                   ? _c(
                       "a",
                       {
-                        staticClass: "btn btn-sm btn-primary",
+                        staticClass: "btn btn-xs btn-warning",
                         on: {
                           click: function($event) {
                             $event.preventDefault()
