@@ -8,11 +8,19 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 Vue.use(new VueSocketio({
     debug: true,
-    connection: 'http://localhost:8080'
+    connection: 'http://127.0.0.1:8080'
 }));
 
 
 import store from '../store/store.js';
+
+import Toasted from 'vue-toasted';
+
+Vue.use(Toasted, {
+    position: 'bottom-center',
+    duration: 5000,
+    type: 'info',
+});
 
 //-------------------------ITEM----------------------------------------------
 const item = Vue.component('item', require('./components/item.vue'));
@@ -159,7 +167,7 @@ const routes = [{
         meta: {
             requiresAuth: true,
             permissionWaiter: true,
-            
+
         }
     },
     {
@@ -196,7 +204,7 @@ const routes = [{
         component: invoice,
         meta: {
             requiresAuth: true,
-            permissionInvoices : true,
+            permissionInvoices: true,
         }
     },
     {
@@ -211,7 +219,7 @@ const routes = [{
         component: invoiceShow,
         meta: {
             requiresAuth: true,
-            permissionInvoices : true,
+            permissionInvoices: true,
         }
     },
     {
@@ -219,7 +227,7 @@ const routes = [{
         component: invoiceEdit,
         meta: {
             requiresAuth: true,
-            permissionCashier : true,
+            permissionCashier: true,
         }
     },
     {
@@ -273,38 +281,39 @@ router.beforeEach((to, from, next) => {
             next("/login");
             return;
         }
-    }if (to.matched.some(record => record.meta.permissionManager)) {
+    }
+    if (to.matched.some(record => record.meta.permissionManager)) {
         if (!store.getters.isManager) {
             next("/");
             alert('you are not a Manager!');
             return;
         }
-    }else if (to.matched.some(record => record.meta.permissionWaiter)) {
+    } else if (to.matched.some(record => record.meta.permissionWaiter)) {
         if (!store.getters.isWaiter) {
             next("/");
             alert('you are not a Waiter!');
             return;
         }
-    }else if (to.matched.some(record => record.meta.permissionCashier)) {
+    } else if (to.matched.some(record => record.meta.permissionCashier)) {
         if (!store.getters.isCashier) {
             next("/");
             alert('you are not a Cashier!');
             return;
         }
-    }else if (to.matched.some(record => record.meta.permissionOrderList)) {
-        if (!store.getters.isWaiter && !store.getters.isCook ) {
+    } else if (to.matched.some(record => record.meta.permissionOrderList)) {
+        if (!store.getters.isWaiter && !store.getters.isCook) {
             next("/");
             alert('You dont have permission to access the list of orders!');
             return;
         }
-    }else if (to.matched.some(record => record.meta.permissionMeals)) {
-        if (!store.getters.isWaiter && !store.getters.isManager ) {
+    } else if (to.matched.some(record => record.meta.permissionMeals)) {
+        if (!store.getters.isWaiter && !store.getters.isManager) {
             next("/");
             alert('You dont have permission to access the list of orders!');
             return;
         }
-    }else if (to.matched.some(record => record.meta.permissionInvoices)) {
-        if (!store.getters.isManager && !store.getters.isCashier ) {
+    } else if (to.matched.some(record => record.meta.permissionInvoices)) {
+        if (!store.getters.isManager && !store.getters.isCashier) {
             next("/");
             alert('You dont have permission to access the list of orders!');
             return;
@@ -316,6 +325,8 @@ router.beforeEach((to, from, next) => {
 const app = new Vue({
     router,
     data: {
+        msgGlobalText: "",
+        msgGlobalTextArea: "",
         items: [],
         users: [],
         invoices: [],
@@ -323,12 +334,31 @@ const app = new Vue({
         orders: []
     },
     store,
+    methods: {
+        sendGlobalMsg: function(){
+            console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
+            if (this.$store.state.user === null) {
+                this.$socket.emit('msg_from_client', this.msgGlobalText);
+            } else {
+                this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
+            }
+            this.msgGlobalText = "";
+        }
+    },
+    sockets:{
+        connect(){
+            console.log('socket connected (socket ID = '+this.$socket.id+')');
+        }, 
+        msg_from_server(dataFromServer){
+            console.log('Receiving this message from Server: "' + dataFromServer + '"');            
+            this.msgGlobalTextArea = dataFromServer + '\n' + this.msgGlobalTextArea ;
+        }, 
+    },
     computed: {
         user() {
             return this.$store.state.user;
         }
-    }
-
-
+    },
+    
 
 }).$mount('#app');

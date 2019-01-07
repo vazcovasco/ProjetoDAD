@@ -20,7 +20,7 @@ class RestaurantTableControllerAPI extends Controller
             ->whereNotIn('restaurant_tables.table_number', $tableNumbersNotAvailable)
             ->pluck('restaurant_tables.table_number');
 
-        return $tableNumbersAvailable->paginate(5);
+        return $tableNumbersAvailable;
 
     }
     public function getAllTables(Request $request)

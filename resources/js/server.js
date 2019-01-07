@@ -49,4 +49,12 @@ io.on('connection', function (socket) {
     socket.on('msg_from_client', function (data) {
         io.sockets.emit('msg_from_server', data);
     });
+    socket.on('msg_from_client', function (msg, userInfo) {
+        if (userInfo === undefined) {
+            console.log('sock here')
+        	io.sockets.emit('msg_from_server', 'User Unknown: "' + msg + '"');
+        } else {
+        	io.sockets.emit('msg_from_server', userInfo.name +': "' + msg + '"');
+        }
+  	});
 });
