@@ -57,7 +57,7 @@ class AuthControllerAPI extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'photo' => $request->photo,
+            'photo_url' => $request->photo_url,
             'type' => $request->type
         ]);
         

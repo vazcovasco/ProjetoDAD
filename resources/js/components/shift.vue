@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user != null">
     <table class="table">
       <tbody class="center">
         <tr>
@@ -34,11 +34,22 @@ export default {
     return {
       moment: moment,
       isShiftStarted: this.$store.getters.isShiftStarted,
-      shiftStart: this.$store.state.shiftStarted,
-      shiftEnd: this.$store.state.shiftEnded,
       timer: null
     };
   },
+
+  computed:{
+
+    shiftStart(){
+      return this.$store.state.shiftStarted;
+    },
+    shiftEnd(){
+      return this.$store.state.shiftEnded;
+    }
+
+
+  },
+
   methods: {
     startShift() {
       let t = this;

@@ -95,7 +95,7 @@ export default {
       this.$router.push("/users");
     },
     cancelEdit: function() {
-      this.$router.push("/use");
+      this.$emit('user-canceled', this.user);
     },
     savePassword: function(user) {
 

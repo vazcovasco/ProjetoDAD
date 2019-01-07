@@ -79,7 +79,7 @@ Route::get('invoices/pdf/{id}', 'InvoiceControllerAPI@downloadInvoice');
 
 Route::get('restaurant_tables', 'RestaurantTableControllerAPI@getRestaurantTables');
 Route::get('restaurant_tables/meal/{table_number}', 'MealControllerAPI@getMeal');
-Route::get('restaurant_tables/all', 'RestaurantTableControllerAPI@getAllTables');
+Route::get('restaurantTables', 'RestaurantTableControllerAPI@getAllTables');
 Route::delete('restaurant_tables', 'RestaurantTableControllerAPI@destroy');
 Route::put('restaurant_tables/{table}', 'RestaurantTableControllerAPI@update');
 Route::post('restaurant_tables', 'RestaurantTableControllerAPI@add');

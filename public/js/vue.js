@@ -68715,7 +68715,7 @@ __WEBPACK_IMPORTED_MODULE_2_axios___default.a.defaults.baseURL = 'http://projeto
                     username: data.username,
                     email: data.email,
                     password: data.password,
-                    photo: data.photo,
+                    photo_url: data.photo_url,
                     type: data.type
                 }).then(function (response) {
                     resolve(response);
@@ -70384,7 +70384,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -70474,8 +70474,8 @@ module.exports = {
         // Copy object properties from response.data.data to this.user
         // without creating a new reference
         Object.assign(_this2.item, response.data.data);
-        _this2.$emit("item-canceled", _this2.item);
       });
+      this.$emit("item-canceled", this.item);
     },
     handleFileUpload: function handleFileUpload() {
       this.file = this.$refs.file.files[0];
@@ -71473,7 +71473,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\np[data-v-e039bdd4] {\r\n  font-size: 2em;\r\n  text-align: center;\n}\r\n", ""]);
+exports.push([module.i, "\np[data-v-e039bdd4] {\r\n  font-size: 2em;\r\n  text-align: center;\n}\n.center[data-v-e039bdd4] {\r\n  text-align: center;\n}\n.button[data-v-e039bdd4] {\r\n  background-color: #4caf50;\r\n  border: none;\r\n  color: white;\r\n  padding: 15px 32px;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  display: inline-block;\r\n  font-size: 16px;\r\n  margin: 4px 2px;\r\n  cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -71672,7 +71672,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       console.log(this.pagination);
     },
     fetchPaginateUsers: function fetchPaginateUsers(url) {
-      console.log(url);
       this.url = url;
       this.getUsers();
     }
@@ -71832,7 +71831,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$router.push("/users");
     },
     cancelEdit: function cancelEdit() {
-      this.$router.push("/use");
+      this.$emit('user-canceled', this.user);
     },
     savePassword: function savePassword(user) {},
     getProfileImage: function getProfileImage(photo_url) {
@@ -72192,6 +72191,7 @@ exports.push([module.i, "\ntr.activerow[data-v-32d347d4] {\r\n  background: #123
 //
 //
 //
+//
 
 // Component code (not registered)
 module.exports = {
@@ -72204,7 +72204,8 @@ module.exports = {
       currentSortDir: "asc",
       msgGlobalText: "",
       msgGlobalTextArea: "",
-      isCookOrWaiter: false
+      isCookOrWaiter: false,
+      currentUserId: this.$store.state.user.id
     };
   },
   methods: {
@@ -72515,20 +72516,24 @@ var render = function() {
                     [_vm._v("Delete")]
                   ),
                   _vm._v(" "),
-                  _c("a", {
-                    class: user.blocked
-                      ? "btn btn-xs btn-success"
-                      : "btn btn-xs btn-warning",
-                    domProps: {
-                      textContent: _vm._s(user.blocked ? "UnBlock" : "Block")
-                    },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.toggleBlockUser(user)
-                      }
-                    }
-                  }),
+                  user.id != _vm.currentUserId
+                    ? _c("a", {
+                        class: user.blocked
+                          ? "btn btn-xs btn-success"
+                          : "btn btn-xs btn-warning",
+                        domProps: {
+                          textContent: _vm._s(
+                            user.blocked ? "UnBlock" : "Block"
+                          )
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.toggleBlockUser(user)
+                          }
+                        }
+                      })
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("a", {
                     class: user.deleted_at
@@ -72661,10 +72666,18 @@ var moment = __webpack_require__(0);
     return {
       moment: moment,
       isShiftStarted: this.$store.getters.isShiftStarted,
-      shiftStart: this.$store.state.shiftStarted,
-      shiftEnd: this.$store.state.shiftEnded,
       timer: null
     };
+  },
+
+
+  computed: {
+    shiftStart: function shiftStart() {
+      return this.$store.state.shiftStarted;
+    },
+    shiftEnd: function shiftEnd() {
+      return this.$store.state.shiftEnded;
+    }
   },
 
   methods: {
@@ -72711,59 +72724,61 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("table", { staticClass: "table" }, [
-      _c("tbody", { staticClass: "center" }, [
-        _c("tr", [
-          !_vm.isShiftStarted
-            ? _c(
-                "button",
-                { staticClass: "button", on: { click: _vm.startShift } },
-                [_vm._v("Start Shift")]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.isShiftStarted
-            ? _c(
-                "button",
-                { staticClass: "button", on: { click: _vm.endShift } },
-                [_vm._v("End Shift")]
-              )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _vm.isShiftStarted
-            ? _c("div", { staticClass: "alert alert-success" }, [
-                _c("p", [
-                  _c("strong", [
-                    _vm._v(_vm._s(_vm.user.name) + " is working!!")
+  return _vm.user != null
+    ? _c("div", [
+        _c("table", { staticClass: "table" }, [
+          _c("tbody", { staticClass: "center" }, [
+            _c("tr", [
+              !_vm.isShiftStarted
+                ? _c(
+                    "button",
+                    { staticClass: "button", on: { click: _vm.startShift } },
+                    [_vm._v("Start Shift")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.isShiftStarted
+                ? _c(
+                    "button",
+                    { staticClass: "button", on: { click: _vm.endShift } },
+                    [_vm._v("End Shift")]
+                  )
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _vm.isShiftStarted
+                ? _c("div", { staticClass: "alert alert-success" }, [
+                    _c("p", [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.user.name) + " is working!!")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("Shift started at: " + _vm._s(_vm.shiftStart))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Time Past: " + _vm._s(_vm.timer))])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("p", [
-                  _vm._v("Shift started at: " + _vm._s(_vm.shiftStart))
-                ]),
-                _vm._v(" "),
-                _c("p", [_vm._v("Time Past: " + _vm._s(_vm.timer))])
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          !_vm.isShiftStarted
-            ? _c("div", { staticClass: "alert alert-danger" }, [
-                _c("p", [
-                  _c("strong", [
-                    _vm._v(_vm._s(_vm.user.name) + " is not working!!")
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.isShiftStarted
+                ? _c("div", { staticClass: "alert alert-danger" }, [
+                    _c("p", [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.user.name) + " is not working!!")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Shift ended at: " + _vm._s(_vm.shiftEnd))])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("p", [_vm._v("Shift ended at: " + _vm._s(_vm.shiftEnd))])
-              ])
-            : _vm._e()
+                : _vm._e()
+            ])
+          ])
         ])
       ])
-    ])
-  ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -73391,7 +73406,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         username: "",
         email: "",
         password: "123",
-        photo: "",
+        photo_url: "",
         type: ""
       },
       imgExists: false,
@@ -73416,9 +73431,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           "Content-Type": "multipart/form-data"
         }
       }).then(function (response) {
-        console.log("response - " + response);
-        t.user.photo = response.data.replace("public/profiles/", "");
-        console.log(t.user.photo);
+        t.user.photo_url = response.data.replace("public/profiles/", "");
+        t.imgExists = true;
 
         console.log("SUCCESS!!");
       }).catch(function () {
@@ -73433,7 +73447,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         username: this.user.username,
         email: this.user.email,
         password: this.user.password,
-        photo: this.user.photo,
+        photo_url: this.user.photo_url,
         type: this.user.type
       }).then(function (response) {
         _this.typeofmsg = "alert-success";
@@ -73637,7 +73651,7 @@ var render = function() {
               _c("img", {
                 attrs: {
                   width: "100px",
-                  src: _vm.getProfileImage(_vm.user.photo)
+                  src: _vm.getProfileImage(_vm.user.photo_url)
                 }
               }),
               _vm._v(" "),
@@ -75817,7 +75831,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\np[data-v-40b26632] {\n    font-size: 2em;\n    text-align: center;\n}\n", ""]);
+exports.push([module.i, "\np[data-v-40b26632] {\r\n  font-size: 2em;\r\n  text-align: center;\n}\r\n", ""]);
 
 // exports
 
@@ -75854,111 +75868,115 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            title: 'List invoice',
-            showingInvoice: false,
-            editingInvoice: false,
-            currentInvoiceShow: null,
-            currentInvoiceEdit: null,
-            showSuccess: false,
-            showFailure: false,
-            successMessage: '',
-            failMessage: '',
-            currentInvoiceIndex: -1,
-            invoices: [],
-            items: []
-        };
+  data: function data() {
+    return {
+      title: "List invoice",
+      showingInvoice: false,
+      editingInvoice: false,
+      currentInvoiceShow: null,
+      currentInvoiceEdit: null,
+      showSuccess: false,
+      showFailure: false,
+      successMessage: "",
+      failMessage: "",
+      currentInvoiceIndex: -1,
+      invoices: [],
+      items: []
+    };
+  },
+  methods: {
+    getInvoices: function getInvoices() {
+      var _this = this;
+
+      axios.get("api/invoices").then(function (response) {
+        _this.invoices = response.data;
+      }); // ver a estrutura do json
     },
-    methods: {
-        getInvoices: function getInvoices() {
-            var _this = this;
+    showInvoice: function showInvoice(invoice) {
+      var _this2 = this;
 
-            axios.get('api/invoices').then(function (response) {
-                _this.invoices = response.data;
-            }); // ver a estrutura do json
-        },
-        showInvoice: function showInvoice(invoice) {
-            var _this2 = this;
+      this.editingInvoice = false;
+      this.currentInvoiceEdit = null;
 
-            this.editingInvoice = false;
-            this.currentInvoiceEdit = null;
+      this.showingInvoice = true;
+      this.currentInvoiceShow = invoice;
 
-            this.showingInvoice = true;
-            this.currentInvoiceShow = invoice;
+      this.showSuccess = false;
 
-            this.showSuccess = false;
+      axios.get("api/invoices/" + invoice.id).then(function (response) {
+        _this2.items = response.data;
 
-            axios.get('api/invoices/' + invoice.id).then(function (response) {
-                _this2.items = response.data;
-
-                console.log(response);
-            }); // ver a estrutura do json
-        },
-        saveInvoice: function saveInvoice() {
-            console.log("rwddd");
-
-            this.currentInvoice = null;
-            this.$refs.usersListRef.editingInvoice = null;
-            this.showSuccess = true;
-            this.successMessage = 'Invoice Saved';
-            this.$socket.emit('invoice_changed', savedInvoice);
-        },
-        editInvoice: function editInvoice(invoice) {
-            //this.editingInvoice=false,
-            this.showingInvoice = false;
-            this.currentInvoiceShow = null;
-
-            this.editingInvoice = true;
-            this.currentInvoiceEdit = invoice;
-
-            this.showSuccess = false;
-
-            /*
-            axios.get('api/invoices/'+ invoice.id)
-                .then(response => {
-                    this.items=response.data;
-                     console.log(response);
-                }); // ver a estrutura do json
-                */
-        },
-        cancelEdit: function cancelEdit() {
-            this.currentInvoice = null;
-            this.$refs.invoicesListRef.editingInvoice = null;
-        },
-        downloadInvoice: function downloadInvoice(invoice) {
-            console.log("cheguei");
-            axios.get('api/invoices/pdf/' + invoice.id, {
-                url: 'http://api.dev/file-download',
-                responseType: 'blob' // important
-            }).then(function (response) {
-                var url = window.URL.createObjectURL(new Blob([response.data]));
-                var link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'edgar.pdf');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            });
-        }
-
+        console.log(response);
+      }); // ver a estrutura do json
     },
-    components: {
-        'invoice-list': __WEBPACK_IMPORTED_MODULE_0__invoiceList_vue___default.a,
-        'invoice-show': __WEBPACK_IMPORTED_MODULE_1__invoiceShow_vue___default.a,
-        'invoice-edit': __WEBPACK_IMPORTED_MODULE_2__invoiceEdit_vue___default.a
+    savedInvoice: function savedInvoice() {
+      console.log("rwddd");
 
+      this.currentInvoice = null;
+      this.$refs.invoicesListRef.editingInvoice = null;
+      this.showSuccess = true;
+      this.successMessage = "Invoice Saved";
+      //this.$socket.emit("invoice-saved", savedInvoice);
     },
-    mounted: function mounted() {
-        this.getInvoices();
+    editInvoice: function editInvoice(invoice) {
+      //this.editingInvoice=false,
+      this.showingInvoice = false;
+      this.currentInvoiceShow = null;
+
+      this.editingInvoice = true;
+      this.currentInvoiceEdit = invoice;
+
+      this.showSuccess = false;
+
+      /*
+                axios.get('api/invoices/'+ invoice.id)
+                    .then(response => {
+                        this.items=response.data;
+                          console.log(response);
+                    }); // ver a estrutura do json
+                    */
+    },
+    cancelEdit: function cancelEdit() {
+      this.currentInvoice = null;
+      this.$refs.invoicesListRef.editingInvoice = null;
+    },
+    downloadInvoice: function downloadInvoice(invoice) {
+      console.log("cheguei");
+      axios.get("api/invoices/pdf/" + invoice.id, {
+        url: "http://api.dev/file-download",
+        responseType: "blob" // important
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "edgar.pdf");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
     }
+  },
+  components: {
+    "invoice-list": __WEBPACK_IMPORTED_MODULE_0__invoiceList_vue___default.a,
+    "invoice-show": __WEBPACK_IMPORTED_MODULE_1__invoiceShow_vue___default.a,
+    "invoice-edit": __WEBPACK_IMPORTED_MODULE_2__invoiceEdit_vue___default.a
+  },
+  mounted: function mounted() {
+    this.getInvoices();
+  }
 });
 
 /***/ }),
@@ -76628,7 +76646,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -76665,82 +76683,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 var Errors = __webpack_require__(276);
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["invoice"],
+  props: ["invoice"],
 
-    data: function data() {
-        return {
-            errors: new Errors(),
-            invoiceCopy: {
-                name: '',
-                nif: ''
-            }
+  data: function data() {
+    return {
+      errors: new Errors(),
+      invoiceCopy: {
+        name: "",
+        nif: ""
+      },
+      showSuccess: false,
+      message: "",
+      typeOfMessage: "alert-success"
+    };
+  },
 
-        };
-    },
+  methods: {
+    savedInvoice: function savedInvoice() {
+      var _this = this;
 
-    methods: {
-        saveInvoice: function saveInvoice() {
-            var _this = this;
-
-            this.checkForm();
-
-            if (this.errors.any()) {
-                this.$forceUpdate();
-            } else {
-
-                axios.put('api/invoices/' + this.invoiceCopy.id, this.invoiceCopy).then(function (response) {
-
-                    // Copy object properties from response.data.data to this.user
-                    // without creating a new reference
-                    console.log(response.data);
-                    Object.assign(_this.invoice, response.data.data);
-                    _this.$emit('invoice-saved', _this.invoice);
-                }).catch(function (errors) {
-                    _this.errors.record(errors.response.data.errors);
-                });
-            }
-        },
-        cancelEdit: function cancelEdit() {
-            this.$router.push("/");
-        },
-        checkForm: function checkForm() {
-
-            if (!this.invoiceCopy.name) {
-                this.errors.set('name', "Name required.");
-            }
-            if (!this.invoiceCopy.nif) {
-                this.errors.set('nif', 'Nif required.');
-            }
+      axios.put("api/invoices/" + this.invoiceCopy.id, this.invoiceCopy).then(function (response) {
+        _this.typeOfMessage = "alert-success";
+        _this.message = "Invoice Edited Successfully";
+        _this.showSuccess = true;
+        Object.assign(_this.invoice, response.data.data);
+        _this.$emit("invoice-saved", _this.invoice);
+      }).catch(function (response) {
+        var str = _this.invoiceCopy.nif;
+        var strn = _this.invoiceCopy.name;
+        if (!str.match("^((?!(0))[0-9]{9})$")) {
+          _this.typeOfMessage = "alert-danger";
+          _this.message = "Nif must be a number with 9 digits";
+          _this.showSuccess = true;
+        } else if (!strn.match("~ m/ / ") && !strn.match("/^[a-zA-Z]+$/")) {
+          _this.typeOfMessage = "alert-danger";
+          _this.message = "Invalid characters in name input";
+          _this.showSuccess = true;
         }
-        /*validEmail: function (email) {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email);
-        },*/
+      });
     },
-    mounted: function mounted() {
-        this.invoiceCopy = this.invoice;
+    cancelEdit: function cancelEdit() {
+      this.$emit("invoice-canceled", this.invoice);
     }
+    /*validEmail: function (email) {
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+           },*/
+  },
+  mounted: function mounted() {
+    this.invoiceCopy = this.invoice;
+  }
 });
 
 /***/ }),
@@ -76819,7 +76814,26 @@ var render = function() {
   return _c("div", { staticClass: "jumbotron" }, [
     _c("h2", [_vm._v("Edit Pending Invoice")]),
     _vm._v(" "),
-    _vm._m(0),
+    _vm.showSuccess
+      ? _c("div", { staticClass: "alert", class: _vm.typeOfMessage }, [
+          _c(
+            "button",
+            {
+              staticClass: "close-btn",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.showSuccess = false
+                }
+              }
+            },
+            [_vm._v("×")]
+          ),
+          _vm._v(" "),
+          _c("strong", [_vm._v(_vm._s(_vm.message))])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "name" } }, [_vm._v("Fullname")]),
       _vm._v(" "),
@@ -76888,7 +76902,7 @@ var render = function() {
           on: {
             click: function($event) {
               $event.preventDefault()
-              _vm.saveInvoice()
+              _vm.savedInvoice()
             }
           }
         },
@@ -76906,23 +76920,12 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Cancel")]
+        [_vm._v("Canecel")]
       )
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("b", [_vm._v("Please correct the following error(s):")]),
-      _vm._v(" "),
-      _c("ul")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -76949,6 +76952,7 @@ var render = function() {
       "div",
       [
         _c("invoice-list", {
+          ref: "invoicesListRef",
           attrs: { invoices: _vm.invoices },
           on: {
             "show-click": _vm.showInvoice,
@@ -76967,7 +76971,7 @@ var render = function() {
           ? _c("invoice-edit", {
               attrs: { invoice: _vm.currentInvoiceEdit },
               on: {
-                "invoice-saved": _vm.saveInvoice,
+                "invoice-saved": _vm.savedInvoice,
                 "invoice-canceled": _vm.cancelEdit
               }
             })
@@ -77111,12 +77115,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 var moment = __webpack_require__(0);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
   data: function data() {
     //user: this.$store.
     return {
@@ -77223,17 +77227,13 @@ var moment = __webpack_require__(0);
       });
 
       if (this.pendingOrders.length > 0) {
-
         setTimeout(function () {
-
           _this4.updatePendingOrders();
         }, 7000);
       }
     },
     updatePendingOrders: function updatePendingOrders() {
-
       this.pendingOrders.forEach(function (element) {
-
         axios.post("api/orders/confirmOrder/" + element.id).then(function (response) {
           // Copy object properties from response.data.data to this.user
           // without creating a new reference
@@ -77252,7 +77252,7 @@ var moment = __webpack_require__(0);
     "order-list": __WEBPACK_IMPORTED_MODULE_0__orderList_vue___default.a
   },
   mounted: function mounted() {
-    console.log('mounted - order.vue');
+    console.log("mounted - order.vue");
     this.getOrders();
   }
 });
@@ -78112,6 +78112,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -78228,6 +78231,20 @@ var render = function() {
                   "router-link",
                   { staticClass: "button", attrs: { to: "/items" } },
                   [_vm._v("Items")]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("tr", [
+            _c(
+              "td",
+              [
+                _c(
+                  "router-link",
+                  { staticClass: "button", attrs: { to: "/restaurantTables" } },
+                  [_vm._v("Tables")]
                 )
               ],
               1
@@ -78798,7 +78815,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\np[data-v-87903d66] {\n\tfont-size: 2em;\n\ttext-align: center;\n}\n", ""]);
+exports.push([module.i, "\np[data-v-87903d66] {\r\n  font-size: 2em;\r\n  text-align: center;\n}\r\n", ""]);
 
 // exports
 
@@ -78836,104 +78853,127 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	data: function data() {
-		return {
-			title: "List Restaurant Tables",
-			showSuccess: false,
-			successMessage: '',
-			showingTable: false,
-			currentTableShow: null,
-			currentTableEdit: null,
-			editingTable: false,
-			restaurant_tables: []
-		};
-	},
-	methods: {
-		getTables: function getTables() {
-			var _this = this;
+  data: function data() {
+    return {
+      title: "List Restaurant Tables",
+      showSuccess: false,
+      successMessage: "",
+      showingTable: false,
+      currentTableShow: null,
+      currentTableEdit: null,
+      editingTable: false,
+      restaurant_tables: []
+    };
+  },
+  methods: {
+    getTables: function getTables() {
+      var _this = this;
 
-			axios.get('/api/restaurant_tables/all').then(function (response) {
-				_this.restaurant_tables = response.data;
-			}).catch(function (error) {
-				_this.showFailure = true;
-				_this.failMessage = 'Error while fetching the existing orders!';
-			});
-		},
-		editTable: function editTable(restaurant_table) {
-			this.editingTable = true;
-			this.currentTableEdit = restaurant_table;
-			this.showSuccess = false;
-		},
-		saveTable: function saveTable() {
-			this.currentTableEdit = null;
-			this.$refs.restaurantTablesListRef.editingTable = null;
-			this.showSuccess = true;
-			this.successMessage = "Table Saved";
-			this.getTables();
-		},
-		cancelEdit: function cancelEdit() {
-			this.currentTableEdit = null;
-			this.$refs.restaurantTablesListRef.editingTable = null;
-		},
-		showTable: function showTable(restaurant_table) {
-			var _this2 = this;
+      axios.get("/api/restaurant_tables/all").then(function (response) {
+        _this.restaurant_tables = response.data;
+      }).catch(function (error) {
+        _this.showFailure = true;
+        _this.failMessage = "Error while fetching the existing orders!";
+      });
+    },
+    editTable: function editTable(restaurant_table) {
+      this.editingTable = true;
+      this.currentTableEdit = restaurant_table;
+      this.showSuccess = false;
+    },
+    saveTable: function saveTable() {
+      this.currentTableEdit = null;
+      this.$refs.restaurantTablesListRef.editingTable = null;
+      this.showSuccess = true;
+      this.successMessage = "Table Saved";
+      this.getTables();
+    },
+    cancelEdit: function cancelEdit() {
+      this.currentTableEdit = null;
+      this.$refs.restaurantTablesListRef.editingTable = null;
+    },
+    showTable: function showTable(restaurant_table) {
+      var _this2 = this;
 
-			this.editingTable = false;
-			this.currentTableEdit = null;
+      this.editingTable = false;
+      this.currentTableEdit = null;
 
-			this.showingTable = true;
-			this.currentTableShow = restaurant_table;
+      this.showingTable = true;
+      this.currentTableShow = restaurant_table;
 
-			this.showSuccess = false;
+      this.showSuccess = false;
 
-			axios.get('api/restaurant_tables/meal/' + restaurant_table.table_number).then(function (response) {
-				_this2.restaurant_tables = response.data;
+      axios.get("api/restaurant_tables/meal/" + restaurant_table.table_number).then(function (response) {
+        _this2.restaurant_tables = response.data;
 
-				console.log(response);
-			}); // ver a estrutura do json
+        console.log(response);
+      }); // ver a estrutura do json
+    },
+    deleteTable: function deleteTable(restaurant_table) {
+      var _this3 = this;
 
-		},
-		deleteTable: function deleteTable(restaurant_table) {
-			var _this3 = this;
+      console.log(restaurant_table);
+      axios.delete("api/restaurant_tables/", {
+        params: { tableDelete: restaurant_table.table_number }
+      }).then(function (response) {
+        _this3.showSuccess = true;
+        _this3.successMessage = "Table Deleted";
+        _this3.getTables();
+      });
+    },
+    restoreTable: function restoreTable(restaurant_table) {
+      var _this4 = this;
 
-			console.log(restaurant_table);
-			axios.delete("api/restaurant_tables/", { params: { tableDelete: restaurant_table.table_number } }).then(function (response) {
-				_this3.showSuccess = true;
-				_this3.successMessage = "Table Deleted";
-				_this3.getTables();
-			});
-		},
-		restoreTable: function restoreTable(restaurant_table) {
-			var _this4 = this;
-
-			if (restaurant_table.deleted_at === null) {
-				this.message = 'Table not Softdeleted';
-			} else {
-				this.message = 'Table  Softdeleted';
-			}
-			console.log(restaurant_table);
-			axios.post('api/restaurant_tables/delete/' + restaurant_table.table_number).then(function (response) {
-				restaurant_table.deleted_at = !restaurant_table.deleted_at;
-				_this4.$emit('message', _this4.message);
-			}).catch(function (erros) {
-				console.log(erros);
-			});
-		}
-	},
-	components: {
-		'tables-list': __WEBPACK_IMPORTED_MODULE_0__restaurantTablesList_vue___default.a,
-		'table-edit': __WEBPACK_IMPORTED_MODULE_1__restaurantTablesEdit_vue___default.a,
-		'table-show': __WEBPACK_IMPORTED_MODULE_2__restaurantTablesShow_vue___default.a
-	},
-	mounted: function mounted() {
-		this.getTables();
-	}
+      if (restaurant_table.deleted_at === null) {
+        this.message = "Table not Softdeleted";
+      } else {
+        this.message = "Table  Softdeleted";
+      }
+      console.log(restaurant_table);
+      axios.post("api/restaurant_tables/delete/" + restaurant_table.table_number).then(function (response) {
+        restaurant_table.deleted_at = !restaurant_table.deleted_at;
+        _this4.$emit("message", _this4.message);
+      }).catch(function (erros) {
+        console.log(erros);
+      });
+    }
+  },
+  components: {
+    "tables-list": __WEBPACK_IMPORTED_MODULE_0__restaurantTablesList_vue___default.a,
+    "table-edit": __WEBPACK_IMPORTED_MODULE_1__restaurantTablesEdit_vue___default.a,
+    "table-show": __WEBPACK_IMPORTED_MODULE_2__restaurantTablesShow_vue___default.a
+  },
+  mounted: function mounted() {
+    this.getTables();
+  }
 });
 
 /***/ }),
@@ -79504,8 +79544,25 @@ var render = function() {
         _c("h1", [_vm._v(_vm._s(_vm.title))])
       ]),
       _vm._v(" "),
-      _c("router-link", { attrs: { to: "/restaurantTables/add" } }, [
-        _c("button", [_vm._v("Add a table")])
+      _c("div", [
+        _c("table", { staticClass: "table" }, [
+          _c("tbody", { staticClass: "center" }, [
+            _c(
+              "tr",
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "button",
+                    attrs: { to: "/restaurantTables/add" }
+                  },
+                  [_vm._v("Register New Table")]
+                )
+              ],
+              1
+            )
+          ])
+        ])
       ]),
       _vm._v(" "),
       _c("tables-list", {
@@ -79655,7 +79712,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\ntr.activerow[data-v-0fa83878] {\n  \t\tbackground: #123456  !important;\n  \t\tcolor: #fff          !important;\n}\n\n", ""]);
+exports.push([module.i, "\ntr.activerow[data-v-0fa83878] {\r\n  background: #123456 !important;\r\n  color: #fff !important;\n}\r\n", ""]);
 
 // exports
 
@@ -79694,36 +79751,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // Component code (not registered)
 /* harmony default export */ __webpack_exports__["default"] = ({
-    //props: ["orders"],
-    data: function data() {
-        return {
-            restaurant_tables: [],
-            form: new __WEBPACK_IMPORTED_MODULE_0_vform___default.a({
-                table_number: ''
-            })
-        };
-    },
-    methods: {
-        getTables: function getTables() {
-            var _this = this;
+  //props: ["orders"],
+  data: function data() {
+    return {
+      restaurant_tables: [],
+      form: new __WEBPACK_IMPORTED_MODULE_0_vform___default.a({
+        table_number: ""
+      }),
+      showMessage: false,
+      message: "",
+      typeOfMessage: "alert-success"
+    };
+  },
+  methods: {
+    getTables: function getTables() {
+      var _this = this;
 
-            axios.get('api/restaurant_tables').then(function (response) {
-                _this.restaurant_tables = response.data;
-                //console.log(response);
-            }); // ver a estrutura do json
-        },
-        createTable: function createTable() {
-            this.form.post('api/restaurant_tables/').then(function (response) {}).catch(function (error) {
-                return console.log('Whoops');
-            });
-        },
-        cancelTable: function cancelTable() {
-            this.$router.push("/");
-        }
+      axios.get("api/restaurant_tables").then(function (response) {
+        _this.restaurant_tables = response.data;
+        //console.log(response);
+      }); // ver a estrutura do json
     },
-    mounted: function mounted() {
-        this.getTables();
+    createTable: function createTable() {
+      var _this2 = this;
+
+      this.form.post("api/restaurant_tables/").then(function (response) {
+        _this2.typeOfMessage = "alert-success";
+        _this2.message = "Table created successfully!";
+        _this2.showMessage = !_this2.showMessage;
+      }).catch(function (error) {
+        if (!Number.isInteger(parseInt(_this2.form.table_number))) {
+          _this2.message = "Insert a valid table number!";
+        } else if (Number.isInteger(parseInt(_this2.form.table_number))) {
+          _this2.message = "Table number already exists!";
+        }
+
+        _this2.typeOfMessage = "alert-danger";
+        _this2.showMessage = !_this2.showMessage;
+      });
+    },
+    cancelTable: function cancelTable() {
+      this.$router.push("/");
     }
+  },
+  mounted: function mounted() {
+    this.getTables();
+  }
 });
 
 /***/ }),
@@ -79736,6 +79809,26 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "jumbotron" }, [
     _c("h1", [_vm._v("Create Table")]),
+    _vm._v(" "),
+    _vm.showMessage
+      ? _c("div", { staticClass: "alert", class: _vm.typeOfMessage }, [
+          _c(
+            "button",
+            {
+              staticClass: "close-btn",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.showSuccess = false
+                }
+              }
+            },
+            [_vm._v("×")]
+          ),
+          _vm._v(" "),
+          _c("strong", [_vm._v(_vm._s(_vm.message))])
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("form", { attrs: { method: "POST", action: "api/create_tables/" } }, [
       _c("div", { staticClass: "form-group" }, [
@@ -79771,7 +79864,7 @@ var render = function() {
       _c(
         "a",
         {
-          staticClass: "btn btn-default",
+          staticClass: "btn btn-primary",
           on: {
             click: function($event) {
               $event.preventDefault()
@@ -79785,7 +79878,7 @@ var render = function() {
       _c(
         "a",
         {
-          staticClass: "btn btn-default",
+          staticClass: "btn btn-light",
           on: {
             click: function($event) {
               $event.preventDefault()

@@ -74,8 +74,9 @@ module.exports = {
         // Copy object properties from response.data.data to this.user
         // without creating a new reference
         Object.assign(this.item, response.data.data);
-        this.$emit("item-canceled", this.item);
+        
       });
+      this.$emit("item-canceled", this.item);
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
